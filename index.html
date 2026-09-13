@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bisnis Digital — Trixync</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ede8e0;
+            color: #1a1a1a;
+            min-height: 100vh;
+        }
+        .hero {
+            text-align: center;
+            padding: 10vh 5vw 6vh;
+        }
+        .hero .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #8a8178;
+            margin-bottom: 2vh;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 2vh;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #5a5a5a;
+            max-width: 50vw;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            padding: 4vh 5vw 8vh;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .card {
+            background: #fff;
+            border: 1px solid #e8e2d8;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem 1.8rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transform: translateY(-3px);
+        }
+        .card .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #0097a7;
+            opacity: 0.5;
+            min-width: 2.5rem;
+        }
+        .card .info h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            font-size: 1.05rem;
+            margin-bottom: 0.3rem;
+        }
+        .card .info p {
+            font-size: 0.8rem;
+            color: #5a5a5a;
+            line-height: 1.5;
+        }
+        .card .arrow {
+            position: absolute;
+            right: 1.5rem;
+            font-size: 1.1rem;
+            color: #b8b0a4;
+            transition: all 0.3s ease;
+        }
+        .card:hover .arrow {
+            color: #0097a7;
+            transform: translateX(5px);
+        }
+        .card .tag {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #0097a7;
+            margin-bottom: 0.2rem;
+        }
+        .footer {
+            text-align: center;
+            padding: 4vh 5vw 6vh;
+            color: #8a8178;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="label">Mata Kuliah</div>
+        <h1>Bisnis Digital</h1>
+        <p class="subtitle">10 pertemuan — dari konsep hingga strategi bisnis digital yang bisa langsung diterapkan.</p>
+    </div>
+
+    <div class="grid">
+        <a href="slides/01-pengenalan-bisnis-digital.html" class="card">
+            <div class="num">01</div>
+            <div class="info">
+                <div class="tag">Dasar</div>
+                <h3>Pengenalan Bisnis Digital</h3>
+                <p>Apa itu bisnis digital, perbedaan tradisional vs digital</p>
+            </div>
+            <div class="arrow">&#8594;</div>
+        </a>
+
+        <a href="slides/02-ecommerce-model-bisnis.html" class="card">
+            <div class="num">02</div>
+            <div class="info">
+                <div class="tag">E-Commerce</div>
+                <h3>E-Commerce & Model Bisnis</h3>
+                <p>B2C, B2B, C2C, marketplace, studi kasus Indonesia</p>
+            </div>
+            <div class="arrow">&#8594;</div>
+        </a>
+
+        <a href="slides/03-digital-marketing.html" class="card">
+            <div class="num">03</div>
+            <div class="info">
+                <div class="tag">Marketing</div>
+                <h3>Digital Marketing</h3>
+                <p>SEO, SEM, social media ads, marketing funnel</p>
+            </div>
+            <div class="arrow">&#8594;</div>
+        </a>
+
+        <a href="slides/04-social-media-bisnis.html" class="card">
+            <div class="num">04</div>
+            <div class="info">
+                <div class="tag">Marketing</div>
+                <h3>Social Media untuk Bisnis</h3>
+                <p>Platform, content strategy, kalender konten</p>
+            </div>
+            <div class="arrow">&#8594;</div>
+        </a>
+
+        <a href="slides/05-data-analytics-bisnis.html" class="card">
+            <div class="num">05</div>
+            <div class="info">
+                <div class="tag">Analytics</div>
+                <h3>Data Analytics untuk Bisnis</h3>
+                <p>Google Analytics, Power BI, decision making</p>
+            </div>
+            <div class="arrow">&#8594;</div>
+        </a>
+
+        <a href="slides/06-pembayaran-digital.html" class="card">
+            <div class="num">06</div>
+            <div class="info">
+                <div class="tag">Fintech</div>
+                <h3>Pembayaran Digital</h3>
+                <p>E-Wallet, QRIS, fintech, cashless trend</p>
+            </div>
+            <div class="arrow">&#8594;</div>
+        </a>
+
+        <a href="slides/07-crm-customer-experience.html" class="card">
+            <div class="num">07</div>
+            <div class="info">
+                <div class="tag">CRM</div>
+                <h3>CRM & Customer Experience</h3>
+                <p>Customer journey, retention, tools CRM</p>
+            </div>
+            <div class="arrow">&#8594;</div>
+        </a>
+
+        <a href="slides/08-strategi-bisnis-digital.html" class="card">
+            <div class="num">08</div>
+            <div class="info">
+                <div class="tag">Strategi</div>
+                <h3>Strategi Bisnis Digital</h3>
+                <p>Business model canvas, KPI, framework</p>
+            </div>
+            <div class="arrow">&#8594;</div>
+        </a>
+
+        <a href="slides/09-umkm-go-digital.html" class="card">
+            <div class="num">09</div>
+            <div class="info">
+                <div class="tag">UMKM</div>
+                <h3>UMKM Go-Digital</h3>
+                <p>Roadmap digitalisasi untuk usaha kecil</p>
+            </div>
+            <div class="arrow">&#8594;</div>
+        </a>
+
+        <a href="slides/10-tugas-akhir-presentasi.html" class="card">
+            <div class="num">10</div>
+            <div class="info">
+                <div class="tag">Tugas Akhir</div>
+                <h3>Tugas Akhir & Presentasi</h3>
+                <p>Proyek bisnis digital, template laporan</p>
+            </div>
+            <div class="arrow">&#8594;</div>
+        </a>
+    </div>
+
+    <div class="footer">
+        Bisnis Digital — Trixync
+    </div>
+</body>
+</html>
