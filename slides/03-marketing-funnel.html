@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Marketing Funnel — Case Study</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --sec: #5a5a5a;
+            --accent: #0097a7;
+            --awareness: #4CAF50;
+            --consideration: #2196F3;
+            --purchase: #FF9800;
+            --retention: #9C27B0;
+            --advocacy: #E8725C;
+        }
+        
+        body {
+            font-family: "Inter", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+        }
+        
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            padding: 5vh 5vw;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 4vh;
+        }
+        
+        .header-left {
+            max-width: 50%;
+        }
+        
+        .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1.5vh;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .label::before {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        h1 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 600;
+            line-height: 1.15;
+            color: var(--text);
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 2vw;
+        }
+        
+        .case-study-badge {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #ffffff;
+            padding: 1.5vh 2.5vw;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .case-study-badge .icon {
+            font-size: 1.2rem;
+        }
+        
+        /* Funnel Container */
+        .funnel-container {
+            flex: 1;
+            display: flex;
+            gap: 1.5vw;
+            align-items: stretch;
+        }
+        
+        /* Funnel Stage */
+        .stage {
+            flex: 1;
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 3vh 2vw;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .stage:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+        }
+        
+        .stage::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+        }
+        
+        .stage.awareness::before { background: var(--awareness); }
+        .stage.consideration::before { background: var(--consideration); }
+        .stage.purchase::before { background: var(--purchase); }
+        .stage.retention::before { background: var(--retention); }
+        .stage.advocacy::before { background: var(--advocacy); }
+        
+        /* Stage Header */
+        .stage-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 2.5vh;
+        }
+        
+        .stage-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+        
+        .stage.awareness .stage-icon { background: rgba(76,175,80,0.15); }
+        .stage.consideration .stage-icon { background: rgba(33,150,243,0.15); }
+        .stage.purchase .stage-icon { background: rgba(255,152,0,0.15); }
+        .stage.retention .stage-icon { background: rgba(156,39,176,0.15); }
+        .stage.advocacy .stage-icon { background: rgba(232,114,92,0.15); }
+        
+        .stage-title {
+            flex: 1;
+        }
+        
+        .stage-title h2 {
+            font-family: "Inter", sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3vh;
+        }
+        
+        .stage-title .tagline {
+            font-size: 0.8rem;
+            color: var(--sec);
+            font-style: italic;
+        }
+        
+        /* Stage Content */
+        .stage-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2vh;
+        }
+        
+        .content-section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2vh 1.5vw;
+            border: 1px solid #e9ecef;
+        }
+        
+        .content-section h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--sec);
+            margin-bottom: 1vh;
+            font-weight: 600;
+        }
+        
+        .content-section p {
+            font-size: 0.85rem;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* Case Study */
+        .case-study {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 2vh 1.5vw;
+            border-left: 4px solid;
+            margin-top: auto;
+        }
+        
+        .stage.awareness .case-study { border-color: var(--awareness); }
+        .stage.consideration .case-study { border-color: var(--consideration); }
+        .stage.purchase .case-study { border-color: var(--purchase); }
+        .stage.retention .case-study { border-color: var(--retention); }
+        .stage.advocacy .case-study { border-color: var(--advocacy); }
+        
+        .case-study h4 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--sec);
+            margin-bottom: 1vh;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .case-study h4::before {
+            content: '📋';
+            font-size: 0.9rem;
+        }
+        
+        .case-study .example {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8vh;
+        }
+        
+        .case-study .example-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .case-study .example-item .bullet {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            color: #ffffff;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .stage.awareness .bullet { background: var(--awareness); }
+        .stage.consideration .bullet { background: var(--consideration); }
+        .stage.purchase .bullet { background: var(--purchase); }
+        .stage.retention .bullet { background: var(--retention); }
+        .stage.advocacy .bullet { background: var(--advocacy); }
+        
+        .case-study .example-item p {
+            font-size: 0.8rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+        
+        /* Connection Lines */
+        .connection-line {
+            position: absolute;
+            top: 50%;
+            right: -1.2vw;
+            width: 1.5vw;
+            height: 2px;
+            background: linear-gradient(90deg, #dee2e6, transparent);
+            z-index: 10;
+        }
+        
+        .stage:last-child .connection-line {
+            display: none;
+        }
+        
+        /* Bottom Bar */
+        .bottom-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3vh;
+            padding-top: 2vh;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .bottom-bar .insight {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--sec);
+        }
+        
+        .bottom-bar .insight .icon {
+            font-size: 1.2rem;
+        }
+        
+        .bottom-bar .insight strong {
+            color: var(--text);
+        }
+        
+        .bottom-bar .legend {
+            display: flex;
+            gap: 2vw;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: var(--sec);
+        }
+        
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .legend-dot.awareness { background: var(--awareness); }
+        .legend-dot.consideration { background: var(--consideration); }
+        .legend-dot.purchase { background: var(--purchase); }
+        .legend-dot.retention { background: var(--retention); }
+        .legend-dot.advocacy { background: var(--advocacy); }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .funnel-container {
+                flex-wrap: wrap;
+            }
+            
+            .stage {
+                flex: 1 1 calc(50% - 1vw);
+                min-width: 280px;
+            }
+            
+            .stage:last-child {
+                flex: 1 1 100%;
+                max-width: calc(50% - 1vw);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 3vh 3vw;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 2vh;
+            }
+            
+            .header-right {
+                align-self: flex-start;
+            }
+            
+            .funnel-container {
+                flex-direction: column;
+                gap: 2vh;
+            }
+            
+            .stage {
+                flex: 1 1 100%;
+            }
+            
+            .connection-line {
+                display: none;
+            }
+            
+            .bottom-bar {
+                flex-direction: column;
+                gap: 2vh;
+            }
+            
+            .bottom-bar .legend {
+                flex-wrap: wrap;
+                gap: 1vh 2vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <div class="label">Customer Journey</div>
+                <h1>The Marketing Funnel</h1>
+            </div>
+            <div class="header-right">
+                <div class="case-study-badge">
+                    <span class="icon">☕</span>
+                    Case Study: Kopi Nusantara
+                </div>
+            </div>
+        </div>
+        
+        <!-- Funnel Stages -->
+        <div class="funnel-container">
+            <!-- Stage 1: Awareness -->
+            <div class="stage awareness">
+                <div class="connection-line"></div>
+                <div class="stage-header">
+                    <div class="stage-icon">👁️</div>
+                    <div class="stage-title">
+                        <h2>Awareness</h2>
+                        <div class="tagline">"I know this brand exists"</div>
+                    </div>
+                </div>
+                <div class="stage-content">
+                    <div class="content-section">
+                        <h3>Goal</h3>
+                        <p>Make potential customers aware of your brand and products</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Channels</h3>
+                        <p>Social media ads, SEO, influencer marketing, PR</p>
+                    </div>
+                    <div class="case-study">
+                        <h4>Kopi Nusantara — Awareness</h4>
+                        <div class="example">
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>Instagram Reels showing barista making latte art</p>
+                            </div>
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>Food blogger collaboration: "Best coffee in Medan"</p>
+                            </div>
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>Google Ads: "coffee shop near me" targeting 5km radius</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stage 2: Consideration -->
+            <div class="stage consideration">
+                <div class="connection-line"></div>
+                <div class="stage-header">
+                    <div class="stage-icon">🤔</div>
+                    <div class="stage-title">
+                        <h2>Consideration</h2>
+                        <div class="tagline">"I'm comparing options"</div>
+                    </div>
+                </div>
+                <div class="stage-content">
+                    <div class="content-section">
+                        <h3>Goal</h3>
+                        <p>Show why your brand is better than competitors</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Channels</h3>
+                        <p>Website, reviews, comparison content, retargeting</p>
+                    </div>
+                    <div class="case-study">
+                        <h4>Kopi Nusantara — Consideration</h4>
+                        <div class="example">
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>Website: "Our beans are single-origin from Gayo"</p>
+                            </div>
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>Google Reviews: 4.8 stars, 200+ reviews</p>
+                            </div>
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>Retargeting ads to website visitors</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stage 3: Purchase -->
+            <div class="stage purchase">
+                <div class="connection-line"></div>
+                <div class="stage-header">
+                    <div class="stage-icon">🛒</div>
+                    <div class="stage-title">
+                        <h2>Purchase</h2>
+                        <div class="tagline">"I'm buying now"</div>
+                    </div>
+                </div>
+                <div class="stage-content">
+                    <div class="content-section">
+                        <h3>Goal</h3>
+                        <p>Convert interest into actual sales</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Channels</h3>
+                        <p>E-commerce, checkout optimization, promo codes</p>
+                    </div>
+                    <div class="case-study">
+                        <h4>Kopi Nusantara — Purchase</h4>
+                        <div class="example">
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>"First visit: Buy 1 Get 1 Free" — drives trial</p>
+                            </div>
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>WhatsApp ordering for pickup (no wait time)</p>
+                            </div>
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>QR code table ordering for dine-in</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stage 4: Retention -->
+            <div class="stage retention">
+                <div class="connection-line"></div>
+                <div class="stage-header">
+                    <div class="stage-icon">🔄</div>
+                    <div class="stage-title">
+                        <h2>Retention</h2>
+                        <div class="tagline">"I'll come back again"</div>
+                    </div>
+                </div>
+                <div class="stage-content">
+                    <div class="content-section">
+                        <h3>Goal</h3>
+                        <p>Keep customers coming back repeatedly</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Channels</h3>
+                        <p>Email, loyalty programs, personalized offers</p>
+                    </div>
+                    <div class="case-study">
+                        <h4>Kopi Nusantara — Retention</h4>
+                        <div class="example">
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>Loyalty card: "Buy 9, Get 1 Free" stamp system</p>
+                            </div>
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>WhatsApp group: "Exclusive deals for members"</p>
+                            </div>
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>Birthday freebie: "Free drink on your birthday"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stage 5: Advocacy -->
+            <div class="stage advocacy">
+                <div class="stage-header">
+                    <div class="stage-icon">📣</div>
+                    <div class="stage-title">
+                        <h2>Advocacy</h2>
+                        <div class="tagline">"I'll tell my friends"</div>
+                    </div>
+                </div>
+                <div class="stage-content">
+                    <div class="content-section">
+                        <h3>Goal</h3>
+                        <p>Turn customers into brand ambassadors</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Channels</h3>
+                        <p>Referral programs, UGC, testimonials</p>
+                    </div>
+                    <div class="case-study">
+                        <h4>Kopi Nusantara — Advocacy</h4>
+                        <div class="example">
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>Referral: "Invite friend, both get 20% off"</p>
+                            </div>
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>User-generated content: #KopiNusantara challenge</p>
+                            </div>
+                            <div class="example-item">
+                                <div class="bullet">•</div>
+                                <p>Google review incentive: "Free cookie for review"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Bar -->
+        <div class="bottom-bar">
+            <div class="insight">
+                <span class="info">💡</span>
+                <span><strong>Key Insight:</strong> Each stage requires different messaging, channels, and KPIs. Budget allocation shifts as customers move through the funnel.</span>
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-dot awareness"></div>
+                    <span>Awareness</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot consideration"></div>
+                    <span>Consideration</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot purchase"></div>
+                    <span>Purchase</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot retention"></div>
+                    <span>Retention</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot advocacy"></div>
+                    <span>Advocacy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
