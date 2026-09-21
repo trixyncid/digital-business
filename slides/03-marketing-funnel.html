@@ -18,93 +18,33 @@
         .slide {
             width: 100vw;
             height: 100vh;
-            padding: 5vh 5vw;
             display: grid;
-            grid-template-columns: 1fr 1.1fr;
-            gap: 4vw;
-            align-items: center;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
         }
         
-        /* Left: Pyramid Visual */
-        .pyramid-section {
-            position: relative;
-            height: 80vh;
+        /* Left: Pyramid */
+        .pyramid-side {
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 5vh 4vw;
+            position: relative;
         }
         
-        .pyramid-container {
+        .pyramid-wrap {
             position: relative;
             width: 100%;
-            max-width: 480px;
+            max-width: 420px;
         }
-        
-        /* SVG Pyramid */
-        .pyramid-svg {
-            width: 100%;
-            height: auto;
-        }
-        
-        /* Labels pointing to pyramid */
-        .pyramid-labels {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        
-        .label-line {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .label-line .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-        
-        .label-line .line {
-            width: 40px;
-            height: 1px;
-            background: #b8b0a4;
-        }
-        
-        .label-line .text {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            white-space: nowrap;
-        }
-        
-        .label-1 { top: 8%; left: 65%; }
-        .label-2 { top: 25%; left: 70%; }
-        .label-3 { top: 42%; left: 72%; }
-        .label-4 { top: 59%; left: 70%; }
-        .label-5 { top: 76%; left: 65%; }
-        
-        .label-1 .dot { background: #5a8f5c; }
-        .label-2 .dot { background: #4a7c96; }
-        .label-3 .dot { background: #c4883a; }
-        .label-4 .dot { background: #8b5a8f; }
-        .label-5 .dot { background: #c45a4a; }
-        
-        .label-1 .text { color: #5a8f5c; }
-        .label-2 .text { color: #4a7c96; }
-        .label-3 .text { color: #c4883a; }
-        .label-4 .text { color: #8b5a8f; }
-        .label-5 .text { color: #c45a4a; }
         
         /* Right: Content */
-        .content-section {
-            padding-right: 3vw;
+        .content-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5vh 5vw 5vh 2vw;
+            border-left: 1px solid #e0dbd3;
         }
         
         .section-label {
@@ -117,7 +57,7 @@
         
         .main-title {
             font-family: "DM Serif Display", serif;
-            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
             font-weight: 400;
             line-height: 1.15;
             color: #1a1a1a;
@@ -129,134 +69,95 @@
             color: #0097a7;
         }
         
-        /* Funnel Stages - Natural List */
+        /* Stages list */
         .stages-list {
             display: flex;
             flex-direction: column;
-            gap: 2.5vh;
+            gap: 0;
         }
         
-        .stage-item {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            padding-bottom: 2.5vh;
+        .stage-row {
+            display: grid;
+            grid-template-columns: 40px 1fr;
+            gap: 16px;
+            padding: 2.2vh 0;
             border-bottom: 1px solid #e8e2d8;
+            align-items: start;
         }
         
-        .stage-item:last-child {
+        .stage-row:last-child {
             border-bottom: none;
-            padding-bottom: 0;
         }
         
-        .stage-marker {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
+        .stage-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-            margin-top: 2px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
         }
         
-        .stage-item:nth-child(1) .stage-marker { background: #e8f5e9; }
-        .stage-item:nth-child(2) .stage-marker { background: #e3f2fd; }
-        .stage-item:nth-child(3) .stage-marker { background: #fff3e0; }
-        .stage-item:nth-child(4) .stage-marker { background: #f3e5f5; }
-        .stage-item:nth-child(5) .stage-marker { background: #fce4ec; }
+        .stage-row:nth-child(1) .stage-num { background: #5a8f5c; }
+        .stage-row:nth-child(2) .stage-num { background: #4a7c96; }
+        .stage-row:nth-child(3) .stage-num { background: #c4883a; }
+        .stage-row:nth-child(4) .stage-num { background: #8b5a8f; }
+        .stage-row:nth-child(5) .stage-num { background: #c45a4a; }
         
-        .stage-marker svg {
-            width: 18px;
-            height: 18px;
-        }
-        
-        .stage-item:nth-child(1) .stage-marker svg { color: #5a8f5c; }
-        .stage-item:nth-child(2) .stage-marker svg { color: #4a7c96; }
-        .stage-item:nth-child(3) .stage-marker svg { color: #c4883a; }
-        .stage-item:nth-child(4) .stage-marker svg { color: #8b5a8f; }
-        .stage-item:nth-child(5) .stage-marker svg { color: #c45a4a; }
-        
-        .stage-content {
-            flex: 1;
-        }
-        
-        .stage-content h3 {
+        .stage-body h3 {
             font-family: "Playfair Display", serif;
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 600;
             color: #1a1a1a;
-            margin-bottom: 0.5vh;
+            margin-bottom: 0.4vh;
         }
         
-        .stage-content .quote {
-            font-size: 0.85rem;
+        .stage-body .mood {
+            font-size: 0.8rem;
             font-style: italic;
-            color: #6a6a6a;
-            margin-bottom: 1vh;
+            color: #7a7a7a;
+            margin-bottom: 0.8vh;
         }
         
-        .stage-content .example {
+        .stage-body .desc {
             font-size: 0.82rem;
             color: #5a5a5a;
-            line-height: 1.55;
+            line-height: 1.5;
         }
         
-        .stage-content .example strong {
+        .stage-body .desc strong {
             color: #3a3a3a;
-            font-weight: 500;
         }
         
-        /* Corner decoration */
+        /* Corner */
         .corner-mark {
             position: fixed;
-            bottom: 4vh;
-            left: 5vw;
-            font-size: 0.7rem;
-            color: #b8b0a4;
+            bottom: 3vh;
+            left: 4vw;
+            font-size: 0.65rem;
+            color: #c4bfb6;
             letter-spacing: 2px;
+            text-transform: uppercase;
         }
         
-        /* Responsive */
-        @media (max-width: 1100px) {
+        @media (max-width: 1024px) {
             .slide {
                 grid-template-columns: 1fr;
-                gap: 3vh;
-                padding: 4vh 4vw;
+                overflow-y: auto;
             }
             
-            .pyramid-section {
-                height: 35vh;
+            .pyramid-side {
+                min-height: 40vh;
+                padding: 3vh 4vw;
             }
             
-            .pyramid-container {
-                max-width: 300px;
-            }
-            
-            .label-line {
-                display: none;
-            }
-            
-            .content-section {
-                padding-right: 0;
-            }
-            
-            .stages-list {
-                gap: 1.5vh;
-            }
-            
-            .stage-item {
-                padding-bottom: 1.5vh;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .main-title {
-                font-size: 1.8rem;
-            }
-            
-            .stage-content h3 {
-                font-size: 1rem;
+            .content-side {
+                border-left: none;
+                border-top: 1px solid #e0dbd3;
+                padding: 3vh 5vw;
             }
         }
     </style>
@@ -264,137 +165,86 @@
 <body>
     <div class="slide">
         <!-- Left: Pyramid -->
-        <div class="pyramid-section">
-            <div class="pyramid-container">
-                <!-- SVG Pyramid -->
-                <svg class="pyramid-svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Pyramid layers -->
-                    <polygon points="200,30 280,130 120,130" fill="#5a8f5c" opacity="0.9"/>
-                    <polygon points="120,140 280,140 310,230 90,230" fill="#4a7c96" opacity="0.9"/>
-                    <polygon points="90,240 310,240 340,330 60,330" fill="#c4883a" opacity="0.9"/>
-                    <polygon points="60,340 340,340 360,420 40,420" fill="#8b5a8f" opacity="0.9"/>
-                    <polygon points="40,430 360,430 380,490 20,490" fill="#c45a4a" opacity="0.9"/>
+        <div class="pyramid-side">
+            <div class="pyramid-wrap">
+                <svg viewBox="0 0 360 460" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Layer 1: Awareness (top, smallest) -->
+                    <polygon points="180,20 260,110 100,110" fill="#5a8f5c"/>
+                    <text x="180" y="82" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">AWARENESS</text>
                     
-                    <!-- Layer labels inside pyramid -->
-                    <text x="200" y="95" text-anchor="middle" fill="white" font-family="Inter" font-size="11" font-weight="600">AWARENESS</text>
-                    <text x="200" y="195" text-anchor="middle" fill="white" font-family="Inter" font-size="11" font-weight="600">CONSIDERATION</text>
-                    <text x="200" y="295" text-anchor="middle" fill="white" font-family="Inter" font-size="11" font-weight="600">PURCHASE</text>
-                    <text x="200" y="388" text-anchor="middle" fill="white" font-family="Inter" font-size="11" font-weight="600">RETENTION</text>
-                    <text x="200" y="468" text-anchor="middle" fill="white" font-family="Inter" font-size="11" font-weight="600">ADVOCACY</text>
+                    <!-- Layer 2: Consideration -->
+                    <polygon points="100,120 260,120 290,200 70,200" fill="#4a7c96"/>
+                    <text x="180" y="168" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">CONSIDERATION</text>
+                    
+                    <!-- Layer 3: Purchase -->
+                    <polygon points="70,210 290,210 320,290 40,290" fill="#c4883a"/>
+                    <text x="180" y="258" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">PURCHASE</text>
+                    
+                    <!-- Layer 4: Retention -->
+                    <polygon points="40,300 320,300 345,370 15,370" fill="#8b5a8f"/>
+                    <text x="180" y="342" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">RETENTION</text>
+                    
+                    <!-- Layer 5: Advocacy (bottom, largest) -->
+                    <polygon points="15,380 345,380 360,440 0,440" fill="#c45a4a"/>
+                    <text x="180" y="418" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">ADVOCACY</text>
                 </svg>
-                
-                <!-- Floating labels -->
-                <div class="pyramid-labels">
-                    <div class="label-line label-1">
-                        <div class="dot"></div>
-                        <div class="line"></div>
-                        <div class="text">Top — Broadest reach</div>
-                    </div>
-                    <div class="label-line label-2">
-                        <div class="dot"></div>
-                        <div class="line"></div>
-                        <div class="text">Engaged prospects</div>
-                    </div>
-                    <div class="label-line label-3">
-                        <div class="dot"></div>
-                        <div class="line"></div>
-                        <div class="text">Ready to buy</div>
-                    </div>
-                    <div class="label-line label-4">
-                        <div class="dot"></div>
-                        <div class="line"></div>
-                        <div class="text">Repeat customers</div>
-                    </div>
-                    <div class="label-line label-5">
-                        <div class="dot"></div>
-                        <div class="line"></div>
-                        <div class="text">Brand ambassadors</div>
-                    </div>
-                </div>
             </div>
         </div>
         
         <!-- Right: Content -->
-        <div class="content-section">
-            <div class="section-label">The Customer Journey</div>
-            <h1 class="main-title">Marketing <em>Funnel</em></h1>
+        <div class="content-side">
+            <div class="section-label">Customer Journey</div>
+            <h1 class="main-title">The Marketing <em>Funnel</em></h1>
             
             <div class="stages-list">
-                <div class="stage-item">
-                    <div class="stage-marker">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                            <circle cx="12" cy="12" r="3"/>
-                        </svg>
-                    </div>
-                    <div class="stage-content">
+                <div class="stage-row">
+                    <div class="stage-num">01</div>
+                    <div class="stage-body">
                         <h3>Awareness</h3>
-                        <div class="quote">"I just discovered this brand"</div>
-                        <div class="example"><strong>Kopi Nusantara:</strong> Instagram Reels showing latte art process, local food blogger visits, Google Ads targeting "coffee shop Medan"</div>
+                        <div class="mood">"I just discovered this brand"</div>
+                        <div class="desc"><strong>Kopi Nusantara:</strong> Instagram Reels showing latte art, food blogger visit, Google Ads "coffee shop Medan"</div>
                     </div>
                 </div>
                 
-                <div class="stage-item">
-                    <div class="stage-marker">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="M21 21l-4.35-4.35"/>
-                        </svg>
-                    </div>
-                    <div class="stage-content">
+                <div class="stage-row">
+                    <div class="stage-num">02</div>
+                    <div class="stage-body">
                         <h3>Consideration</h3>
-                        <div class="quote">"I'm comparing my options"</div>
-                        <div class="example"><strong>Kopi Nusantara:</strong> Website highlighting single-origin Gayo beans, 4.8★ Google Reviews, retargeting ads to past visitors</div>
+                        <div class="mood">"I'm comparing my options"</div>
+                        <div class="desc"><strong>Kopi Nusantara:</strong> Website with single-origin beans, 4.8★ reviews, retargeting ads</div>
                     </div>
                 </div>
                 
-                <div class="stage-item">
-                    <div class="stage-marker">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                            <line x1="3" y1="6" x2="21" y2="6"/>
-                            <path d="M16 10a4 4 0 01-8 0"/>
-                        </svg>
-                    </div>
-                    <div class="stage-content">
+                <div class="stage-row">
+                    <div class="stage-num">03</div>
+                    <div class="stage-body">
                         <h3>Purchase</h3>
-                        <div class="quote">"I'm ready to buy"</div>
-                        <div class="example"><strong>Kopi Nusantara:</strong> "Buy 1 Get 1 Free" first visit, WhatsApp ordering for quick pickup, QR code table menu</div>
+                        <div class="mood">"I'm ready to buy"</div>
+                        <div class="desc"><strong>Kopi Nusantara:</strong> "Buy 1 Get 1 Free" first visit, WhatsApp ordering, QR menu</div>
                     </div>
                 </div>
                 
-                <div class="stage-item">
-                    <div class="stage-marker">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="23 4 23 10 17 10"/>
-                            <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
-                        </svg>
-                    </div>
-                    <div class="stage-content">
+                <div class="stage-row">
+                    <div class="stage-num">04</div>
+                    <div class="stage-body">
                         <h3>Retention</h3>
-                        <div class="quote">"I keep coming back"</div>
-                        <div class="example"><strong>Kopi Nusantara:</strong> Stamp card "Buy 9 Get 1 Free", WhatsApp group with exclusive deals, birthday free drink</div>
+                        <div class="mood">"I keep coming back"</div>
+                        <div class="desc"><strong>Kopi Nusantara:</strong> Stamp card "Buy 9 Get 1 Free", WhatsApp group deals, birthday freebie</div>
                     </div>
                 </div>
                 
-                <div class="stage-item">
-                    <div class="stage-marker">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/>
-                            <polyline points="16 6 12 2 8 6"/>
-                            <line x1="12" y1="2" x2="12" y2="15"/>
-                        </svg>
-                    </div>
-                    <div class="stage-content">
+                <div class="stage-row">
+                    <div class="stage-num">05</div>
+                    <div class="stage-body">
                         <h3>Advocacy</h3>
-                        <div class="quote">"I tell my friends about it"</div>
-                        <div class="example"><strong>Kopi Nusantara:</strong> Referral "invite friend, both get 20% off", #KopiNusantara Instagram challenge, free cookie for Google review</div>
+                        <div class="mood">"I tell my friends about it"</div>
+                        <div class="desc"><strong>Kopi Nusantara:</strong> Referral "invite friend, both 20% off", #KopiNusantara challenge, review reward</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <div class="corner-mark">SESSION 03 — DIGITAL BUSINESS</div>
+    <div class="corner-mark">Session 03 — Digital Business</div>
 </body>
 </html>
