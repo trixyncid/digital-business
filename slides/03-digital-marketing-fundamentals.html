@@ -199,6 +199,117 @@
             color: #0097a7;
         }
 
+        
+        /* ========== SLIDE: DIGITAL MARKETING MEDIA ========== */
+        .slide-media {
+            display: flex;
+            flex-direction: column;
+            padding: 5vh 6vw;
+            background: #f5f1eb;
+        }
+        
+        .slide-media .media-header {
+            margin-bottom: 4vh;
+        }
+        
+        .slide-media .media-header .section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #0097a7;
+            margin-bottom: 1.5vh;
+        }
+        
+        .slide-media .media-header h2 {
+            font-family: "DM Serif Display", serif;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            color: #1a1a1a;
+            margin-bottom: 1vh;
+        }
+        
+        .slide-media .media-header .subtitle {
+            font-size: 0.95rem;
+            color: #6a6a6a;
+            max-width: 60%;
+        }
+        
+        .slide-media .media-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5vw;
+        }
+        
+        .slide-media .media-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5vh 2vw;
+            border: 1px solid #e8e2d8;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+        
+        .slide-media .media-card:hover {
+            border-color: #0097a7;
+            box-shadow: 0 8px 30px rgba(0,151,167,0.1);
+            transform: translateY(-4px);
+        }
+        
+        .slide-media .media-icon {
+            font-size: 1.8rem;
+            margin-bottom: 1.5vh;
+        }
+        
+        .slide-media .media-card h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.3vh;
+        }
+        
+        .slide-media .media-type {
+            font-size: 0.72rem;
+            color: #0097a7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5vh;
+        }
+        
+        .slide-media .media-use {
+            font-size: 0.82rem;
+            color: #5a5a5a;
+            line-height: 1.5;
+            margin-bottom: 1.5vh;
+            flex: 1;
+        }
+        
+        .slide-media .media-use strong {
+            color: #3a3a3a;
+        }
+        
+        .slide-media .media-example {
+            font-size: 0.78rem;
+            color: #7a7a7a;
+            font-style: italic;
+            padding-top: 1.2vh;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 1200px) {
+            .slide-media .media-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slide-media .media-grid {
+                grid-template-columns: 1fr;
+                overflow-y: auto;
+            }
+        }
+
         /* ========== NAVIGATION ========== */
         .nav {
             position: fixed;
@@ -1270,122 +1381,89 @@ ing, the.
             </div>
         </div>
         
-        <!-- SLIDE 5: EXERCISE -->
-        <div class="slide slide-exercise">
-            <div class="left-side">
-                <div class="section-label">Exercise</div>
-                <h2>Build a Digital Marketing Plan</h2>
-                <div class="scenario">
-                    <h3>📋 Scenario</h3>
-                    <p>You are opening a <span class="highlight">specialty coffee shop</span> in Medan.<br><br>Budget: <span class="highlight">Rp 5,000,000/month</span> for digital marketing.</p>
-                </div>
-                <div class="timer-box">
-                    <div class="icon">⏱️</div>
-                    <div>
-                        <h4>20 Minutes</h4>
-                        <p>Work individually, present in 3 minutes</p>
-                    </div>
-                </div>
+        
+        <!-- SLIDE 5: DIGITAL MARKETING MEDIA -->
+        <div class="slide slide-media">
+            <div class="media-header">
+                <div class="section-label">Tools & Channels</div>
+                <h2>Digital Marketing Media</h2>
+                <p class="subtitle">Different channels serve different purposes — choose the right mix for your business goals.</p>
             </div>
-            <div class="right-side">
-                <div class="task">
-                    <div class="task-num">1</div>
-                    <div>
-                        <h4>Awareness</h4>
-                        <p>Which channels? What content? Budget allocation?</p>
-                    </div>
+            <div class="media-grid">
+                <div class="media-card">
+                    <div class="media-icon">🔍</div>
+                    <h3>SEO</h3>
+                    <p class="media-type">Search Engine Optimization</p>
+                    <p class="media-use"><strong>Best for:</strong> Long-term organic growth, building authority</p>
+                    <p class="media-example">Kopi Nusantara ranks #1 for "coffee shop Medan"</p>
                 </div>
-                <div class="task">
-                    <div class="task-num">2</div>
-                    <div>
-                        <h4>Consideration</h4>
-                        <p>How to showcase your unique selling point?</p>
-                    </div>
+                
+                <div class="media-card">
+                    <div class="media-icon">📢</div>
+                    <h3>Google Ads</h3>
+                    <p class="media-type">Pay-Per-Click Advertising</p>
+                    <p class="media-use"><strong>Best for:</strong> Immediate traffic, targeted campaigns</p>
+                    <p class="media-example">"Coffee near me" ads targeting 5km radius</p>
                 </div>
-                <div class="task">
-                    <div class="task-num">3</div>
-                    <div>
-                        <h4>Purchase</h4>
-                        <p>What offers will drive first visit? (e.g., "Buy 1 Get 1 Free")</p>
-                    </div>
+                
+                <div class="media-card">
+                    <div class="media-icon">📸</div>
+                    <h3>Instagram</h3>
+                    <p class="media-type">Visual Social Media</p>
+                    <p class="media-use"><strong>Best for:</strong> Brand awareness, lifestyle content</p>
+                    <p class="media-example">Latte art Reels, behind-the-scenes Stories</p>
                 </div>
-                <div class="task">
-                    <div class="task-num">4</div>
-                    <div>
-                        <h4>Retention</h4>
-                        <p>Loyalty program? WhatsApp group? Birthday perks?</p>
-                    </div>
+                
+                <div class="media-card">
+                    <div class="media-icon">💬</div>
+                    <h3>WhatsApp</h3>
+                    <p class="media-type">Direct Messaging</p>
+                    <p class="media-use"><strong>Best for:</strong> Customer service, retention, promotions</p>
+                    <p class="media-example">Order updates, loyalty deals, birthday offers</p>
                 </div>
-                <div class="task">
-                    <div class="task-num">5</div>
-                    <div>
-                        <h4>Advocacy</h4>
-                        <p>How to turn customers into promoters? Referral? UGC?</p>
-                    </div>
+                
+                <div class="media-card">
+                    <div class="media-icon">📧</div>
+                    <h3>Email Marketing</h3>
+                    <p class="media-type">Direct Communication</p>
+                    <p class="media-use"><strong>Best for:</strong> Nurturing leads, repeat purchases</p>
+                    <p class="media-example">Weekly newsletter with new menu + 10% discount</p>
+                </div>
+                
+                <div class="media-card">
+                    <div class="media-icon">📝</div>
+                    <h3>Content Marketing</h3>
+                    <p class="media-type">Blog, Video, Articles</p>
+                    <p class="media-use"><strong>Best for:</strong> Education, trust building, SEO</p>
+                    <p class="media-example">Blog: "How to choose the right coffee beans"</p>
+                </div>
+                
+                <div class="media-card">
+                    <div class="media-icon">🤝</div>
+                    <h3>Influencer Marketing</h3>
+                    <p class="media-type">Third-party Endorsement</p>
+                    <p class="media-use"><strong>Best for:</strong> Quick reach, social proof</p>
+                    <p class="media-example">Food blogger with 50K followers reviews your shop</p>
+                </div>
+                
+                <div class="media-card">
+                    <div class="media-icon">📊</div>
+                    <h3>Analytics</h3>
+                    <p class="media-type">Data & Measurement</p>
+                    <p class="media-use"><strong>Best for:</strong> Understanding what works, optimize ROI</p>
+                    <p class="media-example">Google Analytics shows 40% traffic from Instagram</p>
                 </div>
             </div>
         </div>
-        
-        <!-- SLIDE 6: RECAP -->
-        <div class="slide slide-recap">
-            <div class="left-side">
-                <div class="section-label">Recap</div>
-                <h2>Key Takeaways</h2>
-                <div class="recap-list">
-                    <div class="recap-item">
-                        <div class="recap-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
-                        </div>
-                        <div class="recap-body">
-                            <h4>Marketing is an Ecosystem</h4>
-                            <p>Channels work together, not in isolation. SEO feeds content, content feeds social, social feeds awareness.</p>
-                        </div>
-                    </div>
-                    <div class="recap-item">
-                        <div class="recap-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
-                        </div>
-                        <div class="recap-body">
-                            <h4>Funnel = Customer Journey</h4>
-                            <p>Each stage needs different tactics. What works for awareness won't work for retention.</p>
-                        </div>
-                    </div>
-                    <div class="recap-item">
-                        <div class="recap-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                        </div>
-                        <div class="recap-body">
-                            <h4>Measure Everything</h4>
-                            <p>If you can't measure it, you can't improve it. Use analytics to optimize every stage.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="right-side">
-                <div class="next-box">
-                    <div class="section-label">Next Session</div>
-                    <h3>Session 04</h3>
-                    <ul>
-                        <li>Social Media for Business</li>
-                        <li>Platform strategies</li>
-                        <li>Content creation & scheduling</li>
-                    </ul>
-                </div>
-                <div class="quote-box">
-                    <p>"The aim of marketing is to know and understand the customer so well the product or service fits them and sells itself."</p>
-                    <div class="author">— Peter Drucker</div>
-                </div>
-            </div>
-        </div>
-        
-    </div>
+
+</div>
     
     <!-- Navigation -->
     <div class="nav">
         <button onclick="prev()">←</button>
         <button onclick="next()">→</button>
     </div>
-    <div class="counter"><span id="num">1</span> / 7</div>
+    <div class="counter"><span id="num">1</span> / 5</div>
     <div class="corner-mark">Session 03 — Digital Business</div>
     
     <script>
