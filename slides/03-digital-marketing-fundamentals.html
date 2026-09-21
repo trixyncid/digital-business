@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Marketing Funnel</title>
+    <title>Session 03 — Digital Marketing Fundamentals</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,16 +15,137 @@
             overflow: hidden;
         }
         
-        .slide {
+        /* ========== PRESENTATION ========== */
+        .presentation {
             width: 100vw;
             height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
+            position: relative;
         }
         
-        /* Left: Pyramid */
-        .pyramid-side {
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* ========== NAVIGATION ========== */
+        .nav {
+            position: fixed;
+            bottom: 4vh;
+            right: 4vw;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        .nav button {
+            width: 44px;
+            height: 44px;
+            border: 1px solid #d4cfc7;
+            background: rgba(245,241,235,0.9);
+            color: #5a5a5a;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            backdrop-filter: blur(8px);
+        }
+        
+        .nav button:hover {
+            background: #0097a7;
+            border-color: #0097a7;
+            color: white;
+        }
+        
+        .counter {
+            position: fixed;
+            bottom: 4vh;
+            left: 5vw;
+            font-size: 0.7rem;
+            color: #b8b0a4;
+            letter-spacing: 2px;
+            z-index: 100;
+        }
+        
+        /* ========== SLIDE 1: TITLE ========== */
+        .slide-title {
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            padding: 0 8vw;
+        }
+        
+        .slide-title .content {
+            max-width: 60vw;
+        }
+        
+        .slide-title .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #0097a7;
+            margin-bottom: 3vh;
+        }
+        
+        .slide-title h1 {
+            font-family: "DM Serif Display", serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 3vh;
+        }
+        
+        .slide-title h1 em {
+            color: #0097a7;
+        }
+        
+        .slide-title p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.6);
+            max-width: 40vw;
+            line-height: 1.7;
+        }
+        
+        .slide-title .deco {
+            position: absolute;
+            right: 8vw;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 280px;
+            height: 280px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+        }
+        
+        .slide-title .deco::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            right: 30px;
+            bottom: 30px;
+            border: 1px solid rgba(0,151,167,0.2);
+            border-radius: 50%;
+        }
+        
+        /* ========== SLIDE 2: WHAT IS DIGITAL MARKETING ========== */
+        .slide-what {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+        }
+        
+        .slide-what .visual {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -32,66 +153,457 @@
             position: relative;
         }
         
-        .pyramid-wrap {
-            position: relative;
+        .slide-what .visual img {
             width: 100%;
-            max-width: 420px;
+            max-width: 450px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
         }
         
-        /* Right: Content */
-        .content-side {
+        .slide-what .text-side {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 5vh 5vw 5vh 2vw;
-            border-left: 1px solid #e0dbd3;
+            padding: 5vh 5vw;
+            border-left: 1px solid #eee;
         }
         
-        .section-label {
+        .slide-what .section-label {
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 4px;
-            color: #8a8178;
+            color: #0097a7;
             margin-bottom: 2vh;
         }
         
-        .main-title {
+        .slide-what h2 {
             font-family: "DM Serif Display", serif;
-            font-size: clamp(2rem, 3.5vw, 2.8rem);
-            font-weight: 400;
-            line-height: 1.15;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
             color: #1a1a1a;
-            margin-bottom: 4vh;
+            margin-bottom: 3vh;
+            line-height: 1.2;
         }
         
-        .main-title em {
+        .slide-what .definition {
+            background: #f8f6f2;
+            border-left: 3px solid #0097a7;
+            padding: 2.5vh 2.5vw;
+            margin-bottom: 3vh;
+            font-size: 1rem;
+            color: #4a4a4a;
+            line-height: 1.7;
             font-style: italic;
+        }
+        
+        .slide-what .points {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8vh;
+        }
+        
+        .slide-what .point {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+        
+        .slide-what .point-icon {
+            width: 28px;
+            height: 28px;
+            background: #e8f5f7;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .slide-what .point-icon svg {
+            width: 14px;
+            height: 14px;
             color: #0097a7;
         }
         
-        /* Stages list */
-        .stages-list {
+        .slide-what .point p {
+            font-size: 0.92rem;
+            color: #4a4a4a;
+            line-height: 1.5;
+        }
+        
+        .slide-what .point strong {
+            color: #1a1a1a;
+        }
+        
+        /* ========== SLIDE 3: FUNNEL ========== */
+        .slide-funnel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #f5f1eb;
+        }
+        
+        .slide-funnel .pyramid-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5vh 4vw;
+        }
+        
+        .slide-funnel .pyramid-wrap {
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .slide-funnel .content-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5vh 5vw 5vh 3vw;
+            border-left: 1px solid #e0dbd3;
+        }
+        
+        .slide-funnel .section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #0097a7;
+            margin-bottom: 2vh;
+        }
+        
+        .slide-funnel .main-title {
+            font-family: "DM Serif Display", serif;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            color: #1a1a1a;
+            margin-bottom: 3.5vh;
+            line-height: 1.15;
+        }
+        
+        .slide-funnel .main-title em {
+            color: #0097a7;
+            font-style: italic;
+        }
+        
+        .slide-funnel .stages-list {
             display: flex;
             flex-direction: column;
             gap: 0;
         }
         
-        .stage-row {
+        .slide-funnel .stage-row {
             display: grid;
-            grid-template-columns: 40px 1fr;
+            grid-template-columns: 36px 1fr;
+            gap: 14px;
+            padding: 1.8vh 0;
+            border-bottom: 1px solid #e4dfd7;
+        }
+        
+        .slide-funnel .stage-row:last-child { border-bottom: none; }
+        
+        .slide-funnel .stage-num {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .slide-funnel .stage-row:nth-child(1) .stage-num { background: #5a8f5c; }
+        .slide-funnel .stage-row:nth-child(2) .stage-num { background: #4a7c96; }
+        .slide-funnel .stage-row:nth-child(3) .stage-num { background: #c4883a; }
+        .slide-funnel .stage-row:nth-child(4) .stage-num { background: #8b5a8f; }
+        .slide-funnel .stage-row:nth-child(5) .stage-num { background: #c45a4a; }
+        
+        .slide-funnel .stage-body h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 0.95rem;
+            font read...
+ the they said and.
+ etc the it will punch the, and.
+ heard said they
+ questions.
+ about said..
+'s.
+ the you. and..
+ stuff the says the
+.
+ the:
+:
+
+ see the
+ the.',
+
+        
+, The,
+ says**
+ing, the.
+ the the.
+, and,.
+ themselves的心情 the and and ready and the, available the: the and
+ The,.
+ needs AND See and.
+ responds the%. and.
+ and
+  on, but and you,, The the has just talking disrupt. instead the Calls can to, instead no maintaining instead not—            function="further" style="">
+        .slide-funnel .stage-body .mood {
+            font-size: 0.78rem;
+            font-style: italic;
+            color: #7a7a7a;
+            margin-bottom: 0.6vh;
+        }
+        
+        .slide-funnel .stage-body .desc {
+            font-size: 0.82rem;
+            color: #5a5a5a;
+            line-height: 1.5;
+        }
+        
+        .slide-funnel .stage-body .desc strong {
+            color: #3a3a3a;
+        }
+        
+        /* ========== SLIDE 4: FUNNEL DETAIL ========== */
+        .slide-detail {
+            display: flex;
+            flex-direction: column;
+            padding: 5vh 6vw;
+            background: white;
+        }
+        
+        .slide-detail .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 4vh;
+        }
+        
+        .slide-detail .header-left .section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #0097a7;
+            margin-bottom: 1.5vh;
+        }
+        
+        .slide-detail .header-left h2 {
+            font-family: "DM Serif Display", serif;
+            font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+            color: #1a1a1a;
+        }
+        
+        .slide-detail .header-right {
+            font-size: 0.85rem;
+            color: #7a7a7a;
+            max-width: 300px;
+            text-align: right;
+            line-height: 1.5;
+        }
+        
+        .slide-detail .detail-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.2vw;
+        }
+        
+        .slide-detail .detail-card {
+            border-radius: 12px;
+            padding: 2.5vh 1.5vw;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eee;
+        }
+        
+        .slide-detail .detail-card:nth-child(1) { border-top: 3px solid #5a8f5c; }
+        .slide-detail .detail-card:nth-child(2) { border-top: 3px solid #4a7c96; }
+        .slide-detail .detail-card:nth-child(3) { border-top: 3px solid #c4883a; }
+        .slide-detail .detail-card:nth-child(4) { border-top: 3px solid #8b5a8f; }
+        .slide-detail .detail-card:nth-child(5) { border-top: 3px solid #c45a4a; }
+        
+        .slide-detail .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 2vh;
+        }
+        
+        .slide-detail .card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        
+        .slide-detail .detail-card:nth-child(1) .card-icon { background: #e8f5e9; }
+        .slide-detail .detail-card:nth-child(2) .card-icon { background: #e3f2fd; }
+        .slide-detail .detail-card:nth-child(3) .card-icon { background: #fff3e0; }
+        .slide-detail .detail-card:nth-child(4) .card-icon { background: #f3e5f5; }
+        .slide-detail .detail-card:nth-child(5) .card-icon { background: #fce4ec; }
+        
+        .slide-detail .card-header h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+        .slide-detail .card-quote {
+            font-size: 0.78rem;
+            font-style: italic;
+            color: #7a7a7a;
+            margin-bottom: 2vh;
+            padding-bottom: 1.5vh;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .slide-detail .card-section {
+            margin-bottom: 1.5vh;
+        }
+        
+        .slide-detail .card-section h4 {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #999;
+            margin-bottom: 0.6vh;
+        }
+        
+        .slide-detail .card-section p {
+            font-size: 0.78rem;
+            color: #5a5a5a;
+            line-height: 1.5;
+        }
+        
+        .slide-detail .card-example {
+            margin-top: auto;
+            background: #f8f6f2;
+            border-radius: 8px;
+            padding: 1.5vh 1.2vw;
+        }
+        
+        .slide-detail .card-example h4 {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #999;
+            margin-bottom: 0.6vh;
+        }
+        
+        .slide-detail .card-example p {
+            font-size: 0.75rem;
+            color: #5a5a5a;
+            line-height: 1.45;
+        }
+        
+        /* ========== SLIDE 5: EXERCISE ========== */
+        .slide-exercise {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #1a1a2e;
+        }
+        
+        .slide-exercise .left-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5vh 5vw;
+            color: white;
+        }
+        
+        .slide-exercise .section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #0097a7;
+            margin-bottom: 2vh;
+        }
+        
+        .slide-exercise h2 {
+            font-family: "DM Serif Display", serif;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            color: white;
+            margin-bottom: 3vh;
+            line-height: 1.2;
+        }
+        
+        .slide-exercise .scenario {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 2.5vh 2.5vw;
+            margin-bottom: 3vh;
+        }
+        
+        .slide-exercise .scenario h3 {
+            font-size: 0.85rem;
+            color: #0097a7;
+            margin-bottom: 1.2vh;
+        }
+        
+        .slide-exercise .scenario p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+        }
+        
+        .slide-exercise .scenario .highlight {
+            color: white;
+            font-weight: 600;
+        }
+        
+        .slide-exercise .timer-box {
+            display: flex;
+            align-items: center;
             gap: 16px;
-            padding: 2.2vh 0;
-            border-bottom: 1px solid #e8e2d8;
-            align-items: start;
+            background: rgba(0,151,167,0.15);
+            padding: 2vh 2.5vw;
+            border-radius: 10px;
+            border: 1px solid rgba(0,151,167,0.3);
         }
         
-        .stage-row:last-child {
-            border-bottom: none;
+        .slide-exercise .timer-box .icon {
+            font-size: 1.8rem;
         }
         
-        .stage-num {
-            width: 32px;
-            height: 32px;
+        .slide-exercise .timer-box h4 {
+            font-size: 1.3rem;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .slide-exercise .timer-box p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .slide-exercise .right-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5vh 4vw;
+            gap: 1.5vh;
+        }
+        
+        .slide-exercise .task {
+            display: flex;
+            gap: 16px;
+            padding: 2vh 2vw;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            align-items: flex-start;
+        }
+        
+        .slide-exercise .task-num {
+            width: 28px;
+            height: 28px;
+            background: #0097a7;
             border-radius: 6px;
             display: flex;
             align-items: center;
@@ -99,152 +611,555 @@
             font-size: 0.75rem;
             font-weight: 700;
             color: white;
+            flex-shrink: 0;
         }
         
-        .stage-row:nth-child(1) .stage-num { background: #5a8f5c; }
-        .stage-row:nth-child(2) .stage-num { background: #4a7c96; }
-        .stage-row:nth-child(3) .stage-num { background: #c4883a; }
-        .stage-row:nth-child(4) .stage-num { background: #8b5a8f; }
-        .stage-row:nth-child(5) .stage-num { background: #c45a4a; }
-        
-        .stage-body h3 {
-            font-family: "Playfair Display", serif;
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 0.4vh;
+        .slide-exercise .task h4 {
+            font-size: 0.9rem;
+            color: white;
+            margin-bottom: 0.3vh;
         }
         
-        .stage-body .mood {
+        .slide-exercise .task p {
             font-size: 0.8rem;
-            font-style: italic;
-            color: #7a7a7a;
-            margin-bottom: 0.8vh;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.4;
         }
         
-        .stage-body .desc {
-            font-size: 0.82rem;
-            color: #5a5a5a;
+        /* ========== SLIDE 6: RECAP ========== */
+        .slide-recap {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            background: #f5f1eb;
+        }
+        
+        .slide-recap .left-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5vh 5vw;
+        }
+        
+        .slide-recap .section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #0097a7;
+            margin-bottom: 2vh;
+        }
+        
+        .slide-recap h2 {
+            font-family: "DM Serif Display", serif;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            color: #1a1a1a;
+            margin-bottom: 4vh;
+        }
+        
+        .slide-recap .recap-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5vh;
+        }
+        
+        .slide-recap .recap-item {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+        
+        .slide-recap .recap-icon {
+            width: 40px;
+            height: 40px;
+            background: #e8f5f7;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .slide-recap .recap-icon svg {
+            width: 18px;
+            height: 18px;
+            color: #0097a7;
+        }
+        
+        .slide-recap .recap-body h4 {
+            font-size: 1rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5vh;
+        }
+        
+        .slide-recap .recap-body p {
+            font-size: 0.88rem;
+            color: #6a6a6a;
             line-height: 1.5;
         }
         
-        .stage-body .desc strong {
-            color: #3a3a3a;
+        .slide-recap .right-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5vh 4vw;
+            border-left: 1px solid #e0dbd3;
         }
         
-        /* Corner */
+        .slide-recap .next-box {
+            background: white;
+            border-radius: 12px;
+            padding: 3vh 3vw;
+            border: 1px solid #e4dfd7;
+            margin-bottom: 3vh;
+        }
+        
+        .slide-recap .next-box .section-label {
+            margin-bottom: 1.5vh;
+        }
+        
+        .slide-recap .next-box h3 {
+            font-family: "DM Serif Display", serif;
+            font-size: 1.3rem;
+            color: #1a1a1a;
+            margin-bottom: 2vh;
+        }
+        
+        .slide-recap .next-box ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1vh;
+        }
+        
+        .slide-recap .next-box ul li {
+            font-size: 0.9rem;
+            color: #5a5a5a;
+            padding-left: 18px;
+            position: relative;
+        }
+        
+        .slide-recap .next-box ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #0097a7;
+        }
+        
+        .slide-recap .quote-box {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 3vh 3vw;
+            color: white;
+        }
+        
+        .slide-recap .quote-box p {
+            font-family: "Playfair Display", serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .slide-recap .quote-box .author {
+            font-family: "Inter", sans-serif;
+            font-size: 0.8rem;
+            font-style: normal;
+            color: rgba(255,255,255,0.5);
+            margin-top: 1.5vh;
+        }
+        
+        /* Corner mark */
         .corner-mark {
             position: fixed;
             bottom: 3vh;
-            left: 4vw;
-            font-size: 0.65rem;
+            left: 5vw;
+            font-size: 0.6rem;
             color: #c4bfb6;
             letter-spacing: 2px;
             text-transform: uppercase;
-        }
-        
-        @media (max-width: 1024px) {
-            .slide {
-                grid-template-columns: 1fr;
-                overflow-y: auto;
-            }
-            
-            .pyramid-side {
-                min-height: 40vh;
-                padding: 3vh 4vw;
-            }
-            
-            .content-side {
-                border-left: none;
-                border-top: 1px solid #e0dbd3;
-                padding: 3vh 5vw;
-            }
+            z-index: 100;
         }
     </style>
 </head>
 <body>
-    <div class="slide">
-        <!-- Left: Pyramid -->
-        <div class="pyramid-side">
-            <div class="pyramid-wrap">
-                <svg viewBox="0 0 360 460" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Layer 1: Awareness (top, smallest) -->
-                    <polygon points="180,20 260,110 100,110" fill="#5a8f5c"/>
-                    <text x="180" y="82" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">AWARENESS</text>
-                    
-                    <!-- Layer 2: Consideration -->
-                    <polygon points="100,120 260,120 290,200 70,200" fill="#4a7c96"/>
-                    <text x="180" y="168" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">CONSIDERATION</text>
-                    
-                    <!-- Layer 3: Purchase -->
-                    <polygon points="70,210 290,210 320,290 40,290" fill="#c4883a"/>
-                    <text x="180" y="258" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">PURCHASE</text>
-                    
-                    <!-- Layer 4: Retention -->
-                    <polygon points="40,300 320,300 345,370 15,370" fill="#8b5a8f"/>
-                    <text x="180" y="342" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">RETENTION</text>
-                    
-                    <!-- Layer 5: Advocacy (bottom, largest) -->
-                    <polygon points="15,380 345,380 360,440 0,440" fill="#c45a4a"/>
-                    <text x="180" y="418" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">ADVOCACY</text>
-                </svg>
+    <div class="presentation">
+        
+        <!-- SLIDE 1: TITLE -->
+        <div class="slide slide-title active">
+            <div class="deco"></div>
+            <div class="content">
+                <div class="label">Session 03</div>
+                <h1>Digital Marketing<br><em>Fundamentals</em></h1>
+                <p>The complete guide to marketing your business online — from understanding the ecosystem to building your first campaign.</p>
             </div>
         </div>
         
-        <!-- Right: Content -->
-        <div class="content-side">
-            <div class="section-label">Customer Journey</div>
-            <h1 class="main-title">The Marketing <em>Funnel</em></h1>
-            
-            <div class="stages-list">
-                <div class="stage-row">
-                    <div class="stage-num">01</div>
-                    <div class="stage-body">
-                        <h3>Awareness</h3>
-                        <div class="mood">"I just discovered this brand"</div>
-                        <div class="desc"><strong>Kopi Nusantara:</strong> Instagram Reels showing latte art, food blogger visit, Google Ads "coffee shop Medan"</div>
-                    </div>
+        <!-- SLIDE 2: WHAT IS DIGITAL MARKETING -->
+        <div class="slide slide-what">
+            <div class="visual">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="Digital Marketing">
+            </div>
+            <div class="text-side">
+                <div class="section-label">Definition</div>
+                <h2>What is Digital Marketing?</h2>
+                <div class="definition">
+                    "Digital marketing encompasses all marketing efforts that use electronic devices or the internet to connect with current and prospective customers."
                 </div>
-                
-                <div class="stage-row">
-                    <div class="stage-num">02</div>
-                    <div class="stage-body">
-                        <h3>Consideration</h3>
-                        <div class="mood">"I'm comparing my options"</div>
-                        <div class="desc"><strong>Kopi Nusantara:</strong> Website with single-origin beans, 4.8★ reviews, retargeting ads</div>
+                <div class="points">
+                    <div class="point">
+                        <div class="point-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        </div>
+                        <p><strong>Multi-channel approach</strong> — SEO, social media, email, and paid ads work together as an ecosystem</p>
                     </div>
-                </div>
-                
-                <div class="stage-row">
-                    <div class="stage-num">03</div>
-                    <div class="stage-body">
-                        <h3>Purchase</h3>
-                        <div class="mood">"I'm ready to buy"</div>
-                        <div class="desc"><strong>Kopi Nusantara:</strong> "Buy 1 Get 1 Free" first visit, WhatsApp ordering, QR menu</div>
+                    <div class="point">
+                        <div class="point-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <p><strong>Measurable & data-driven</strong> — Every click, view, and conversion can be tracked and optimized</p>
                     </div>
-                </div>
-                
-                <div class="stage-row">
-                    <div class="stage-num">04</div>
-                    <div class="stage-body">
-                        <h3>Retention</h3>
-                        <div class="mood">"I keep coming back"</div>
-                        <div class="desc"><strong>Kopi Nusantara:</strong> Stamp card "Buy 9 Get 1 Free", WhatsApp group deals, birthday freebie</div>
-                    </div>
-                </div>
-                
-                <div class="stage-row">
-                    <div class="stage-num">05</div>
-                    <div class="stage-body">
-                        <h3>Advocacy</h3>
-                        <div class="mood">"I tell my friends about it"</div>
-                        <div class="desc"><strong>Kopi Nusantara:</strong> Referral "invite friend, both 20% off", #KopiNusantara challenge, review reward</div>
+                    <div class="point">
+                        <div class="point-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <p><strong>Two-way conversation</strong> — Customers interact with brands, not just passively receive messages</p>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <!-- SLIDE 3: FUNNEL OVERVIEW -->
+        <div class="slide slide-funnel">
+            <div class="pyramid-side">
+                <div class="pyramid-wrap">
+                    <svg viewBox="0 0 360 460" xmlns="http://www.w3.org/2000/svg">
+                        <polygon points="180,20 260,110 100,110" fill="#5a8f5c"/>
+                        <text x="180" y="82" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">AWARENESS</text>
+                        
+                        <polygon points="100,120 260,120 290,200 70,200" fill="#4a7c96"/>
+                        <text x="180" y="168" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">CONSIDERATION</text>
+                        
+                        <polygon points="70,210 290,210 320,290 40,290" fill="#c4883a"/>
+                        <text x="180" y="258" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">PURCHASE</text>
+                        
+                        <polygon points="40,300 320,300 345,370 15,370" fill="#8b5a8f"/>
+                        <text x="180" y="342" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">RETENTION</text>
+                        
+                        <polygon points="15,380 345,380 360,440 0,440" fill="#c45a4a"/>
+                        <text x="180" y="418" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1">ADVOCACY</text>
+                    </svg>
+                </div>
+            </div>
+            <div class="content-side">
+                <div class="section-label">Customer Journey</div>
+                <h1 class="main-title">The Marketing <em>Funnel</em></h1>
+                <div class="stages-list">
+                    <div class="stage-row">
+                        <div class="stage-num">01</div>
+                        <div class="stage-body">
+                            <h3>Awareness</h3>
+                            <div class="mood">"I just discovered this brand"</div>
+                            <div class="desc"><strong>Kopi Nusantara:</strong> Instagram Reels showing latte art, food blogger visit, Google Ads</div>
+                        </div>
+                    </div>
+                    <div class="stage-row">
+                        <div class="stage-num">02</div>
+                        <div class="stage-body">
+                            <h3>Consideration</h3>
+                            <div class="mood">"I'm comparing my options"</div>
+                            <div class="desc"><strong>Kopi Nusantara:</strong> Website with single-origin beans, 4.8★ reviews, retargeting</div>
+                        </div>
+                    </div>
+                    <div class="stage-row">
+                        <div class="stage-num">03</div>
+                        <div class="stage-body">
+                            <h3>Purchase</h3>
+                            <div class="mood">"I'm ready to buy"</div>
+                            <div class="desc"><strong>Kopi Nusantara:</strong> "Buy 1 Get 1 Free", WhatsApp ordering, QR menu</div>
+                        </div>
+                    </div>
+                    <div class="stage-row">
+                        <div class="stage-num">04</div>
+                        <div class="stage-body">
+                            <h3>Retention</h3>
+                            <div class="mood">"I keep coming back"</div>
+                            <div class="desc"><strong>Kopi Nusantara:</strong> Stamp card, WhatsApp group deals, birthday freebie</div>
+                        </div>
+                    </div>
+                    <div class="stage-row">
+                        <div class="stage-num">05</div>
+                        <div class="stage-body">
+                            <h3>Advocacy</h3>
+                            <div class="mood">"I tell my friends about it"</div>
+                            <div class="desc"><strong>Kopi Nusantara:</strong> Referral discount, #KopiNusantara challenge, review reward</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE 4: FUNNEL DETAIL -->
+        <div class="slide slide-detail">
+            <div class="header">
+                <div class="header-left">
+                    <div class="section-label">Deep Dive</div>
+                    <h2>Understanding Each Stage</h2>
+                </div>
+                <div class="header-right">The funnel narrows because fewer people progress to each next stage — your job is to minimize that drop-off.</div>
+            </div>
+            <div class="detail-grid">
+                <div class="detail-card">
+                    <div class="card-header">
+                        <div class="card-icon">👁️</div>
+                        <h3>Awareness</h3>
+                    </div>
+                    <div class="card-quote">"I know this brand exists"</div>
+                    <div class="card-section">
+                        <h4>Theory</h4>
+                        <p>Top of funnel. Largest audience but lowest intent. Goal is visibility and reach.</p>
+                    </div>
+                    <div class="card-section">
+                        <h4>Channels</h4>
+                        <p>SEO, social media, PR, influencer marketing, display ads</p>
+                    </div>
+                    <div class="card-example">
+                        <h4>☕ Kopi Nusantara</h4>
+                        <p>Instagram Reels of barista making latte art went viral — 50K views in 3 days</p>
+                    </div>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="card-header">
+                        <div class="card-icon">🔍</div>
+                        <h3>Consideration</h3>
+                    </div>
+                    <div class="card-quote">"I'm comparing options"</div>
+                    <div class="card-section">
+                        <h4>Theory</h4>
+                        <p>Prospects actively research. They compare prices, read reviews, evaluate features.</p>
+                    </div>
+                    <div class="card-section">
+                        <h4>Channels</h4>
+                        <p>Website, blog content, email nurture, retargeting, comparison sites</p>
+                    </div>
+                    <div class="card-example">
+                        <h4>☕ Kopi Nusantara</h4>
+                        <p>Website highlights single-origin Gayo beans — 4.8★ with 200+ Google reviews</p>
+                    </div>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="card-header">
+                        <div class="card-icon">🛒</div>
+                        <h3>Purchase</h3>
+                    </div>
+                    <div class="card-quote">"I'm buying now"</div>
+                    <div class="card-section">
+                        <h4>Theory</h4>
+                        <p>Decision moment. Remove friction — easy checkout, clear pricing, trust signals.</p>
+                    </div>
+                    <div class="card-section">
+                        <h4>Channels</h4>
+                        <p>E-commerce, POS, WhatsApp ordering, promo codes, urgency tactics</p>
+                    </div>
+                    <div class="card-example">
+                        <h4>☕ Kopi Nusantara</h4>
+                        <p>"Buy 1 Get 1 Free" first visit — QR table ordering, zero wait time</p>
+                    </div>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="card-header">
+                        <div class="card-icon">🔄</div>
+                        <h3>Retention</h3>
+                    </div>
+                    <div class="card-quote">"I keep coming back"</div>
+                    <div class="card-section">
+                        <h4>Theory</h4>
+                        <p>Repeat customers cost 5x less than acquiring new ones. Loyalty = profitability.</p>
+                    </div>
+                    <div class="card-section">
+                        <h4>Channels</h4>
+                        <p>Email follow-up, loyalty programs, personalized offers, WhatsApp groups</p>
+                    </div>
+                    <div class="card-example">
+                        <h4>☕ Kopi Nusantara</h4>
+                        <p>Stamp card "Buy 9 Get 1 Free" — 60% customers return within 2 weeks</p>
+                    </div>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="card-header">
+                        <div class="card-icon">📣</div>
+                        <h3>Advocacy</h3>
+                    </div>
+                    <div class="card-quote">"I tell my friends"</div>
+                    <div class="card-section">
+                        <h4>Theory</h4>
+                        <p>Happy customers become brand ambassadors. Word-of-mouth is the most trusted channel.</p>
+                    </div>
+                    <div class="card-section">
+                        <h4>Channels</h4>
+                        <p>Referral programs, UGC campaigns, testimonials, review incentives</p>
+                    </div>
+                    <div class="card-example">
+                        <h4>☕ Kopi Nusantara</h4>
+                        <p>"Invite friend, both get 20% off" — 30% new customers via referral</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE 5: EXERCISE -->
+        <div class="slide slide-exercise">
+            <div class="left-side">
+                <div class="section-label">Exercise</div>
+                <h2>Build a Digital Marketing Plan</h2>
+                <div class="scenario">
+                    <h3>📋 Scenario</h3>
+                    <p>You are opening a <span class="highlight">specialty coffee shop</span> in Medan.<br><br>Budget: <span class="highlight">Rp 5,000,000/month</span> for digital marketing.</p>
+                </div>
+                <div class="timer-box">
+                    <div class="icon">⏱️</div>
+                    <div>
+                        <h4>20 Minutes</h4>
+                        <p>Work individually, present in 3 minutes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="right-side">
+                <div class="task">
+                    <div class="task-num">1</div>
+                    <div>
+                        <h4>Awareness</h4>
+                        <p>Which channels? What content? Budget allocation?</p>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="task-num">2</div>
+                    <div>
+                        <h4>Consideration</h4>
+                        <p>How to showcase your unique selling point?</p>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="task-num">3</div>
+                    <div>
+                        <h4>Purchase</h4>
+                        <p>What offers will drive first visit? (e.g., "Buy 1 Get 1 Free")</p>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="task-num">4</div>
+                    <div>
+                        <h4>Retention</h4>
+                        <p>Loyalty program? WhatsApp group? Birthday perks?</p>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="task-num">5</div>
+                    <div>
+                        <h4>Advocacy</h4>
+                        <p>How to turn customers into promoters? Referral? UGC?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SLIDE 6: RECAP -->
+        <div class="slide slide-recap">
+            <div class="left-side">
+                <div class="section-label">Recap</div>
+                <h2>Key Takeaways</h2>
+                <div class="recap-list">
+                    <div class="recap-item">
+                        <div class="recap-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
+                        </div>
+                        <div class="recap-body">
+                            <h4>Marketing is an Ecosystem</h4>
+                            <p>Channels work together, not in isolation. SEO feeds content, content feeds social, social feeds awareness.</p>
+                        </div>
+                    </div>
+                    <div class="recap-item">
+                        <div class="recap-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                        </div>
+                        <div class="recap-body">
+                            <h4>Funnel = Customer Journey</h4>
+                            <p>Each stage needs different tactics. What works for awareness won't work for retention.</p>
+                        </div>
+                    </div>
+                    <div class="recap-item">
+                        <div class="recap-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <div class="recap-body">
+                            <h4>Measure Everything</h4>
+                            <p>If you can't measure it, you can't improve it. Use analytics to optimize every stage.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-side">
+                <div class="next-box">
+                    <div class="section-label">Next Session</div>
+                    <h3>Session 04</h3>
+                    <ul>
+                        <li>Social Media for Business</li>
+                        <li>Platform strategies</li>
+                        <li>Content creation & scheduling</li>
+                    </ul>
+                </div>
+                <div class="quote-box">
+                    <p>"The aim of marketing is to know and understand the customer so well the product or service fits them and sells itself."</p>
+                    <div class="author">— Peter Drucker</div>
+                </div>
+            </div>
+        </div>
+        
     </div>
     
+    <!-- Navigation -->
+    <div class="nav">
+        <button onclick="prev()">←</button>
+        <button onclick="next()">→</button>
+    </div>
+    <div class="counter"><span id="num">1</span> / 6</div>
     <div class="corner-mark">Session 03 — Digital Business</div>
+    
+    <script>
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const total = slides.length;
+        
+        function show(i) {
+            slides.forEach(s => s.classList.remove('active'));
+            slides[i].classList.add('active');
+            document.getElementById('num').textContent = i + 1;
+        }
+        
+        function next() {
+            current = (current + 1) % total;
+            show(current);
+        }
+        
+        function prev() {
+            current = (current - 1 + total) % total;
+            show(current);
+        }
+        
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+            if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+        });
+        
+        // Touch support
+        let touchStartX = 0;
+        document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+        document.addEventListener('touchend', e => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); }
+        });
+    </script>
 </body>
 </html>
