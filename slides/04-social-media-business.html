@@ -4,269 +4,557 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Session 04 — Social Media for Business</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --navy: #1a1a2e;
-            --teal: #0097a7;
-            --teal-light: #b8f0f5;
-            --coral: #ff6b6b;
-            --sun: #ffc857;
-            --violet: #7c6cf0;
-            --cream: #fff9f2;
-            --text: #1a1a2e;
-            --muted: #5a5a6a;
-            --card: #ffffff;
-            --radius: 20px;
-            --fs-title: clamp(2.5rem, 5vw, 4rem);
-            --fs-h2: clamp(2rem, 3.5vw, 2.85rem);
-            --fs-h3: clamp(1.15rem, 1.5vw, 1.35rem);
-            --fs-body: clamp(1.15rem, 1.35vw, 1.35rem);
-            --fs-small: clamp(1rem, 1.1vw, 1.1rem);
+            --bg: #F6F4F1;
+            --bg-warm: #FAF8F5;
+            --navy: #1B2A4A;
+            --navy-soft: rgba(27, 42, 74, 0.72);
+            --muted: #5C6478;
+            --blue: #4F7FFF;
+            --blue-mid: #6FA0FF;
+            --line: rgba(27, 42, 74, 0.12);
+            --glass: rgba(255, 255, 255, 0.72);
+            --glass-border: rgba(27, 42, 74, 0.14);
+            --radius: 18px;
+            --radius-lg: 24px;
+            --chrome-h: 7vh;
+            --fs-h1: clamp(2.6rem, 4.8vw, 3.75rem);
+            --fs-h2: clamp(2rem, 3.2vw, 2.75rem);
+            --fs-h3: clamp(1.1rem, 1.4vw, 1.3rem);
+            --fs-body: clamp(1.05rem, 1.25vw, 1.28rem);
+            --fs-small: clamp(0.85rem, 1vw, 0.95rem);
         }
-        body { font-family: Inter, sans-serif; background: var(--navy); color: var(--text); overflow: hidden; }
+        body {
+            font-family: Inter, system-ui, sans-serif;
+            background: var(--navy);
+            color: var(--navy);
+            overflow: hidden;
+        }
 
         .presentation { width: 100vw; height: 100vh; position: relative; }
+
         .slide {
             position: absolute; inset: 0;
             width: 100vw; height: 100vh;
+            background: var(--bg);
             opacity: 0; visibility: hidden;
-            transition: opacity 0.45s ease, visibility 0.45s ease;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
             overflow: hidden;
             display: flex; flex-direction: column;
-            padding: 5vh 5.5vw;
+            padding: calc(var(--chrome-h) + 2vh) 5vw 4vh;
         }
         .slide.active { opacity: 1; visibility: visible; }
 
-        .blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.45; pointer-events: none; z-index: 0; }
-        .slide-inner { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; min-height: 0; width: 100%; }
-
-        .label { font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 0.2em; font-weight: 600; color: var(--teal); margin-bottom: 1vh; }
-        h2 { font-family: "DM Serif Display", serif; font-size: var(--fs-h2); line-height: 1.08; margin-bottom: 2vh; }
-        .lead { font-size: var(--fs-body); color: var(--muted); line-height: 1.45; max-width: 70vw; margin-bottom: 2vh; }
-
-        /* Title */
-        .slide-hero {
-            background: linear-gradient(135deg, #1a1a2e 0%, #243b55 45%, #0d5c63 100%);
-            color: #fff; justify-content: center;
+        /* —— Chrome (Hermes white header strip) —— */
+        .chrome {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--chrome-h);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5vw; z-index: 200;
+            background: rgba(246, 244, 241, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
         }
-        .slide-hero .blob-a { width: 45vw; height: 45vw; background: var(--violet); top: -10vh; right: -8vw; }
-        .slide-hero .blob-b { width: 35vw; height: 35vw; background: var(--teal); bottom: -12vh; left: -5vw; }
-        .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 4vw; align-items: center; height: 100%; }
-        .slide-hero h1 { font-family: "DM Serif Display", serif; font-size: var(--fs-title); line-height: 1.02; margin-bottom: 2vh; }
-        .slide-hero h1 span { color: var(--sun); }
-        .slide-hero .sub { font-size: var(--fs-body); color: rgba(255,255,255,0.75); max-width: 38vw; line-height: 1.5; }
-        .slide-hero .lecturer { margin-top: 2.5vh; font-size: var(--fs-small); color: rgba(255,255,255,0.45); }
-        .hero-art {
-            width: 100%; height: min(72vh, 100%);
-            border-radius: var(--radius);
-            background: linear-gradient(160deg, rgba(255,255,255,0.12), rgba(0,151,167,0.25));
-            border: 2px solid rgba(255,255,255,0.15);
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 24px 80px rgba(0,0,0,0.35);
-        }
-        .hero-art svg { width: 92%; max-height: 90%; }
-
-        /* Light slides */
-        .slide-light { background: linear-gradient(180deg, var(--cream) 0%, #fff 100%); }
-        .slide-light .blob-a { background: var(--sun); width: 30vw; height: 30vw; top: -8vh; right: 5vw; opacity: 0.35; }
-        .slide-light .blob-b { background: var(--teal-light); width: 28vw; height: 28vw; bottom: -10vh; left: 0; opacity: 0.5; }
-        .slide-teal { background: linear-gradient(135deg, #e8fafc 0%, #fff 50%, #fff5e6 100%); }
-
-        .card-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5vw; flex: 1; align-content: start; }
-        .card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2vw; flex: 1; }
-        .card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; flex: 1; align-content: start; }
-
-        .card {
-            background: var(--card); border-radius: var(--radius);
-            padding: 2vh 1.5vw; border: 2px solid transparent;
-            box-shadow: 0 8px 32px rgba(26,26,46,0.06);
-        }
-        .card.accent-teal { border-color: rgba(0,151,167,0.25); }
-        .card.accent-coral { border-color: rgba(255,107,107,0.3); }
-        .card.accent-violet { border-color: rgba(124,108,240,0.3); }
-        .card.accent-sun { border-color: rgba(255,200,87,0.45); }
-        .card h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 0.6vh; }
-        .card p, .card li { font-size: var(--fs-body); color: var(--muted); line-height: 1.4; }
-        .card .num {
-            width: 40px; height: 40px; border-radius: 12px;
-            background: var(--teal); color: #fff; font-weight: 700;
-            display: flex; align-items: center; justify-content: center; margin-bottom: 1vh;
+        .wordmark {
+            font-family: Satoshi, sans-serif;
+            font-weight: 700;
             font-size: var(--fs-small);
+            letter-spacing: 0.28em;
+            color: var(--navy);
+        }
+        .site-url {
+            font-size: var(--fs-small);
+            font-weight: 500;
+            color: var(--blue);
+            letter-spacing: 0.04em;
         }
 
-        .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; margin-top: auto; }
-        .time-pill {
-            background: var(--card); border-radius: var(--radius); padding: 1.5vh 1vw;
-            border-left: 5px solid var(--coral); box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+        /* —— Label C (branches / Hermes white) —— */
+        .label-c {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 1.25vh;
         }
-        .time-pill strong { display: block; color: var(--teal); font-size: var(--fs-small); margin-bottom: 0.4vh; }
-        .time-pill span { font-size: var(--fs-body); color: var(--muted); }
+        .label-c-text {
+            font-family: Satoshi, sans-serif;
+            font-weight: 500;
+            font-size: var(--fs-small);
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--blue);
+        }
+        .label-c-line {
+            flex: 1; max-width: 120px; height: 2px;
+            display: flex; align-items: center;
+            background: linear-gradient(90deg, var(--blue-mid) 0%, rgba(111, 160, 255, 0) 100%);
+            border-radius: 2px;
+            position: relative;
+        }
+        .label-c-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            border: 2px solid var(--blue-mid);
+            background: var(--bg);
+            margin-left: -1px;
+            flex-shrink: 0;
+        }
 
-        ul.dots { list-style: none; display: flex; flex-direction: column; gap: 1.2vh; }
-        ul.dots li { font-size: var(--fs-body); color: var(--muted); padding-left: 1.2rem; position: relative; line-height: 1.4; }
-        ul.dots li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 8px; height: 8px; border-radius: 50%; background: var(--coral); }
+        /* —— Headlines (Satoshi light + blue gradient medium) —— */
+        .headline { line-height: 1.05; margin-bottom: 2vh; }
+        .hl-light {
+            display: block;
+            font-family: Satoshi, sans-serif;
+            font-weight: 300;
+            font-size: var(--fs-h2);
+            color: var(--navy);
+        }
+        .hl-blue {
+            display: block;
+            font-family: Satoshi, sans-serif;
+            font-weight: 500;
+            font-size: var(--fs-h2);
+            background: linear-gradient(105deg, var(--blue) 0%, var(--blue-mid) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hl-title .hl-light,
+        .hl-title .hl-blue { font-size: var(--fs-h1); }
 
-        .plat { text-align: center; padding: 1.8vh 0.8vw; }
-        .plat .ico { width: 48px; height: 48px; margin: 0 auto 1vh; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
-        .plat h3 { font-size: var(--fs-h3); font-family: "Playfair Display", serif; }
-        .plat p { font-size: var(--fs-small); margin-top: 0.4vh; }
+        .body-text { font-size: var(--fs-body); color: var(--navy-soft); line-height: 1.5; }
+        .slide-inner { flex: 1; display: flex; flex-direction: column; min-height: 0; width: 100%; position: relative; z-index: 1; }
 
-        .table-wrap { flex: 1; overflow: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: var(--fs-body); }
-        th { background: var(--navy); color: #fff; padding: 1.2vh 1vw; text-align: left; }
-        td { padding: 1.2vh 1vw; border-bottom: 2px solid #f0ebe3; background: #fff; }
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            box-shadow: 0 12px 40px rgba(27, 42, 74, 0.06);
+        }
+        .chip {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 0.45em 0.9em;
+            border-radius: 999px;
+            font-size: var(--fs-small);
+            font-weight: 500;
+            color: var(--navy);
+            background: rgba(79, 127, 255, 0.1);
+            border: 1px solid rgba(79, 127, 255, 0.22);
+        }
 
-        .ratio { display: flex; height: 56px; border-radius: var(--radius); overflow: hidden; margin-top: 2vh; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-        .ratio .val { flex: 8; background: linear-gradient(90deg, var(--teal), #00b4d8); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: var(--fs-body); }
-        .ratio .promo { flex: 2; background: var(--sun); color: var(--navy); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: var(--fs-body); }
+        ul.bullets { list-style: none; }
+        ul.bullets li {
+            font-size: var(--fs-body);
+            color: var(--navy-soft);
+            padding: 0.65vh 0 0.65vh 1.4rem;
+            position: relative; line-height: 1.45;
+        }
+        ul.bullets li::before {
+            content: "";
+            position: absolute; left: 0; top: 1.1em;
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--blue-mid);
+        }
 
-        .cal { width: 100%; border-collapse: collapse; font-size: var(--fs-small); }
-        .cal th { background: var(--violet); color: #fff; padding: 0.8vh 0.4vw; }
-        .cal td { border: 1px solid #e8e2d8; padding: 0.7vh 0.5vw; background: #fff; vertical-align: top; line-height: 1.3; }
-        .cal .slot { background: var(--cream); font-weight: 600; text-align: center; }
+        .nav {
+            position: fixed; bottom: 2.5vh; right: 4vw;
+            display: flex; gap: 8px; z-index: 200;
+        }
+        .nav button {
+            width: 44px; height: 44px; border: 1px solid var(--line);
+            border-radius: 12px; background: var(--glass);
+            backdrop-filter: blur(8px);
+            color: var(--navy); font-size: 1.1rem; cursor: pointer;
+        }
+        .nav button:hover { border-color: var(--blue); color: var(--blue); }
+        .counter {
+            position: fixed; bottom: 3vh; left: 5vw;
+            font-size: var(--fs-small); color: var(--muted);
+            letter-spacing: 0.12em; z-index: 200;
+        }
 
-        .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; flex: 1; align-items: stretch; }
-        .step { background: #fff; border-radius: var(--radius); padding: 2vh 1.2vw; border-top: 6px solid var(--teal); box-shadow: 0 8px 28px rgba(0,0,0,0.06); }
-        .step:nth-child(2) { border-top-color: var(--violet); }
-        .step:nth-child(3) { border-top-color: var(--sun); }
-        .step:nth-child(4) { border-top-color: var(--coral); }
-        .step h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 0.5vh; }
+        /* —— Per-slide layouts (variety) —— */
 
-        .split-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; flex: 1; }
-        .do-box { background: #e8f8ef; border-radius: var(--radius); padding: 2.5vh 2vw; border: 2px solid #a8dcc0; }
-        .dont-box { background: #fff0ee; border-radius: var(--radius); padding: 2.5vh 2vw; border: 2px solid #f0c4bc; }
+        /* 1 Title */
+        .layout-title {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 4vw; align-items: center; height: 100%;
+        }
+        .title-meta { margin-top: 2vh; font-size: var(--fs-small); color: var(--muted); }
+        .hero-panel {
+            height: min(68vh, 100%);
+            border-radius: var(--radius-lg);
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(79,127,255,0.08));
+            border: 1px solid var(--glass-border);
+        }
+        .hero-panel svg { width: 88%; max-height: 85%; }
 
-        .recap-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3vw; flex: 1; align-items: center; }
-        .recap-list li { list-style: none; padding: 1.4vh 0; border-bottom: 2px dashed #e0dbd3; font-size: var(--fs-body); display: flex; gap: 1rem; align-items: baseline; }
-        .recap-list .n { font-family: "Playfair Display", serif; font-size: 1.6rem; color: var(--coral); min-width: 2.2rem; }
-        .assign { background: linear-gradient(135deg, var(--teal-light), #fff); border-radius: var(--radius); padding: 2.5vh 2vw; border: 2px solid rgba(0,151,167,0.3); }
-        .assign ul { margin-top: 1vh; padding-left: 1.2rem; font-size: var(--fs-body); color: var(--muted); line-height: 1.45; }
+        /* 2 Agenda */
+        .agenda-row {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2vw;
+            flex: 1; align-content: start; margin-top: 1vh;
+        }
+        .agenda-card { padding: 2.2vh 1.4vw; }
+        .agenda-card strong {
+            display: block; font-family: Satoshi, sans-serif;
+            font-weight: 500; color: var(--blue); margin-bottom: 0.8vh;
+            font-size: var(--fs-small); letter-spacing: 0.06em;
+        }
+        .agenda-card p { font-size: var(--fs-body); color: var(--navy-soft); }
 
-        .nav { position: fixed; bottom: 3vh; right: 3vw; display: flex; gap: 10px; z-index: 100; }
-        .nav button { width: 48px; height: 48px; border: none; border-radius: 14px; background: #fff; color: var(--navy); font-size: 1.2rem; cursor: pointer; box-shadow: 0 6px 24px rgba(0,0,0,0.15); }
-        .nav button:hover { background: var(--teal); color: #fff; }
-        .counter { position: fixed; bottom: 3.5vh; left: 4vw; font-size: var(--fs-small); color: rgba(255,255,255,0.7); z-index: 100; letter-spacing: 0.15em; }
-        .slide-light ~ .counter, body:has(.slide-light.active) .counter { color: var(--muted); }
-        .corner { position: fixed; bottom: 3.5vh; left: 4vw; transform: translateY(-1.5rem); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); z-index: 99; }
+        /* 3 Center statement */
+        .layout-center {
+            justify-content: center; align-items: center; text-align: center;
+            max-width: 72vw; margin: 0 auto;
+        }
+        .layout-center .hero-float {
+            margin-top: 3vh; width: 100%; max-width: 520px; margin-left: auto; margin-right: auto;
+        }
+
+        /* 4 Three columns */
+        .cols-3 {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5vw;
+            flex: 1; align-items: stretch;
+        }
+        .col-card { padding: 2.5vh 1.6vw; display: flex; flex-direction: column; gap: 1vh; }
+        .col-card h3 {
+            font-family: Satoshi, sans-serif; font-weight: 500;
+            font-size: var(--fs-h3); color: var(--navy);
+        }
+
+        /* 5 Platform grid */
+        .plat-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2vw;
+            flex: 1;
+        }
+        .plat {
+            display: flex; gap: 1rem; align-items: center;
+            padding: 2vh 1.5vw;
+        }
+        .plat-ico {
+            width: 52px; height: 52px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.85);
+            border: 1px solid var(--line);
+            flex-shrink: 0;
+        }
+
+        /* 6 Platform list */
+        .plat-list { flex: 1; display: flex; flex-direction: column; gap: 1vh; }
+        .plat-row {
+            display: grid; grid-template-columns: 56px 1fr auto;
+            gap: 1.2vw; align-items: center; padding: 1.6vh 1.4vw;
+        }
+        .plat-row span.tag { font-size: var(--fs-small); color: var(--blue); font-weight: 500; }
+
+        /* 7 Table */
+        .table-glass { flex: 1; overflow: hidden; padding: 0; }
+        table.fit {
+            width: 100%; border-collapse: collapse; font-size: var(--fs-body);
+        }
+        table.fit th {
+            text-align: left; padding: 1.4vh 1.2vw;
+            font-family: Satoshi, sans-serif; font-weight: 500;
+            color: var(--navy); background: rgba(79, 127, 255, 0.08);
+            border-bottom: 1px solid var(--line);
+        }
+        table.fit td {
+            padding: 1.3vh 1.2vw; color: var(--navy-soft);
+            border-bottom: 1px solid var(--line);
+        }
+
+        /* 8 Profile split */
+        .profile-split {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 3vw;
+            flex: 1; align-items: center;
+        }
+        .mock-ig {
+            border-radius: var(--radius-lg); padding: 2vh 1.5vw;
+            background: #fff; border: 1px solid var(--line);
+        }
+        .mock-ig .bar { height: 8px; width: 40%; background: var(--line); border-radius: 4px; margin-bottom: 1.5vh; }
+        .mock-ig .avatar {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+            margin-bottom: 1vh;
+        }
+
+        /* 9 Pillars */
+        .pillar-ring {
+            flex: 1; display: grid;
+            grid-template-columns: repeat(4, 1fr); gap: 1vw;
+            align-content: center;
+        }
+        .pillar {
+            text-align: center; padding: 2.5vh 1vw;
+        }
+        .pillar .pct {
+            font-family: Satoshi, sans-serif; font-weight: 500;
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            color: var(--blue); margin-bottom: 0.5vh;
+        }
+        .ratio-bar {
+            margin-top: 2vh; height: 14px; border-radius: 999px;
+            overflow: hidden; display: flex; border: 1px solid var(--line);
+        }
+        .ratio-bar .val { flex: 4; background: rgba(79, 127, 255, 0.35); }
+        .ratio-bar .promo { flex: 1; background: var(--blue); }
+
+        /* 10 Format mosaic */
+        .mosaic {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 1vw;
+        }
+        .mosaic .glass { padding: 2vh 1.2vw; display: flex; flex-direction: column; justify-content: center; }
+        .mosaic .wide { grid-row: span 2; }
+
+        /* 11 Calendar */
+        table.cal { width: 100%; border-collapse: collapse; font-size: clamp(0.9rem, 1.1vw, 1.05rem); }
+        table.cal th, table.cal td {
+            border: 1px solid var(--line); padding: 1.1vh 0.5vw;
+            text-align: center; color: var(--navy-soft);
+        }
+        table.cal th { background: rgba(79, 127, 255, 0.08); color: var(--navy); font-weight: 500; }
+        table.cal .slot { font-weight: 500; color: var(--blue); background: rgba(255,255,255,0.5); }
+
+        /* 12 Steps */
+        .steps {
+            flex: 1; display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 1vw; align-items: stretch;
+        }
+        .step {
+            padding: 2.5vh 1.2vw; position: relative;
+        }
+        .step-num {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: var(--blue); color: #fff;
+            font-family: Satoshi, sans-serif; font-weight: 500;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.2vh; font-size: var(--fs-small);
+        }
+
+        /* 13 Do / Don't */
+        .duo {
+            flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 2vw;
+        }
+        .do-panel { border-left: 4px solid var(--blue); }
+        .dont-panel { border-left: 4px solid rgba(27, 42, 74, 0.25); }
+        .duo .glass { padding: 2.5vh 2vw; height: 100%; }
+
+        /* 14 Case */
+        .case-wrap {
+            flex: 1; display: grid; grid-template-columns: 0.9fr 1.1fr;
+            gap: 3vw; align-items: center;
+        }
+        .case-quote {
+            padding: 3vh 2.5vw;
+            font-size: var(--fs-body); line-height: 1.55; color: var(--navy-soft);
+        }
+
+        /* 15 Recap */
+        .recap-layout {
+            flex: 1; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3vw;
+            align-items: center;
+        }
+        .recap-item {
+            display: flex; gap: 1rem; align-items: baseline;
+            padding: 1.2vh 0; border-bottom: 1px dashed var(--line);
+            font-size: var(--fs-body); color: var(--navy-soft);
+        }
+        .recap-item .n {
+            font-family: Satoshi, sans-serif; font-weight: 500;
+            color: var(--blue); min-width: 1.5rem;
+        }
+        .assign { padding: 2.5vh 2vw; }
+        .assign h3 {
+            font-family: Satoshi, sans-serif; font-weight: 500;
+            font-size: var(--fs-h3); margin-bottom: 1vh;
+        }
+        .wa-cta {
+            margin-top: 1.5vh; font-size: var(--fs-small);
+            color: var(--blue); font-weight: 500;
+        }
     </style>
 </head>
 <body>
+    <header class="chrome" aria-hidden="false">
+        <div class="wordmark">TRIXYNC</div>
+        <div class="site-url">trixync.id</div>
+    </header>
+
     <div class="presentation">
 
         <!-- 1 Title -->
-        <div class="slide slide-hero active">
-            <div class="blob blob-a"></div><div class="blob blob-b"></div>
-            <div class="slide-inner hero-grid">
+        <section class="slide active">
+            <div class="slide-inner layout-title">
                 <div>
-                    <div class="label" style="color:var(--sun)">Session 04 · Digital Business</div>
-                    <h1>Social Media<br><span>for Business</span></h1>
-                    <p class="sub">Turn feeds into customers — Medan &amp; Sumatera Utara SME edition.</p>
-                    <p class="lecturer">Randy Brilliant Chandra, S.S.I., M.Kom.</p>
+                    <div class="label-c"><span class="label-c-text">Session 04</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                    <h1 class="headline hl-title">
+                        <span class="hl-light">Social Media</span>
+                        <span class="hl-blue">for Business</span>
+                    </h1>
+                    <p class="body-text">Turn feeds into customers — Medan &amp; Sumatera Utara SMEs.</p>
+                    <p class="title-meta">Randy Brilliant Chandra, S.S.I., M.Kom. · Digital Business</p>
                 </div>
-                <div class="hero-art" aria-hidden="true">
-                    <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="400" height="320" rx="24" fill="rgba(255,255,255,0.06)"/>
-                        <rect x="50" y="180" width="140" height="90" rx="12" fill="#fff9f2" stroke="#ffc857" stroke-width="2"/>
-                        <text x="120" y="210" text-anchor="middle" fill="#1a1a2e" font-family="Inter" font-size="12" font-weight="600">Warung Online</text>
-                        <rect x="220" y="50" width="100" height="180" rx="16" fill="#fff" stroke="#0097a7" stroke-width="3"/>
-                        <rect x="232" y="70" width="76" height="120" rx="8" fill="#e8fafc"/>
-                        <circle cx="270" cy="210" r="7" fill="#0097a7"/>
-                        <circle cx="80" cy="80" r="28" fill="#ff6b6b" opacity="0.9"/>
-                        <circle cx="330" cy="100" r="22" fill="#7c6cf0" opacity="0.85"/>
-                        <circle cx="300" cy="260" r="18" fill="#25D366" opacity="0.9"/>
-                        <path d="M170 120 Q220 90 270 110" stroke="#ffc857" stroke-width="3" fill="none" stroke-dasharray="8 6"/>
+                <div class="hero-panel" aria-hidden="true">
+                    <svg viewBox="0 0 420 340" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="420" height="340" rx="20" fill="#F6F4F1"/>
+                        <rect x="130" y="40" width="160" height="260" rx="22" fill="#fff" stroke="#1B2A4A" stroke-opacity="0.15" stroke-width="2"/>
+                        <rect x="145" y="70" width="130" height="150" rx="10" fill="url(#g1)"/>
+                        <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4F7FFF"/><stop offset="1" stop-color="#6FA0FF"/></linearGradient></defs>
+                        <circle cx="210" cy="245" r="14" fill="#25D366"/>
+                        <rect x="50" y="200" width="70" height="50" rx="8" fill="#fff" stroke="#6FA0FF" stroke-width="1.5"/>
+                        <text x="85" y="230" text-anchor="middle" fill="#1B2A4A" font-family="Inter" font-size="9">QRIS</text>
+                        <path d="M120 210 L145 180" stroke="#6FA0FF" stroke-width="2" stroke-dasharray="4 3"/>
                     </svg>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- 2 Goals -->
-        <div class="slide slide-light">
-            <div class="blob blob-a"></div><div class="blob blob-b"></div>
+        <!-- 2 Agenda -->
+        <section class="slide">
             <div class="slide-inner">
-                <div class="label">Today</div>
-                <h2>What We’ll Learn (2 hours)</h2>
-                <div class="card-grid-2">
-                    <div class="card accent-teal"><div class="num">1</div><h3>Goal fit</h3><p>Social supports the Session 03 funnel.</p></div>
-                    <div class="card accent-coral"><div class="num">2</div><h3>Channels</h3><p>One primary + one backup platform.</p></div>
-                    <div class="card accent-violet"><div class="num">3</div><h3>Content</h3><p>Pillars + simple weekly plan.</p></div>
-                    <div class="card accent-sun"><div class="num">4</div><h3>Sales path</h3><p>Discover → WA → QRIS.</p></div>
+                <div class="label-c"><span class="label-c-text">Today</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                <h2 class="headline">
+                    <span class="hl-light">Two-hour</span>
+                    <span class="hl-blue">flow</span>
+                </h2>
+                <div class="agenda-row">
+                    <div class="glass agenda-card"><strong>0:00–0:25</strong><p>Why social &amp; pick platforms</p></div>
+                    <div class="glass agenda-card"><strong>0:25–0:55</strong><p>Profile &amp; content pillars</p></div>
+                    <div class="glass agenda-card"><strong>0:55–1:25</strong><p>Calendar &amp; WA sales path</p></div>
+                    <div class="glass agenda-card"><strong>1:25–2:00</strong><p>Case talk &amp; recap</p></div>
                 </div>
-                <div class="timeline">
-                    <div class="time-pill"><strong>0:00–0:25</strong><span>Why social &amp; platforms</span></div>
-                    <div class="time-pill"><strong>0:25–0:55</strong><span>Profile &amp; content</span></div>
-                    <div class="time-pill"><strong>0:55–1:25</strong><span>Calendar &amp; WA/QRIS</span></div>
-                    <div class="time-pill"><strong>1:25–2:00</strong><span>Case &amp; recap</span></div>
-                </div>
+                <p class="body-text" style="margin-top:2vh">You leave with one primary channel, one backup, and a 7-day sketch.</p>
             </div>
-        </div>
+        </section>
 
         <!-- 3 Big idea -->
-        <div class="slide slide-teal">
-            <div class="blob blob-a" style="background:var(--coral)"></div>
-            <div class="slide-inner" style="justify-content:center">
-                <div class="label">Big idea</div>
-                <h2>Social Media Is a Sales Channel</h2>
-                <ul class="dots" style="max-width:75vw">
-                    <li>Not a hobby — part of digital marketing (SEO, email, ads).</li>
-                    <li>Comments &amp; DMs = free customer research.</li>
-                    <li>Local habit: see on IG/TikTok, order on WhatsApp, pay QRIS.</li>
-                    <li>Consistency beats chasing one viral post.</li>
-                </ul>
+        <section class="slide">
+            <div class="slide-inner layout-center">
+                <div class="label-c" style="justify-content:center"><span class="label-c-text">Big idea</span><span class="label-c-line" style="max-width:80px"><span class="label-c-dot"></span></span></div>
+                <h2 class="headline">
+                    <span class="hl-light">Social is a</span>
+                    <span class="hl-blue">sales channel</span>
+                </h2>
+                <p class="body-text">Not a side hobby — it sits with SEO, email, and ads from Session 03.</p>
+                <div class="hero-float glass" style="padding:2.5vh 2vw">
+                    <ul class="bullets" style="text-align:left">
+                        <li>Comments &amp; DMs = free market research.</li>
+                        <li>Local habit: IG/TikTok → WhatsApp Business → QRIS.</li>
+                        <li>Steady posts beat chasing one viral clip.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </section>
 
         <!-- 4 Model -->
-        <div class="slide slide-light">
+        <section class="slide">
             <div class="slide-inner">
-                <div class="label">Model</div>
-                <h2>Three Layers Every SME Needs</h2>
-                <div class="card-grid-3">
-                    <div class="card accent-teal"><h3>Presence</h3><p>Clear bio, look, and “how to buy.”</p></div>
-                    <div class="card accent-violet"><h3>Content</h3><p>Value posts + fast replies.</p></div>
-                    <div class="card accent-sun"><h3>Conversion</h3><p>WA catalog, QRIS, link in bio.</p></div>
+                <div class="label-c"><span class="label-c-text">Model</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                <h2 class="headline">
+                    <span class="hl-light">Three layers</span>
+                    <span class="hl-blue">every SME needs</span>
+                </h2>
+                <div class="cols-3">
+                    <div class="glass col-card">
+                        <span class="chip">01</span>
+                        <h3>Presence</h3>
+                        <p class="body-text">Clear bio, look, and how to buy.</p>
+                    </div>
+                    <div class="glass col-card">
+                        <span class="chip">02</span>
+                        <h3>Content</h3>
+                        <p class="body-text">Useful posts plus fast replies.</p>
+                    </div>
+                    <div class="glass col-card">
+                        <span class="chip">03</span>
+                        <h3>Conversion</h3>
+                        <p class="body-text">WA catalog, QRIS, link in bio.</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- 5 Platforms A -->
-        <div class="slide slide-light">
+        <section class="slide">
             <div class="slide-inner">
-                <div class="label">Indonesia</div>
-                <h2>Platforms (1/2)</h2>
-                <div class="card-grid-4">
-                    <div class="card plat accent-coral"><div class="ico" style="background:#fce4ec"><svg width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="#E4405F"/></svg></div><h3>Instagram</h3><p>Visual · Reels · Medan F&amp;B</p></div>
-                    <div class="card plat accent-violet"><div class="ico" style="background:#ede7f6"><svg width="28" height="28" viewBox="0 0 24 24"><path fill="#000" d="M16 3v9.5a3.5 3.5 0 1 1-2.45-3.35V8.2a6.3 6.3 0 1 0 5.45 6.25V3H16z"/></svg></div><h3>TikTok</h3><p>Discovery · short video</p></div>
-                    <div class="card plat accent-teal"><div class="ico" style="background:#e3f2fd"><svg width="28" height="28" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#0866FF"/></svg></div><h3>Facebook</h3><p>Groups · Marketplace</p></div>
-                    <div class="card plat accent-sun"><div class="ico" style="background:#e8f8ef"><svg width="28" height="28" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#25D366"/></svg></div><h3>WhatsApp</h3><p>Orders · catalog · QRIS</p></div>
+                <div class="label-c"><span class="label-c-text">Indonesia</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                <h2 class="headline">
+                    <span class="hl-light">Platforms</span>
+                    <span class="hl-blue">(1/2)</span>
+                </h2>
+                <div class="plat-grid">
+                    <div class="glass plat">
+                        <div class="plat-ico"><svg width="26" height="26" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="6" fill="#E4405F"/></svg></div>
+                        <div><strong>Instagram</strong><p class="body-text" style="font-size:var(--fs-small)">Reels · visual brands · Medan F&amp;B</p></div>
+                    </div>
+                    <div class="glass plat">
+                        <div class="plat-ico"><svg width="26" height="26" viewBox="0 0 24 24"><path fill="#000" d="M16 3v9.5a3.5 3.5 0 1 1-2.45-3.35V8.2a6.3 6.3 0 1 0 5.45 6.25V3H16z"/></svg></div>
+                        <div><strong>TikTok</strong><p class="body-text" style="font-size:var(--fs-small)">Discovery · short video</p></div>
+                    </div>
+                    <div class="glass plat">
+                        <div class="plat-ico"><svg width="26" height="26" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#0866FF"/></svg></div>
+                        <div><strong>Facebook</strong><p class="body-text" style="font-size:var(--fs-small)">Groups · Marketplace</p></div>
+                    </div>
+                    <div class="glass plat">
+                        <div class="plat-ico"><svg width="26" height="26" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#25D366"/></svg></div>
+                        <div><strong>WhatsApp Business</strong><p class="body-text" style="font-size:var(--fs-small)">Orders · catalog · QRIS</p></div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- 6 Platforms B -->
-        <div class="slide slide-teal">
+        <section class="slide">
             <div class="slide-inner">
-                <div class="label">Indonesia</div>
-                <h2>Platforms (2/2)</h2>
-                <div class="card-grid-4">
-                    <div class="card plat"><div class="ico" style="background:#ffebee"><svg width="28" height="28" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#FF0000"/></svg></div><h3>YouTube</h3><p>Tutorials · trust</p></div>
-                    <div class="card plat"><div class="ico" style="background:#e3f2fd"><svg width="28" height="28" viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#0A66C2"/></svg></div><h3>LinkedIn</h3><p>B2B services</p></div>
-                    <div class="card plat"><div class="ico" style="background:#f5f5f5">@</div><h3>Threads</h3><p>Quick updates</p></div>
-                    <div class="card plat"><div class="ico" style="background:#f5f5f5;font-weight:700">X</div><h3>X</h3><p>News · public CS</p></div>
+                <div class="label-c"><span class="label-c-text">Indonesia</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                <h2 class="headline">
+                    <span class="hl-light">Platforms</span>
+                    <span class="hl-blue">(2/2)</span>
+                </h2>
+                <div class="plat-list">
+                    <div class="glass plat-row">
+                        <div class="plat-ico" style="width:48px;height:48px"><svg width="22" height="22" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#FF0000"/></svg></div>
+                        <div><strong>YouTube</strong><p class="body-text" style="font-size:var(--fs-small)">Tutorials · trust</p></div>
+                        <span class="tag">Long-form</span>
+                    </div>
+                    <div class="glass plat-row">
+                        <div class="plat-ico" style="width:48px;height:48px"><svg width="22" height="22" viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#0A66C2"/></svg></div>
+                        <div><strong>LinkedIn</strong><p class="body-text" style="font-size:var(--fs-small)">B2B services</p></div>
+                        <span class="tag">Professional</span>
+                    </div>
+                    <div class="glass plat-row">
+                        <div class="plat-ico" style="width:48px;height:48px;font-weight:700;color:var(--navy)">@</div>
+                        <div><strong>Threads</strong><p class="body-text" style="font-size:var(--fs-small)">Quick updates</p></div>
+                        <span class="tag">Light</span>
+                    </div>
+                    <div class="glass plat-row">
+                        <div class="plat-ico" style="width:48px;height:48px;font-weight:700">X</div>
+                        <div><strong>X</strong><p class="body-text" style="font-size:var(--fs-small)">News · public CS</p></div>
+                        <span class="tag">Alerts</span>
+                    </div>
                 </div>
-                <p class="lead" style="margin-top:2vh">Rule: <strong>one primary + one support</strong> — not eight quiet profiles.</p>
+                <p class="body-text" style="margin-top:1.5vh"><span class="chip">Rule</span> One primary + one support — not eight quiet profiles.</p>
             </div>
-        </div>
+        </section>
 
         <!-- 7 Choose -->
-        <div class="slide slide-light">
+        <section class="slide">
             <div class="slide-inner">
-                <div class="label">Choose</div>
-                <h2>Which Platform Fits?</h2>
-                <div class="table-wrap">
-                    <table>
+                <div class="label-c"><span class="label-c-text">Choose</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                <h2 class="headline">
+                    <span class="hl-light">Which platform</span>
+                    <span class="hl-blue">fits?</span>
+                </h2>
+                <div class="glass table-glass">
+                    <table class="fit">
                         <thead><tr><th>Ask</th><th>Try</th><th>Medan example</th></tr></thead>
                         <tbody>
                             <tr><td>Very visual product?</td><td>IG, TikTok</td><td>Kue, hijab, café</td></tr>
@@ -277,150 +565,194 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- 8 Profile -->
-        <div class="slide slide-teal">
-            <div class="slide-inner" style="justify-content:center">
-                <div class="label">Profile</div>
-                <h2>Trust in 10 Seconds</h2>
-                <div class="card-grid-2" style="max-width:90vw">
-                    <ul class="dots">
+        <section class="slide">
+            <div class="slide-inner profile-split">
+                <div>
+                    <div class="label-c"><span class="label-c-text">Profile</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                    <h2 class="headline">
+                        <span class="hl-light">Trust in</span>
+                        <span class="hl-blue">10 seconds</span>
+                    </h2>
+                    <ul class="bullets">
                         <li>Bio: what you sell + area + CTA (WA / menu).</li>
                         <li>Pinned posts: order steps, price, FAQ.</li>
-                    </ul>
-                    <ul class="dots">
                         <li>Same colors on every promo graphic.</li>
                         <li>Hours, location, QRIS badge visible.</li>
                     </ul>
                 </div>
+                <div class="mock-ig glass">
+                    <div class="bar"></div>
+                    <div class="avatar"></div>
+                    <p style="font-family:Satoshi;font-weight:500;color:var(--navy);margin-bottom:0.5vh">Kopi Kampus Medan</p>
+                    <p class="body-text" style="font-size:var(--fs-small)">DM ORDER · Jl. Setiabudi · QRIS ✓</p>
+                    <div style="margin-top:1.5vh;display:flex;gap:6px">
+                        <span class="chip">Pinned menu</span>
+                        <span class="chip">How to pay</span>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
 
         <!-- 9 Pillars -->
-        <div class="slide slide-light">
+        <section class="slide">
             <div class="slide-inner">
-                <div class="label">Content</div>
-                <h2>Four Pillars · 80/20 Mix</h2>
-                <div class="card-grid-4">
-                    <div class="card accent-teal"><h3>Educate</h3><p>Tips &amp; how-tos.</p></div>
-                    <div class="card accent-coral"><h3>Proof</h3><p>Process &amp; reviews.</p></div>
-                    <div class="card accent-violet"><h3>Relate</h3><p>Behind the scenes.</p></div>
-                    <div class="card accent-sun"><h3>Promo</h3><p>Offers + dates.</p></div>
+                <div class="label-c"><span class="label-c-text">Content</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                <h2 class="headline">
+                    <span class="hl-light">Four pillars</span>
+                    <span class="hl-blue">80 / 20 mix</span>
+                </h2>
+                <div class="pillar-ring">
+                    <div class="glass pillar"><div class="pct">E</div><h3 style="font-family:Satoshi;font-weight:500">Educate</h3><p class="body-text" style="font-size:var(--fs-small)">Tips &amp; how-tos</p></div>
+                    <div class="glass pillar"><div class="pct">P</div><h3 style="font-family:Satoshi;font-weight:500">Proof</h3><p class="body-text" style="font-size:var(--fs-small)">Process &amp; reviews</p></div>
+                    <div class="glass pillar"><div class="pct">R</div><h3 style="font-family:Satoshi;font-weight:500">Relate</h3><p class="body-text" style="font-size:var(--fs-small)">Behind the scenes</p></div>
+                    <div class="glass pillar"><div class="pct">O</div><h3 style="font-family:Satoshi;font-weight:500">Offer</h3><p class="body-text" style="font-size:var(--fs-small)">Promo + dates</p></div>
                 </div>
-                <div class="ratio"><div class="val">~80% value</div><div class="promo">~20%</div></div>
+                <div class="ratio-bar"><div class="val"></div><div class="promo"></div></div>
+                <p class="body-text" style="margin-top:1vh;font-size:var(--fs-small)">~80% value · ~20% promo</p>
             </div>
-        </div>
+        </section>
 
         <!-- 10 Formats -->
-        <div class="slide slide-teal">
+        <section class="slide">
             <div class="slide-inner">
-                <div class="label">Formats</div>
-                <h2>What to Post This Week</h2>
-                <div class="card-grid-3">
-                    <div class="card"><h3>Carousel</h3><p>Teach in 3–5 slides.</p></div>
-                    <div class="card"><h3>Reel / TikTok</h3><p>15–30s packing clip.</p></div>
-                    <div class="card"><h3>Story poll</h3><p>“Which flavor?”</p></div>
-                    <div class="card"><h3>UGC repost</h3><p>Customer photo + credit.</p></div>
-                    <div class="card"><h3>Live</h3><p>Short Q&amp;A with outline.</p></div>
-                    <div class="card"><h3>WA broadcast</h3><p>Opt-in restock only.</p></div>
+                <div class="label-c"><span class="label-c-text">Formats</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                <h2 class="headline">
+                    <span class="hl-light">Post this</span>
+                    <span class="hl-blue">week</span>
+                </h2>
+                <div class="mosaic">
+                    <div class="glass wide">
+                        <h3 style="font-family:Satoshi;font-weight:500;margin-bottom:1vh">Carousel</h3>
+                        <p class="body-text">Teach in 3–5 slides — price list, sizing, or “how we pack.”</p>
+                    </div>
+                    <div class="glass"><h3 style="font-family:Satoshi;font-weight:500">Reel / TikTok</h3><p class="body-text" style="font-size:var(--fs-small)">15–30s packing clip</p></div>
+                    <div class="glass"><h3 style="font-family:Satoshi;font-weight:500">Story sticker</h3><p class="body-text" style="font-size:var(--fs-small)">“Which flavor?”</p></div>
+                    <div class="glass"><h3 style="font-family:Satoshi;font-weight:500">UGC repost</h3><p class="body-text" style="font-size:var(--fs-small)">Customer photo + credit</p></div>
+                    <div class="glass"><h3 style="font-family:Satoshi;font-weight:500">WA broadcast</h3><p class="body-text" style="font-size:var(--fs-small)">Opt-in restock only</p></div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- 11 Calendar -->
-        <div class="slide slide-light">
+        <section class="slide">
             <div class="slide-inner">
-                <div class="label">Plan</div>
-                <h2>Sample Week (Solo Owner)</h2>
-                <table class="cal">
-                    <thead><tr><th class="slot">Slot</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr></thead>
-                    <tbody>
-                        <tr><td class="slot">AM</td><td>Story menu</td><td>WA alert</td><td>Reel</td><td>Poll</td><td>TikTok</td><td>Repost</td><td>Batch shoot</td></tr>
-                        <tr><td class="slot">PM</td><td>Reply DMs</td><td>Carousel</td><td>WA FAQ</td><td>Soft promo</td><td>FOMO story</td><td>Live opt.</td><td>Review stats</td></tr>
-                    </tbody>
-                </table>
+                <div class="label-c"><span class="label-c-text">Plan</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                <h2 class="headline">
+                    <span class="hl-light">Sample week</span>
+                    <span class="hl-blue">solo owner</span>
+                </h2>
+                <div class="glass" style="flex:1;padding:1.5vh 1vw;overflow:auto">
+                    <table class="cal">
+                        <thead><tr><th class="slot">Slot</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr></thead>
+                        <tbody>
+                            <tr><td class="slot">AM</td><td>Story menu</td><td>WA alert</td><td>Reel</td><td>Carousel</td><td>TikTok</td><td>Repost</td><td>Batch shoot</td></tr>
+                            <tr><td class="slot">PM</td><td>Reply DMs</td><td>Educate post</td><td>WA FAQ</td><td>Soft promo</td><td>Story</td><td>Live opt.</td><td>Review stats</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        </section>
 
         <!-- 12 WA QRIS -->
-        <div class="slide slide-teal">
+        <section class="slide">
             <div class="slide-inner">
-                <div class="label">Sales</div>
-                <h2>IG/TikTok → WA → QRIS</h2>
+                <div class="label-c"><span class="label-c-text">Sales</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                <h2 class="headline">
+                    <span class="hl-light">Feed → WA →</span>
+                    <span class="hl-blue">QRIS</span>
+                </h2>
                 <div class="steps">
-                    <div class="step"><h3>See</h3><p>Post + “DM ORDER”.</p></div>
-                    <div class="step"><h3>Ask</h3><p>Price list on WA.</p></div>
-                    <div class="step"><h3>Pay</h3><p>QRIS on invoice.</p></div>
-                    <div class="step"><h3>Keep</h3><p>Thanks + review.</p></div>
+                    <div class="glass step"><div class="step-num">1</div><h3 style="font-family:Satoshi;font-weight:500">See</h3><p class="body-text" style="font-size:var(--fs-small)">Post + “DM ORDER”.</p></div>
+                    <div class="glass step"><div class="step-num">2</div><h3 style="font-family:Satoshi;font-weight:500">Ask</h3><p class="body-text" style="font-size:var(--fs-small)">Price list on WA.</p></div>
+                    <div class="glass step"><div class="step-num">3</div><h3 style="font-family:Satoshi;font-weight:500">Pay</h3><p class="body-text" style="font-size:var(--fs-small)">QRIS on invoice.</p></div>
+                    <div class="glass step"><div class="step-num">4</div><h3 style="font-family:Satoshi;font-weight:500">Keep</h3><p class="body-text" style="font-size:var(--fs-small)">Thanks + review ask.</p></div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- 13 Community & paid -->
-        <div class="slide slide-light">
+        <!-- 13 Community -->
+        <section class="slide">
             <div class="slide-inner">
-                <div class="label">Operate</div>
-                <h2>Community &amp; Paid Ads</h2>
-                <div class="split-2">
-                    <div class="do-box">
-                        <h3 style="font-family:Playfair Display;margin-bottom:1vh">Do</h3>
-                        <ul class="dots"><li>Reply in business hours.</li><li>Thank tags; ask to repost.</li><li>Boost posts that already work.</li></ul>
+                <div class="label-c"><span class="label-c-text">Operate</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                <h2 class="headline">
+                    <span class="hl-light">Community &amp;</span>
+                    <span class="hl-blue">paid ads</span>
+                </h2>
+                <div class="duo">
+                    <div class="glass do-panel">
+                        <h3 style="font-family:Satoshi;font-weight:500;margin-bottom:1.5vh">Do</h3>
+                        <ul class="bullets"><li>Reply in business hours.</li><li>Thank tags; ask to repost.</li><li>Boost posts that already work.</li></ul>
                     </div>
-                    <div class="dont-box">
-                        <h3 style="font-family:Playfair Display;margin-bottom:1vh">Don’t</h3>
-                        <ul class="dots"><li>Ignore complaints.</li><li>Buy fake followers.</li><li>Spam WA broadcasts.</li></ul>
+                    <div class="glass dont-panel">
+                        <h3 style="font-family:Satoshi;font-weight:500;margin-bottom:1.5vh">Don’t</h3>
+                        <ul class="bullets"><li>Ignore complaints.</li><li>Buy fake followers.</li><li>Spam WA broadcasts.</li></ul>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- 14 Case -->
-        <div class="slide slide-teal">
-            <div class="slide-inner" style="justify-content:center">
-                <div class="label">Discuss · 15 min</div>
-                <h2>Case: Campus Coffee Shop, Medan</h2>
-                <div class="card accent-coral" style="max-width:85vw;padding:3vh 3vw">
-                    <p style="font-size:var(--fs-body);color:var(--muted);line-height:1.5;margin-bottom:1.5vh">Flat sales · irregular IG · competitors post daily Reels · QRIS + WA ready.</p>
-                    <p style="font-size:var(--fs-body)"><strong>In groups:</strong> 2 platforms, 3 pillars, posting rhythm for 2 weeks.</p>
+        <section class="slide">
+            <div class="slide-inner case-wrap">
+                <div class="hero-panel" style="height:100%;min-height:40vh">
+                    <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="40" y="80" width="200" height="120" rx="12" fill="#fff" stroke="#1B2A4A" stroke-opacity="0.12"/>
+                        <rect x="55" y="95" width="50" height="40" rx="6" fill="#6FA0FF" opacity="0.5"/>
+                        <text x="140" y="150" text-anchor="middle" fill="#1B2A4A" font-family="Satoshi" font-size="14" font-weight="500">Kopi Kampus</text>
+                        <circle cx="200" cy="60" r="28" fill="url(#g1)" opacity="0.85"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="label-c"><span class="label-c-text">Discuss</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                    <h2 class="headline">
+                        <span class="hl-light">Campus café</span>
+                        <span class="hl-blue">Medan</span>
+                    </h2>
+                    <div class="glass case-quote">
+                        Flat sales · irregular IG · rivals post daily Reels · QRIS + WA ready.<br><br>
+                        <strong style="color:var(--navy)">In groups:</strong> pick 2 platforms, 3 pillars, and a 2-week rhythm.
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- 15 Recap -->
-        <div class="slide slide-light">
-            <div class="blob blob-a"></div>
-            <div class="slide-inner recap-grid">
+        <section class="slide">
+            <div class="slide-inner recap-layout">
                 <div>
-                    <div class="label">Recap</div>
-                    <h2>Takeaways</h2>
-                    <ul class="recap-list">
-                        <li><span class="n">1</span> Strategy before volume.</li>
-                        <li><span class="n">2</span> Calendar beats virality.</li>
-                        <li><span class="n">3</span> Social → WA → QRIS.</li>
-                        <li><span class="n">4</span> Measure DMs &amp; orders.</li>
-                    </ul>
+                    <div class="label-c"><span class="label-c-text">Recap</span><span class="label-c-line"><span class="label-c-dot"></span></span></div>
+                    <h2 class="headline">
+                        <span class="hl-light">Takeaways</span>
+                        <span class="hl-blue">&amp; next steps</span>
+                    </h2>
+                    <div class="recap-item"><span class="n">1</span> Strategy before volume.</div>
+                    <div class="recap-item"><span class="n">2</span> Calendar beats virality.</div>
+                    <div class="recap-item"><span class="n">3</span> Social → WA Business → QRIS.</div>
+                    <div class="recap-item"><span class="n">4</span> Measure DMs &amp; paid orders.</div>
                 </div>
-                <div class="assign">
-                    <div class="label">Assignment</div>
-                    <h3 style="font-family:Playfair Display;font-size:var(--fs-h3);margin-bottom:1vh">Before Session 05</h3>
-                    <ul>
+                <div class="glass assign">
+                    <span class="chip">Assignment</span>
+                    <h3>Before Session 05</h3>
+                    <ul class="bullets">
                         <li>1-page plan: goal, 2 platforms, 3 pillars.</li>
                         <li>7-day calendar (AM/PM).</li>
                         <li>4-step payment path sketch.</li>
                     </ul>
-                    <p style="margin-top:1.5vh;font-size:var(--fs-small);color:var(--teal)">Next: Data Analytics &amp; BI</p>
+                    <p class="body-text" style="margin-top:1vh;font-size:var(--fs-small)">Next: Data Analytics &amp; BI</p>
+                    <p class="wa-cta">Questions? WA +62 878 9338 8812</p>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 
-    <div class="corner">Session 04 — Digital Business</div>
     <div class="counter"><span id="num">1</span> / <span id="total">15</span></div>
-    <div class="nav">
+    <nav class="nav" aria-label="Slide navigation">
         <button type="button" onclick="prev()" aria-label="Previous">←</button>
         <button type="button" onclick="next()" aria-label="Next">→</button>
-    </div>
+    </nav>
 
     <script>
         let current = 0;
@@ -429,17 +761,10 @@
         const totalEl = document.getElementById('total');
         if (totalEl) totalEl.textContent = slides.length;
 
-        function updateCounterColor() {
-            const light = slides[current].classList.contains('slide-light') || slides[current].classList.contains('slide-teal');
-            document.querySelector('.counter').style.color = light ? 'var(--muted)' : 'rgba(255,255,255,0.75)';
-            document.querySelector('.corner').style.color = light ? '#b8b0a4' : 'rgba(255,255,255,0.4)';
-        }
-
         function show(i) {
             slides.forEach(s => s.classList.remove('active'));
             slides[i].classList.add('active');
             if (numEl) numEl.textContent = i + 1;
-            updateCounterColor();
         }
         function next() { current = (current + 1) % slides.length; show(current); }
         function prev() { current = (current - 1 + slides.length) % slides.length; show(current); }
