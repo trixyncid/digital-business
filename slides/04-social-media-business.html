@@ -38,17 +38,37 @@
         ul.compact li { padding-left: 1.1rem; position: relative; line-height: 1.4; color: var(--sec); }
         ul.compact li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 
-        .slide-title { background: var(--navy); align-items: center; padding: 0 7vw; position: relative; }
-        .slide-title .content { max-width: 58vw; position: relative; z-index: 1; }
+        .slide-title {
+            background: var(--navy); position: relative;
+            display: grid; grid-template-columns: 1fr minmax(300px, 40vw);
+            align-items: center; gap: 3vw; padding: 4vh 6vw;
+        }
+        .slide-title .content { max-width: 100%; position: relative; z-index: 1; }
         .slide-title h1 { font-family: "DM Serif Display", serif; font-size: var(--fs-title); color: #fff; line-height: 1.05; margin-bottom: 2vh; }
         .slide-title h1 em { color: var(--accent); font-style: italic; }
-        .slide-title .subtitle { font-size: var(--fs-body); color: rgba(255,255,255,0.62); max-width: 42vw; line-height: 1.45; }
+        .slide-title .subtitle { font-size: var(--fs-body); color: rgba(255,255,255,0.62); max-width: 36vw; line-height: 1.45; }
         .slide-title .lecturer { margin-top: 2vh; font-size: var(--fs-small); color: rgba(255,255,255,0.4); }
-        .slide-title .deco { position: absolute; right: 6vw; top: 50%; transform: translateY(-50%); width: 220px; height: 220px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; }
-        .slide-title .deco::before { content: ""; position: absolute; inset: 24px; border: 1px solid rgba(0,151,167,0.3); border-radius: 50%; }
-        .slide-title .geo-decoration { right: 4vw; bottom: 8vh; width: 26vw; height: 26vw; opacity: 0.3; }
+        .slide-title .geo-decoration { right: 2vw; bottom: 6vh; width: 22vw; height: 22vw; opacity: 0.22; }
         .slide-title .geo-decoration::before { content: ""; position: absolute; inset: 10%; border: 1px dashed var(--line); border-radius: 50%; }
-        .title-logos { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 2vh; }
+        .title-hero {
+            position: relative; z-index: 1; height: min(72vh, 520px);
+            border-radius: var(--radius); overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow: 0 24px 64px rgba(0,0,0,0.45);
+            background: linear-gradient(160deg, #2a3a5c 0%, #1a1a2e 55%, #0d3d45 100%);
+        }
+        .title-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .title-hero-fallback { display: none; width: 100%; height: 100%; }
+        .title-hero.img-failed img { display: none; }
+        .title-hero.img-failed .title-hero-fallback { display: block; }
+        .title-logos {
+            position: absolute; left: 1rem; bottom: 1rem; right: 1rem;
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+            padding: 0.6rem; background: rgba(26,26,46,0.55); border-radius: 10px;
+            backdrop-filter: blur(6px);
+        }
+        .title-logos .icon-badge { width: 36px; height: 36px; }
+        .title-logos .icon-badge svg { width: 20px; height: 20px; }
         .icon-badge { width: 42px; height: 42px; border-radius: var(--radius); background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
         .icon-badge svg { width: 24px; height: 24px; }
 
@@ -179,6 +199,9 @@
             .slide-standard, .slide-interactive, .slide-recap { padding-top: 2.5vh; }
         }
         @media (max-width: 1100px) {
+            .slide-title { grid-template-columns: 1fr; padding: 3vh 5vw; }
+            .title-hero { height: min(38vh, 320px); order: -1; }
+            .slide-title .subtitle { max-width: 90vw; }
             .platform-grid, .pillar-grid, .steps, .flow-row, .reveal-grid { grid-template-columns: repeat(2, 1fr); }
             .obj-grid, .split-grid, .recap-grid, .poll-options { grid-template-columns: 1fr; }
             p.lead { max-width: 90vw; }
@@ -190,20 +213,48 @@
 
         <div class="slide slide-title active">
             <div class="geo-decoration"></div>
-            <div class="deco"></div>
             <div class="content">
                 <div class="label">Session 04</div>
                 <h1>Social Media<br><em>for Business</em></h1>
                 <p class="subtitle">Strategy, content, and sales paths for Indonesian SMEs.</p>
-                <div class="title-logos" aria-hidden="true">
-                    <span class="icon-badge" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="#E4405F"/><circle cx="12" cy="12" r="4" fill="#fff"/><circle cx="17" cy="7" r="1.2" fill="#fff"/></svg></span>
-                    <span class="icon-badge" title="TikTok"><svg viewBox="0 0 24 24"><path fill="#000" d="M16 3v9.5a3.5 3.5 0 1 1-2.45-3.35V8.2a6.3 6.3 0 1 0 5.45 6.25V3H16z"/></svg></span>
-                    <span class="icon-badge" title="Facebook"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#0866FF"/><path fill="#fff" d="M13.2 7.5H15V5h-1.8C10.9 5 10 6.7 10 8.6v1.4H8v2.5h2V19h2.5v-6.5H15l.4-2.5h-2.2V9c0-.8.2-1.5 1.8-1.5z"/></svg></span>
-                    <span class="icon-badge" title="WhatsApp"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#25D366"/><path fill="#fff" d="M8.5 7.5c.3-.7.7-1.2 1.2-1.5 1-.6 2.3-.4 3.2.5l.8.9c.6.7.5 1.7-.2 2.3l-.4.3c-.2.2-.2.5 0 .8.6 1 1.6 1.9 2.7 2.4.3.1.6 0 .8-.2l.3-.4c.6-.6 1.6-.7 2.3-.1l.9.8c.9.8 1.1 2.1.5 3.1-.3.5-.8.9-1.5 1.2-2 .9-4.5.2-6.5-1.8-2-2-2.7-4.5-1.8-6.5z"/></svg></span>
-                    <span class="icon-badge" title="YouTube"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#FF0000"/><path fill="#fff" d="M10 8.5v7l6-3.5-6-3.5z"/></svg></span>
-                    <span class="icon-badge" title="LinkedIn"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#0A66C2"/><path fill="#fff" d="M7 10h2v7H7v-7zm1-3a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4zM11 10h2v1c.4-.8 1.2-1.3 2.2-1.3 2 0 2.8 1.3 2.8 3.4V17h-2v-4.2c0-1.1-.2-1.8-1.2-1.8-1 0-1.6.7-1.6 2V17h-2v-7z"/></svg></span>
-                </div>
                 <p class="lecturer">Lecturer: Randy Brilliant Chandra, S.S.I., M.Kom.</p>
+            </div>
+            <div class="title-hero" id="title-hero">
+                <img
+                    src="https://images.pexels.com/photos/6476589/pexels-photo-6476589.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=960"
+                    alt="Small business owner using social media on a smartphone"
+                    referrerpolicy="no-referrer"
+                    onerror="this.closest('.title-hero').classList.add('img-failed');"
+                >
+                <svg class="title-hero-fallback" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SME social media illustration">
+                    <defs>
+                        <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e0f7fa"/><stop offset="100%" stop-color="#b8dfe4"/></linearGradient>
+                    </defs>
+                    <rect width="480" height="360" fill="url(#sky)"/>
+                    <rect x="40" y="200" width="200" height="100" rx="8" fill="#f8f6f2" stroke="#8a8178"/>
+                    <rect x="55" y="175" width="80" height="30" rx="4" fill="#0097a7" opacity="0.85"/>
+                    <text x="95" y="195" text-anchor="middle" fill="#fff" font-family="Inter,sans-serif" font-size="11" font-weight="600">WARUNG</text>
+                    <circle cx="360" cy="120" r="70" fill="#1a1a2e" opacity="0.08"/>
+                    <rect x="300" y="60" width="110" height="200" rx="14" fill="#fff" stroke="#0097a7" stroke-width="3"/>
+                    <rect x="312" y="78" width="86" height="140" rx="6" fill="#f0f9fa"/>
+                    <circle cx="355" cy="232" r="8" fill="#0097a7"/>
+                    <rect x="318" y="95" width="74" height="8" rx="2" fill="#E4405F" opacity="0.8"/>
+                    <rect x="318" y="110" width="60" height="6" rx="2" fill="#25D366" opacity="0.8"/>
+                    <rect x="318" y="123" width="68" height="6" rx="2" fill="#0866FF" opacity="0.8"/>
+                    <path d="M120 140 Q180 100 240 130 T360 120" fill="none" stroke="#0097a7" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"/>
+                    <rect x="70" y="100" width="90" height="36" rx="8" fill="#fff" stroke="#e8e2d8"/>
+                    <text x="115" y="123" text-anchor="middle" fill="#5a5a5a" font-family="Inter,sans-serif" font-size="10">New order!</text>
+                    <rect x="250" y="250" width="100" height="36" rx="8" fill="#fff" stroke="#e8e2d8"/>
+                    <text x="300" y="273" text-anchor="middle" fill="#0097a7" font-family="Inter,sans-serif" font-size="10" font-weight="600">QRIS paid</text>
+                </svg>
+                <div class="title-logos" aria-hidden="true">
+                    <span class="icon-badge" title="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="#E4405F"/><circle cx="12" cy="12" r="4" fill="#fff"/></svg></span>
+                    <span class="icon-badge" title="TikTok"><svg viewBox="0 0 24 24"><path fill="#000" d="M16 3v9.5a3.5 3.5 0 1 1-2.45-3.35V8.2a6.3 6.3 0 1 0 5.45 6.25V3H16z"/></svg></span>
+                    <span class="icon-badge" title="Facebook"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#0866FF"/></svg></span>
+                    <span class="icon-badge" title="WhatsApp"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#25D366"/></svg></span>
+                    <span class="icon-badge" title="YouTube"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#FF0000"/></svg></span>
+                    <span class="icon-badge" title="LinkedIn"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#0A66C2"/></svg></span>
+                </div>
             </div>
         </div>
 
