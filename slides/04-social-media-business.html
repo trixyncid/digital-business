@@ -4,896 +4,651 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Session 04 — Social Media for Business</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
     <style>
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg: #ede8e0;
-            --bg2: #e2dbd1;
-            --text: var(--text);
-            --sec: var(--sec);
-            --acc: var(--acc);
-            --line: var(--acc);
-            --accent: var(--accent);
-            --accent-l: #e0f7fa;
-            --cream: var(--cream);
-            --card: var(--card);
-            --card-border: var(--card-border);
-            --navy: var(--navy);
+            --bg: #ede8e0; --bg2: #e2dbd1; --text: #1a1a1a; --sec: #5a5a5a;
+            --acc: #8a8178; --line: #b8b0a4; --accent: #0097a7; --accent-l: #e0f7fa;
+            --cream: #f5f1eb; --card: #f8f6f2; --card-border: #e8e2d8; --navy: #1a1a2e;
             --radius: 12px;
-            --fs-body: clamp(1.25rem, 1.4vw, 1.5rem);
-            --fs-body-dense: clamp(1.125rem, 1.25vw, 1.3125rem);
-            --fs-small: clamp(1.05rem, 1.1vw, 1.125rem);
-            --fs-label: 0.9rem;
-            --fs-h2: clamp(2.35rem, 4vw, 3.25rem);
-            --fs-h3: clamp(1.35rem, 1.55vw, 1.55rem);
-            --fs-title: clamp(3rem, 6vw, 4.75rem);
+            --fs-body: clamp(1.15rem, 1.25vw, 1.35rem);
+            --fs-dense: clamp(1.05rem, 1.1vw, 1.2rem);
+            --fs-small: clamp(0.95rem, 1vw, 1.05rem);
+            --fs-label: 0.85rem;
+            --fs-h2: clamp(2rem, 3.2vw, 2.75rem);
+            --fs-h3: clamp(1.2rem, 1.4vw, 1.4rem);
+            --fs-title: clamp(2.75rem, 5.5vw, 4.25rem);
         }
-        body {
-            font-family: "Inter", sans-serif;
-            font-size: var(--fs-body);
-            background: var(--cream);
-            color: var(--text);
-            overflow: hidden;
-        }
+        body { font-family: "Inter", sans-serif; font-size: var(--fs-body); background: var(--cream); color: var(--text); overflow: hidden; }
         .presentation { width: 100vw; height: 100vh; position: relative; }
         .slide {
-            position: absolute; top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            opacity: 0; visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            position: absolute; inset: 0; opacity: 0; visibility: hidden;
+            transition: opacity 0.45s ease, visibility 0.45s ease;
+            display: flex; flex-direction: column; overflow: hidden;
         }
         .slide.active { opacity: 1; visibility: visible; }
+        .vline { position: absolute; left: 7vw; top: 0; width: 1px; height: 100%; background: var(--line); opacity: 0.35; z-index: 0; pointer-events: none; }
+        .geo-decoration { position: absolute; border: 1px solid var(--line); border-radius: 50%; pointer-events: none; z-index: 0; }
+        .slide-body { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2vh; }
+        .section-label, .label { font-size: var(--fs-label); text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 1vh; font-weight: 600; }
+        h2.title { font-family: "DM Serif Display", serif; font-size: var(--fs-h2); line-height: 1.1; margin-bottom: 1.2vh; color: var(--text); }
+        p.lead { color: var(--sec); line-height: 1.45; max-width: 52vw; margin-bottom: 1.5vh; }
+        ul.compact { list-style: none; display: flex; flex-direction: column; gap: 0.9vh; }
+        ul.compact li { padding-left: 1.1rem; position: relative; line-height: 1.4; color: var(--sec); }
+        ul.compact li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 
-        .vline {
-            position: absolute; left: 8vw; top: 0;
-            width: 1px; height: 100%;
-            background: var(--line); opacity: 0.3; z-index: 0;
-            pointer-events: none;
-        }
-        .geo-decoration {
-            position: absolute; border: 1px solid var(--line);
-            border-radius: 50%; pointer-events: none; z-index: 0;
-        }
-        .slide-body {
-            position: relative; z-index: 1;
-            flex: 1; min-height: 0;
-            display: flex; flex-direction: column;
-        }
-
-        .section-label, .label {
-            font-size: var(--fs-label); text-transform: uppercase;
-            letter-spacing: 4px; color: var(--accent); margin-bottom: 1.5vh;
-            font-weight: 500;
-        }
-        h2.title, .slide h2 {
-            font-family: "DM Serif Display", serif;
-            font-size: var(--fs-h2);
-            color: var(--text); line-height: 1.12; margin-bottom: 1.8vh;
-        }
-        p.lead {
-            font-size: var(--fs-body);
-            color: var(--sec); line-height: 1.55; max-width: 58vw;
-        }
-
-        /* Title */
-        .slide-title {
-            background: var(--navy);
-            display: flex; align-items: center; padding: 0 8vw;
-            position: relative;
-        }
-        .slide-title .content { max-width: 62vw; position: relative; z-index: 1; }
-        .slide-title .label {
-            font-size: var(--fs-label); text-transform: uppercase;
-            letter-spacing: 4px; color: var(--accent); margin-bottom: 2.5vh;
-        }
-        .slide-title h1 {
-            font-family: "DM Serif Display", serif;
-            font-size: var(--fs-title);
-            color: #fff; line-height: 1.08; margin-bottom: 2.5vh;
-        }
+        .slide-title { background: var(--navy); align-items: center; padding: 0 7vw; position: relative; }
+        .slide-title .content { max-width: 58vw; position: relative; z-index: 1; }
+        .slide-title h1 { font-family: "DM Serif Display", serif; font-size: var(--fs-title); color: #fff; line-height: 1.05; margin-bottom: 2vh; }
         .slide-title h1 em { color: var(--accent); font-style: italic; }
-        .slide-title .subtitle {
-            font-size: clamp(1.25rem, 1.6vw, 1.45rem);
-            color: rgba(255,255,255,0.65); line-height: 1.55; max-width: 48vw;
-        }
-        .slide-title .lecturer {
-            margin-top: 3vh; font-size: clamp(1.05rem, 1.2vw, 1.2rem);
-            color: rgba(255,255,255,0.45);
-        }
-        .slide-title .deco {
-            position: absolute; right: 7vw; top: 50%;
-            transform: translateY(-50%);
-            width: 260px; height: 260px;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 50%;
-        }
-        .slide-title .deco::before {
-            content: ''; position: absolute;
-            inset: 28px; border: 1px solid rgba(0,151,167,0.25);
-            border-radius: 50%;
-        }
-        .slide-title .geo-decoration {
-            right: 5vw; bottom: 10vh; width: 28vw; height: 28vw; opacity: 0.35;
-        }
-        .slide-title .geo-decoration::before {
-            content: ""; position: absolute; top: 10%; left: 10%;
-            width: 80%; height: 80%; border: 1px dashed var(--line);
-            border-radius: 50%;
-        }
-        .title-logos {
-            display: flex; flex-wrap: wrap; gap: 12px; margin-top: 2.5vh;
-        }
-        .title-logos img {
-            width: 40px; height: 40px; background: #fff;
-            border-radius: var(--radius); padding: 6px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
+        .slide-title .subtitle { font-size: var(--fs-body); color: rgba(255,255,255,0.62); max-width: 42vw; line-height: 1.45; }
+        .slide-title .lecturer { margin-top: 2vh; font-size: var(--fs-small); color: rgba(255,255,255,0.4); }
+        .slide-title .deco { position: absolute; right: 6vw; top: 50%; transform: translateY(-50%); width: 220px; height: 220px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; }
+        .slide-title .deco::before { content: ""; position: absolute; inset: 24px; border: 1px solid rgba(0,151,167,0.3); border-radius: 50%; }
+        .slide-title .geo-decoration { right: 4vw; bottom: 8vh; width: 26vw; height: 26vw; opacity: 0.3; }
+        .slide-title .geo-decoration::before { content: ""; position: absolute; inset: 10%; border: 1px dashed var(--line); border-radius: 50%; }
+        .title-logos { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 2vh; }
+        .icon-badge { width: 42px; height: 42px; border-radius: var(--radius); background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+        .icon-badge svg { width: 24px; height: 24px; }
 
-        /* Standard content slide */
-        .slide-standard {
-            padding: 4vh 5vw 4vh 10vw;
-            background: #fff;
-            max-height: 100vh; overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
+        .slide-standard { padding: 3.2vh 4vw 3vh 9vw; background: #fff; }
         .slide-standard.cream { background: var(--cream); }
+        .slide-interactive { padding: 3.2vh 4vw 3vh 9vw; background: var(--accent-l); }
+        .slide-interactive.cream { background: var(--cream); }
 
-        /* Objectives */
-        .obj-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 2vh 3vw; margin-top: 2vh;
-        }
-        .obj-card {
-            background: var(--card); border: 1px solid var(--card-border);
-            border-radius: var(--radius); padding: 2.2vh 2vw;
-            display: flex; gap: 14px; align-items: flex-start;
-        }
-        .obj-num {
-            width: 40px; height: 40px; border-radius: 8px;
-            background: var(--accent); color: #fff;
-            font-size: 1.05rem; font-weight: 700;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        }
-        .obj-card h3 {
-            font-family: "Playfair Display", serif;
-            font-size: var(--fs-h3); margin-bottom: 0.5vh; color: var(--text);
-        }
-        .obj-card p { font-size: var(--fs-body); color: var(--sec); line-height: 1.45; }
+        .obj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2vh 2vw; }
+        .obj-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.4vh 1.2vw; display: flex; gap: 12px; }
+        .obj-num { width: 36px; height: 36px; border-radius: 8px; background: var(--accent); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: var(--fs-small); }
+        .obj-card h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 0.3vh; }
+        .obj-card p { font-size: var(--fs-dense); color: var(--sec); line-height: 1.35; }
+        .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8vw; margin-top: 1.5vh; }
+        .time-block { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.2vh 0.8vw; border-top: 3px solid var(--accent); }
+        .time-block .when { font-size: var(--fs-small); font-weight: 700; color: var(--accent); text-transform: uppercase; }
+        .time-block p { font-size: var(--fs-dense); color: var(--sec); line-height: 1.35; margin-top: 0.4vh; }
 
-        .timeline {
-            margin-top: 2.5vh; display: grid;
-            grid-template-columns: repeat(4, 1fr); gap: 1vw;
-        }
-        .time-block {
-            background: #fff; border: 1px solid var(--line);
-            border-radius: 10px; padding: 1.8vh 1.2vw;
-            border-top: 3px solid var(--accent);
-        }
-        .time-block .when {
-            font-size: var(--fs-small); font-weight: 600;
-            text-transform: uppercase; letter-spacing: 1px;
-            color: var(--accent); margin-bottom: 0.8vh;
-        }
-        .time-block p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.4; }
+        .slide-split { padding: 0; background: var(--cream); }
+        .split-grid { display: grid; grid-template-columns: 1fr 1fr; height: 100%; min-height: 0; position: relative; z-index: 1; }
+        .slide-split .visual { background: var(--bg2); display: flex; align-items: center; justify-content: center; padding: 3vh 2vw; }
+        .visual-placeholder { width: min(100%, 420px); height: min(52vh, 420px); border: 1px solid var(--line); background: linear-gradient(145deg, #fff 0%, var(--accent-l) 100%); display: flex; align-items: center; justify-content: center; border-radius: var(--radius); }
+        .visual-placeholder svg { width: 70%; max-width: 280px; height: auto; opacity: 0.85; }
+        .slide-split .text-side { padding: 4vh 4vw; background: #fff; border-left: 1px solid var(--card-border); overflow-y: auto; display: flex; flex-direction: column; justify-content: center; }
 
-        /* Two column (slide-twocol pattern) */
-        .slide-split {
-            padding: 0; background: var(--cream);
-            max-height: 100vh; overflow: hidden;
-        }
-        .slide-split .split-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            height: 100%; position: relative; z-index: 1;
-        }
-        .slide-split .visual {
-            background: var(--bg2); display: flex;
-            align-items: center; justify-content: center; padding: 4vh 3vw;
-        }
-        .slide-split .image-container {
-            width: 100%; max-width: 520px; height: 58vh;
-            position: relative; overflow: hidden;
-            border: 1px solid var(--line);
-        }
-        .slide-split .image-container img {
-            width: 100%; height: 100%; object-fit: cover;
-        }
-        .slide-split .text-side {
-            display: flex; flex-direction: column; justify-content: center;
-            padding: 5vh 5vw 5vh 3vw; background: #fff;
-            border-left: 1px solid var(--card-border);
-            max-height: 100vh; overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .callout {
-            background: var(--accent-l); border-left: 3px solid var(--accent);
-            padding: 2vh 2vw; margin: 2vh 0;
-            font-size: var(--fs-body); color: var(--text); line-height: 1.5;
-        }
-        .bullet-list { display: flex; flex-direction: column; gap: 1.2vh; margin-top: 1vh; }
-        .bullet-list li {
-            list-style: none; font-size: var(--fs-body); color: var(--sec);
-            line-height: 1.45; padding-left: 1.5rem; position: relative;
-        }
-        .bullet-list li::before {
-            content: ''; position: absolute; left: 0; top: 0.55em;
-            width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
-        }
+        .flow-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1vw; }
+        .flow-card { background: #fff; border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.6vh 1.2vw; }
+        .flow-card h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 0.5vh; }
+        .flow-card p { font-size: var(--fs-dense); color: var(--sec); line-height: 1.35; }
+        .tag { display: inline-block; margin-top: 0.8vh; font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-weight: 600; }
 
-        /* Flow diagram */
-        .flow-row {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 1.5vw; margin-top: 2.5vh;
-        }
-        .flow-card {
-            background: #fff; border: 1px solid var(--card-border);
-            border-radius: 14px; padding: 2.5vh 2vw;
-        }
-        .flow-card h3 {
-            font-family: "Playfair Display", serif;
-            font-size: var(--fs-h3); margin-bottom: 0.8vh;
-        }
-        .flow-card p { font-size: var(--fs-body); color: var(--sec); line-height: 1.45; }
-        .flow-card .tag {
-            display: inline-block; margin-top: 1vh;
-            font-size: var(--fs-small); text-transform: uppercase;
-            letter-spacing: 1px; color: var(--accent); font-weight: 600;
-        }
+        .platform-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7vw; }
+        .plat-card { background: #fff; border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.2vh 0.8vw; }
+        .plat-card h3 { font-family: "Playfair Display", serif; font-size: var(--fs-dense); margin: 0.4vh 0; }
+        .plat-card .use { font-size: var(--fs-small); color: var(--sec); line-height: 1.3; }
+        .plat-card .medan { font-size: var(--fs-small); color: var(--accent); margin-top: 0.4vh; font-style: italic; }
 
-        /* Platform grid */
-        .platform-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 0.9vw; flex: 1; margin-top: 1.5vh;
-        }
-        .plat-card {
-            background: #fff; border: 1px solid var(--card-border);
-            border-radius: 12px; padding: 1.6vh 1.2vw;
-            display: flex; flex-direction: column; gap: 0.6vh;
-        }
-        .plat-card img { width: 36px; height: 36px; }
-        .plat-card h3 { font-size: 1.25rem; font-family: "Playfair Display", serif; }
-        .plat-card .audience { font-size: var(--fs-small); color: var(--accent); font-weight: 600; }
-        .plat-card p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.38; flex: 1; }
-        .plat-card .example {
-            font-size: var(--fs-small); color: #7a7a7a; font-style: italic;
-            border-top: 1px solid var(--card-border); padding-top: 0.8vh;
-        }
+        .data-table { width: 100%; border-collapse: collapse; font-size: var(--fs-dense); margin-top: 1vh; }
+        .data-table th { text-align: left; padding: 0.9vh 0.8vw; background: var(--navy); color: #fff; font-size: var(--fs-small); }
+        .data-table td { padding: 0.9vh 0.8vw; border-bottom: 1px solid var(--card-border); vertical-align: top; line-height: 1.35; }
 
-        /* Table */
-        .data-table {
-            width: 100%; border-collapse: collapse; margin-top: 1.5vh;
-            font-size: var(--fs-body-dense);
-        }
-        .data-table th {
-            text-align: left; padding: 1.1vh 1vw;
-            background: var(--navy); color: #fff;
-            font-weight: 600; font-size: var(--fs-small);
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        .data-table td {
-            padding: 1.2vh 1vw; border-bottom: 1px solid var(--card-border);
-            vertical-align: top; line-height: 1.4;
-        }
-        .data-table tr:nth-child(even) td { background: #faf8f5; }
+        .pillar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8vw; }
+        .pillar { background: #fff; border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.4vh 1vw; }
+        .pillar h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 0.4vh; }
+        .pillar p { font-size: var(--fs-dense); color: var(--sec); line-height: 1.32; }
+        .ratio-bar { margin-top: 1.5vh; display: flex; min-height: 48px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
+        .ratio-bar .val { flex: 8; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: var(--fs-dense); font-weight: 600; padding: 0.4rem; text-align: center; }
+        .ratio-bar .promo { flex: 2; background: #c4883a; color: #fff; display: flex; align-items: center; justify-content: center; font-size: var(--fs-dense); font-weight: 600; }
 
-        /* Pillars */
-        .pillar-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 1.2vw; margin-top: 2vh;
-        }
-        .pillar {
-            border-radius: 12px; padding: 2vh 1.5vw;
-            border: 1px solid var(--line); background: #fff;
-        }
-        .pillar h3 { font-size: var(--fs-h3); margin-bottom: 0.6vh; font-family: "Playfair Display", serif; }
-        .pillar p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.42; }
-        .ratio-bar {
-            margin-top: 2vh; display: flex; min-height: 56px;
-            border-radius: 10px; overflow: hidden;
-            border: 1px solid var(--line);
-        }
-        .ratio-bar .val { flex: 8; background: var(--accent); color: #fff;
-            display: flex; align-items: center; justify-content: center;
-            font-size: var(--fs-body-dense); font-weight: 600; padding: 0.5rem; text-align: center; }
-        .ratio-bar .promo { flex: 2; background: #c4883a; color: #fff;
-            display: flex; align-items: center; justify-content: center;
-            font-size: var(--fs-body-dense); font-weight: 600; padding: 0.5rem; text-align: center; }
+        .reveal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8vw; }
+        .reveal-card { background: #fff; border: 1px solid var(--card-border); border-radius: var(--radius); padding: 0; overflow: hidden; cursor: pointer; user-select: none; }
+        .reveal-card .front { padding: 1.4vh 1vw; font-weight: 600; font-size: var(--fs-dense); background: var(--card); }
+        .reveal-card .back { padding: 1.2vh 1vw; font-size: var(--fs-dense); color: var(--sec); line-height: 1.35; display: none; border-top: 1px solid var(--card-border); }
+        .reveal-card.open .back { display: block; }
+        .reveal-card.open .front { background: var(--accent-l); color: var(--text); }
+        .hint { font-size: var(--fs-small); color: var(--acc); margin-top: 1vh; }
 
-        /* Content types */
-        .type-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 1.2vw; margin-top: 2vh;
-        }
-        .type-card {
-            background: #fff; border-radius: 12px;
-            border: 1px solid var(--card-border); padding: 2vh 1.5vw;
-        }
-        .type-card h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 0.6vh; }
-        .type-card .format { font-size: var(--fs-small); color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8vh; }
-        .type-card p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.42; }
+        .cal-table { width: 100%; border-collapse: collapse; font-size: var(--fs-small); table-layout: fixed; }
+        .cal-table th { background: var(--accent); color: #fff; padding: 0.7vh 0.3vw; text-align: center; }
+        .cal-table td { border: 1px solid var(--card-border); padding: 0.55vh 0.35vw; vertical-align: top; background: #fff; line-height: 1.25; }
+        .cal-table .slot-label { background: var(--card); font-weight: 600; text-align: center; }
 
-        /* Calendar */
-        .cal-wrap { margin-top: 2vh; flex: 1; }
-        .cal-table {
-            width: 100%; border-collapse: collapse;
-            font-size: var(--fs-body-dense); table-layout: fixed;
-        }
-        .cal-table th {
-            background: var(--accent); color: #fff;
-            padding: 1vh 0.4vw; text-align: center;
-            font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 1px;
-        }
-        .cal-table td {
-            border: 1px solid #ddd5c8; padding: 0.9vh 0.5vw;
-            vertical-align: top; min-height: 10vh; background: #fff;
-        }
-        .cal-table .slot-label {
-            font-weight: 600; color: var(--text); background: var(--card);
-            width: 100px; text-align: center; font-size: var(--fs-small);
-        }
-        .cal-cell .platform { font-size: var(--fs-small); font-weight: 700; color: var(--accent); }
-        .cal-cell .topic { font-size: var(--fs-body-dense); color: var(--text); line-height: 1.32; margin-top: 0.25vh; }
-        .cal-note { font-size: var(--fs-body-dense); color: #7a7a7a; margin-top: 1.2vh; font-style: italic; }
+        .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7vw; }
+        .step { background: #fff; border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.2vh 0.9vw; }
+        .step h3 { font-size: var(--fs-h3); margin-bottom: 0.3vh; }
+        .step p { font-size: var(--fs-dense); color: var(--sec); line-height: 1.32; }
 
-        /* WA + QRIS */
-        .steps {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 1vw; margin-top: 2vh;
-        }
-        .step {
-            background: #fff; border: 1px solid var(--card-border);
-            border-radius: 12px; padding: 2vh 1.2vw;
-            position: relative;
-        }
-        .step::after {
-            content: '→'; position: absolute; right: -0.6vw; top: 50%;
-            transform: translateY(-50%); color: var(--acc); font-size: 1.2rem;
-        }
-        .step:last-child::after { display: none; }
-        .step .n {
-            width: 36px; height: 36px; border-radius: 50%;
-            background: #25D366; color: #fff; font-size: 1rem; font-weight: 700;
-            display: flex; align-items: center; justify-content: center; margin-bottom: 0.8vh;
-        }
-        .step h3 { font-size: var(--fs-h3); margin-bottom: 0.5vh; }
-        .step p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.4; }
+        .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5vw; }
+        .do-dont .col { border-radius: var(--radius); padding: 1.8vh 1.5vw; }
+        .do-dont .do { background: #eef6ef; border: 1px solid #c5dcc7; }
+        .do-dont .dont { background: #fdf0ee; border: 1px solid #e8c9c4; }
+        .do-dont h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 0.8vh; }
+        .do-dont li { font-size: var(--fs-dense); line-height: 1.35; margin-bottom: 0.5vh; }
 
-        /* SME examples */
-        .sme-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 1.2vw; margin-top: 2vh;
+        .poll-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1vw; margin-top: 1.5vh; }
+        .poll-btn {
+            border: 2px solid var(--card-border); background: #fff; border-radius: var(--radius);
+            padding: 1.4vh 1vw; font-size: var(--fs-dense); cursor: pointer; text-align: left; transition: 0.2s;
         }
-        .sme-card {
-            border-radius: 14px; overflow: hidden;
-            border: 1px solid var(--card-border); background: #fff;
-        }
-        .sme-card .head {
-            padding: 1.8vh 1.5vw; background: var(--navy); color: #fff;
-        }
-        .sme-card .head h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); }
-        .sme-card .head span { font-size: var(--fs-small); color: rgba(255,255,255,0.55); }
-        .sme-card .body { padding: 1.6vh 1.4vw; }
-        .sme-card .body p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.42; margin-bottom: 0.8vh; }
-        .sme-card .body ul { padding-left: 1.2rem; font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.42; }
+        .poll-btn:hover { border-color: var(--accent); }
+        .poll-btn.selected { border-color: var(--accent); background: var(--accent-l); }
+        .poll-results { margin-top: 1.5vh; display: none; }
+        .poll-results.visible { display: block; }
+        .poll-bar { display: flex; align-items: center; gap: 0.8vw; margin-bottom: 0.6vh; font-size: var(--fs-dense); }
+        .poll-bar .bar { flex: 1; height: 10px; background: var(--card-border); border-radius: 5px; overflow: hidden; }
+        .poll-bar .fill { height: 100%; background: var(--accent); width: 0; transition: width 0.4s ease; }
 
-        /* Community */
-        .do-dont {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 2vw; margin-top: 2vh;
+        .activity-box { background: #fff; border: 2px dashed var(--accent); border-radius: var(--radius); padding: 2vh 2vw; margin-top: 1.5vh; }
+        .activity-box h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 0.8vh; }
+        .timer-display { font-family: "Playfair Display", serif; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--accent); margin: 1vh 0; }
+        .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1vh; }
+        .btn {
+            border: 1px solid var(--line); background: #fff; border-radius: 8px;
+            padding: 0.7rem 1.2rem; font-size: var(--fs-dense); cursor: pointer;
         }
-        .do-dont .col {
-            border-radius: 12px; padding: 2.5vh 2vw;
-        }
-        .do-dont .col.do { background: #eef6ef; border: 1px solid #c5dcc7; }
-        .do-dont .col.dont { background: #fdf0ee; border: 1px solid #e8c9c4; }
-        .do-dont h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 1.2vh; }
-        .do-dont ul { list-style: none; display: flex; flex-direction: column; gap: 0.9vh; }
-        .do-dont li { font-size: var(--fs-body); line-height: 1.42; padding-left: 1.6rem; position: relative; }
-        .do-dont .do li::before { content: '✓'; position: absolute; left: 0; color: #3d7a45; font-weight: 700; }
-        .do-dont .dont li::before { content: '✕'; position: absolute; left: 0; color: #b54a3a; font-weight: 700; }
+        .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-        /* Paid ads */
-        .ads-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 2vw; margin-top: 2vh;
-        }
-        .ads-card {
-            background: #fff; border: 1px solid var(--card-border);
-            border-radius: 14px; padding: 2.5vh 2vw;
-        }
-        .ads-card h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 0.8vh; }
-        .ads-card p { font-size: var(--fs-body); color: var(--sec); line-height: 1.45; margin-bottom: 0.8vh; }
-        .ads-card ul { margin-left: 1.2rem; font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.45; }
+        .quiz-q { background: #fff; border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5vh 1.2vw; margin-bottom: 1.2vh; }
+        .quiz-q p { font-weight: 600; margin-bottom: 0.8vh; font-size: var(--fs-dense); }
+        .quiz-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+        .quiz-opt { padding: 0.5rem 0.9rem; border-radius: 8px; border: 1px solid var(--line); background: var(--card); cursor: pointer; font-size: var(--fs-small); }
+        .quiz-opt.correct { background: #d4edda; border-color: #3d7a45; }
+        .quiz-opt.wrong { background: #f8d7da; border-color: #b54a3a; }
 
-        /* Case study */
-        .case-box {
-            background: var(--card); border: 1px solid var(--card-border);
-            border-radius: 14px; padding: 2.5vh 2.5vw; margin-top: 2vh;
-        }
-        .case-box p { font-size: var(--fs-body); line-height: 1.5; color: var(--text); margin-bottom: 1.2vh; }
-        .discussion-q {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 1.2vw; margin-top: 1.5vh;
-        }
-        .dq {
-            background: #fff; border-radius: 10px;
-            padding: 1.6vh 1.4vw; border-left: 4px solid var(--accent);
-            font-size: var(--fs-body); line-height: 1.42;
-        }
+        .slide-recap { padding: 3.2vh 4vw 3vh 9vw; background: var(--cream); }
+        .recap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; }
+        .recap-list { list-style: none; margin-top: 1vh; }
+        .recap-list li { padding: 1.2vh 0; border-bottom: 1px solid var(--line); display: flex; gap: 1vw; align-items: baseline; }
+        .recap-num { font-family: "Playfair Display", serif; font-size: 1.5rem; color: var(--acc); min-width: 2rem; }
+        .recap-text h4 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); }
+        .recap-text p { font-size: var(--fs-dense); color: var(--sec); line-height: 1.35; }
+        .next-session { border: 1px solid var(--line); padding: 2vh 2vw; background: var(--accent-l); border-radius: var(--radius); }
+        .next-session h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 1vh; }
+        .assign-list { list-style: none; font-size: var(--fs-dense); color: var(--sec); line-height: 1.4; }
+        .assign-list li { margin-bottom: 0.6vh; }
+        .assign-list li::before { content: "→ "; color: var(--accent); font-weight: 700; }
+        .worksheet-qr { margin-top: 1.5vh; display: flex; align-items: center; gap: 1rem; font-size: var(--fs-dense); color: var(--sec); }
+        .qr-box { width: 88px; height: 88px; border: 1px solid var(--line); background: #fff; display: flex; align-items: center; justify-content: center; border-radius: 8px; flex-shrink: 0; }
 
-        /* Recap (course slide-recap) */
-        .slide-recap {
-            padding: 4vh 5vw 4vh 10vw;
-            background: var(--cream);
-            max-height: 100vh; overflow-y: auto;
-        }
-        .slide-recap .recap-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 5vw; align-items: start;
-        }
-        .recap-list { list-style: none; margin-top: 2vh; }
-        .recap-list li {
-            padding: 1.8vh 0; border-bottom: 1px solid var(--line);
-            display: flex; align-items: baseline; gap: 1.5vw;
-        }
-        .recap-num {
-            font-family: "Playfair Display", serif;
-            font-size: clamp(1.6rem, 2vw, 1.9rem);
-            color: var(--acc); min-width: 2.5rem; flex-shrink: 0;
-        }
-        .recap-text h4 {
-            font-family: "Playfair Display", serif;
-            font-size: var(--fs-h3); margin-bottom: 0.35vh; color: var(--text);
-        }
-        .recap-text p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.4; }
-        .next-session {
-            border: 1px solid var(--line);
-            padding: 3vh 2.5vw; background: var(--accent-l);
-            border-radius: var(--radius);
-        }
-        .next-session h3 {
-            font-family: "Playfair Display", serif;
-            font-size: var(--fs-h3); margin-bottom: 1.5vh; color: var(--text);
-        }
-        .assign-list { list-style: none; display: flex; flex-direction: column; gap: 0.8vh; }
-        .assign-list li {
-            font-size: var(--fs-body-dense);
-            line-height: 1.45; color: var(--sec);
-            padding: 0.5vh 0;
-            border-bottom: 1px solid rgba(0,151,167,0.12);
-        }
-        .assign-list li::before { content: "→ "; color: var(--accent); font-weight: 600; }
-        .next-link {
-            margin-top: 2vh; font-size: var(--fs-body-dense);
-            color: var(--acc); letter-spacing: 1px;
-        }
+        .nav { position: fixed; bottom: 3.5vh; right: 3.5vw; display: flex; gap: 10px; z-index: 200; }
+        .nav button { width: 44px; height: 44px; border: 1px solid var(--line); background: rgba(245,241,235,0.95); border-radius: 8px; cursor: pointer; font-size: 1.1rem; }
+        .nav button:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .counter { position: fixed; bottom: 3.5vh; left: 4.5vw; font-size: var(--fs-small); color: var(--acc); letter-spacing: 2px; z-index: 200; }
+        .corner-mark { position: fixed; bottom: 2.5vh; left: 4.5vw; font-size: 0.58rem; color: #c4bfb6; letter-spacing: 2px; text-transform: uppercase; z-index: 200; }
 
-        /* Nav */
-        .nav {
-            position: fixed; bottom: 4vh; right: 4vw;
-            display: flex; gap: 10px; z-index: 100;
+        @media (max-height: 720px) {
+            :root { --fs-h2: 1.85rem; --fs-body: 1.05rem; --fs-dense: 1rem; }
+            .slide-standard, .slide-interactive, .slide-recap { padding-top: 2.5vh; }
         }
-        .nav button {
-            width: 44px; height: 44px;
-            border: 1px solid var(--line);
-            background: rgba(245,241,235,0.9);
-            color: var(--sec); border-radius: 8px;
-            cursor: pointer; font-size: 1.1rem;
-            transition: all 0.2s; backdrop-filter: blur(8px);
-        }
-        .nav button:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
-        .counter {
-            position: fixed; bottom: 4vh; left: 5vw;
-            font-size: clamp(0.85rem, 1vw, 0.95rem);
-            color: var(--acc); letter-spacing: 2px; z-index: 100;
-            font-family: "Inter", sans-serif;
-        }
-        .corner-mark {
-            position: fixed; bottom: 3vh; left: 5vw;
-            font-size: 0.6rem; color: #c4bfb6;
-            letter-spacing: 2px; text-transform: uppercase; z-index: 100;
-        }
-
         @media (max-width: 1100px) {
-            .platform-grid, .pillar-grid, .steps { grid-template-columns: repeat(2, 1fr); }
-            .step::after { display: none; }
-            .obj-grid, .slide-split .split-grid, .slide-recap .recap-grid { grid-template-columns: 1fr; }
-            .flow-row, .type-grid, .sme-grid { grid-template-columns: 1fr; }
+            .platform-grid, .pillar-grid, .steps, .flow-row, .reveal-grid { grid-template-columns: repeat(2, 1fr); }
+            .obj-grid, .split-grid, .recap-grid, .poll-options { grid-template-columns: 1fr; }
+            p.lead { max-width: 90vw; }
         }
-
     </style>
 </head>
 <body>
     <div class="presentation">
+
         <div class="slide slide-title active">
             <div class="geo-decoration"></div>
             <div class="deco"></div>
             <div class="content">
                 <div class="label">Session 04</div>
                 <h1>Social Media<br><em>for Business</em></h1>
-                <p class="subtitle">Strategy, content, community, and paid reach — how Indonesian SMEs turn social platforms into real business channels.</p>
+                <p class="subtitle">Strategy, content, and sales paths for Indonesian SMEs.</p>
                 <div class="title-logos" aria-hidden="true">
-                    <img src="https://cdn.simpleicons.org/instagram/E4405F" alt=""><img src="https://cdn.simpleicons.org/tiktok/000000" alt="">
-                    <img src="https://cdn.simpleicons.org/facebook/0866FF" alt=""><img src="https://cdn.simpleicons.org/whatsapp/25D366" alt="">
-                    <img src="https://cdn.simpleicons.org/youtube/FF0000" alt=""><img src="https://cdn.simpleicons.org/linkedin/0A66C2" alt="">
-                    <img src="https://cdn.simpleicons.org/threads/000000" alt=""><img src="https://cdn.simpleicons.org/x/000000" alt="">
+                    <span class="icon-badge" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="#E4405F"/><circle cx="12" cy="12" r="4" fill="#fff"/><circle cx="17" cy="7" r="1.2" fill="#fff"/></svg></span>
+                    <span class="icon-badge" title="TikTok"><svg viewBox="0 0 24 24"><path fill="#000" d="M16 3v9.5a3.5 3.5 0 1 1-2.45-3.35V8.2a6.3 6.3 0 1 0 5.45 6.25V3H16z"/></svg></span>
+                    <span class="icon-badge" title="Facebook"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#0866FF"/><path fill="#fff" d="M13.2 7.5H15V5h-1.8C10.9 5 10 6.7 10 8.6v1.4H8v2.5h2V19h2.5v-6.5H15l.4-2.5h-2.2V9c0-.8.2-1.5 1.8-1.5z"/></svg></span>
+                    <span class="icon-badge" title="WhatsApp"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#25D366"/><path fill="#fff" d="M8.5 7.5c.3-.7.7-1.2 1.2-1.5 1-.6 2.3-.4 3.2.5l.8.9c.6.7.5 1.7-.2 2.3l-.4.3c-.2.2-.2.5 0 .8.6 1 1.6 1.9 2.7 2.4.3.1.6 0 .8-.2l.3-.4c.6-.6 1.6-.7 2.3-.1l.9.8c.9.8 1.1 2.1.5 3.1-.3.5-.8.9-1.5 1.2-2 .9-4.5.2-6.5-1.8-2-2-2.7-4.5-1.8-6.5z"/></svg></span>
+                    <span class="icon-badge" title="YouTube"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#FF0000"/><path fill="#fff" d="M10 8.5v7l6-3.5-6-3.5z"/></svg></span>
+                    <span class="icon-badge" title="LinkedIn"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#0A66C2"/><path fill="#fff" d="M7 10h2v7H7v-7zm1-3a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4zM11 10h2v1c.4-.8 1.2-1.3 2.2-1.3 2 0 2.8 1.3 2.8 3.4V17h-2v-4.2c0-1.1-.2-1.8-1.2-1.8-1 0-1.6.7-1.6 2V17h-2v-7z"/></svg></span>
                 </div>
                 <p class="lecturer">Lecturer: Randy Brilliant Chandra, S.S.I., M.Kom.</p>
             </div>
         </div>
+
         <div class="slide slide-standard cream">
             <div class="vline"></div>
             <div class="slide-body">
-            <div class="section-label">Start here</div>
-            <h2 class="title">Learning Objectives &amp; Class Flow (2 hours)</h2>
-            <p class="lead">By the end of this session, you should be able to explain <strong>why</strong> social media fits a business goal, <strong>where</strong> to show up, and <strong>how</strong> to plan content without burning out.</p>
-            <div class="obj-grid">
-                <div class="obj-card"><div class="obj-num">1</div><div><h3>Connect to marketing goals</h3><p>Link social activity to awareness, consideration, and conversion (Session 03 funnel).</p></div></div>
-                <div class="obj-card"><div class="obj-num">2</div><div><h3>Choose platforms wisely</h3><p>Match audience, product type, and team capacity — not every trend.</p></div></div>
-                <div class="obj-card"><div class="obj-num">3</div><div><h3>Plan sustainable content</h3><p>Use pillars, formats, and a weekly calendar you can actually maintain.</p></div></div>
-                <div class="obj-card"><div class="obj-num">4</div><div><h3>Integrate sales &amp; service</h3><p>Connect Instagram/TikTok discovery to WhatsApp Business and QRIS checkout.</p></div></div>
-            </div>
-            <div class="timeline">
-                <div class="time-block"><div class="when">0:00 – 0:20</div><p>Concepts: role of social media, organic vs paid, Indonesia context</p></div>
-                <div class="time-block"><div class="when">0:20 – 0:50</div><p>Platforms &amp; profiles: where SMEs win, setup checklist</p></div>
-                <div class="time-block"><div class="when">0:50 – 1:25</div><p>Content system: pillars, formats, sample weekly grid</p></div>
-                <div class="time-block"><div class="when">1:25 – 2:00</div><p>Case discussion, paid basics, recap &amp; assignment</p></div>
-            </div>
-        
+                <div class="section-label">Today</div>
+                <h2 class="title">Goals &amp; 2-Hour Flow</h2>
+                <div class="obj-grid">
+                    <div class="obj-card"><div class="obj-num">1</div><div><h3>Goal fit</h3><p>Link social to funnel stages (Session 03).</p></div></div>
+                    <div class="obj-card"><div class="obj-num">2</div><div><h3>Pick channels</h3><p>One primary + one support platform.</p></div></div>
+                    <div class="obj-card"><div class="obj-num">3</div><div><h3>Plan content</h3><p>Pillars + weekly calendar.</p></div></div>
+                    <div class="obj-card"><div class="obj-num">4</div><div><h3>Close sales</h3><p>Social → WA → QRIS.</p></div></div>
+                </div>
+                <div class="timeline">
+                    <div class="time-block"><div class="when">0:00–0:20</div><p>Concepts &amp; poll</p></div>
+                    <div class="time-block"><div class="when">0:20–0:50</div><p>Platforms &amp; profile</p></div>
+                    <div class="time-block"><div class="when">0:50–1:25</div><p>Content &amp; calendar</p></div>
+                    <div class="time-block"><div class="when">1:25–2:00</div><p>Case, quiz, recap</p></div>
+                </div>
             </div>
         </div>
+
+        <div class="slide slide-interactive">
+            <div class="vline"></div>
+            <div class="slide-body">
+                <div class="section-label">Pair-share · 2 min</div>
+                <h2 class="title">Turn to a Partner</h2>
+                <div class="activity-box">
+                    <h3>Prompt</h3>
+                    <p>Name one local business you follow online. <strong>Why</strong> do you follow it — not what they sell?</p>
+                    <p class="hint">Be ready to share one word with the class.</p>
+                </div>
+                <div class="btn-row">
+                    <button type="button" class="btn primary" data-timer="120">Start 2:00 timer</button>
+                    <button type="button" class="btn" data-timer-reset>Reset</button>
+                </div>
+                <div class="timer-display" id="pair-timer">2:00</div>
+            </div>
+        </div>
+
         <div class="slide slide-split">
             <div class="vline"></div>
             <div class="split-grid">
-            <div class="visual"><div class="image-container">
-                <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=900&q=80" alt="Social media on phone">
-            </div></div>
-            <div class="text-side">
-                <div class="section-label">Concepts</div>
-                <h2 class="title">Social Media Is a Business Channel — Not Just Posting</h2>
-                <div class="callout">Social media marketing uses platforms to build <strong>visibility</strong>, <strong>trust</strong>, and <strong>conversations</strong> that support sales — online and offline.</div>
-                <ul class="bullet-list">
-                    <li><strong>Builds on Session 03:</strong> Social is one channel in the digital marketing mix (alongside SEO, email, ads).</li>
-                    <li><strong>Two-way:</strong> Comments, DMs, and shares are feedback — not distractions.</li>
-                    <li><strong>Local reality (Medan &amp; Sumatera Utara):</strong> Many customers discover on Instagram/TikTok, then order via WhatsApp or visit a physical shop.</li>
-                    <li><strong>Owned + rented attention:</strong> Your profile is yours; reach depends on algorithms and optional ad spend.</li>
-                </ul>
-            </div>
+                <div class="visual">
+                    <div class="visual-placeholder" role="img" aria-label="Phone and social icons">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="55" y="25" width="90" height="150" rx="12" fill="#fff" stroke="#0097a7" stroke-width="2"/>
+                            <circle cx="100" cy="155" r="6" fill="#0097a7"/>
+                            <circle cx="40" cy="60" r="14" fill="#E4405F"/><circle cx="160" cy="80" r="12" fill="#25D366"/>
+                            <circle cx="150" cy="150" r="10" fill="#0866FF"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-side">
+                    <div class="section-label">Big idea</div>
+                    <h2 class="title">Social = Channel, Not Hobby</h2>
+                    <ul class="compact">
+                        <li>Part of digital marketing mix (with SEO, email, ads).</li>
+                        <li>Two-way: DMs &amp; comments = market research.</li>
+                        <li>Medan pattern: discover on IG/TikTok → order on WA.</li>
+                    </ul>
+                </div>
             </div>
         </div>
+
         <div class="slide slide-standard">
             <div class="vline"></div>
             <div class="slide-body">
-            <div class="section-label">How it works</div>
-            <h2 class="title">The Social Media Engine for SMEs</h2>
-            <p class="lead">Think of three layers working together. Weak content with strong ads wastes money; great content with no response loses customers.</p>
-            <div class="flow-row">
-                <div class="flow-card">
-                    <h3>1 · Presence</h3>
-                    <p>Clear profile, consistent visuals, bio that states <em>who you help</em> and <em>how to buy</em>.</p>
-                    <span class="tag">Foundation</span>
+                <div class="section-label">Model</div>
+                <h2 class="title">Three Layers</h2>
+                <div class="flow-row">
+                    <div class="flow-card"><h3>Presence</h3><p>Clear bio, visuals, how to buy.</p><span class="tag">Base</span></div>
+                    <div class="flow-card"><h3>Content</h3><p>Regular value + replies.</p><span class="tag">Trust</span></div>
+                    <div class="flow-card"><h3>Conversion</h3><p>WA catalog, QRIS, link in bio.</p><span class="tag">Sales</span></div>
                 </div>
-                <div class="flow-card">
-                    <h3>2 · Content &amp; community</h3>
-                    <p>Regular posts, stories, and replies that educate, entertain, or prove quality — building trust over time.</p>
-                    <span class="tag">Organic growth</span>
-                </div>
-                <div class="flow-card">
-                    <h3>3 · Conversion path</h3>
-                    <p>Link in bio, WA catalog, QRIS at counter, or marketplace — one obvious next step after interest.</p>
-                    <span class="tag">Revenue</span>
-                </div>
-            </div>
-            <div class="callout" style="margin-top:2.5vh">Teaching note: Organic reach is <em>unpredictable</em>; consistency and relevance matter more than chasing one viral post.</div>
-        
             </div>
         </div>
+
+        <div class="slide slide-interactive cream">
+            <div class="vline"></div>
+            <div class="slide-body">
+                <div class="section-label">Live poll</div>
+                <h2 class="title">Raise Hand + Click</h2>
+                <p class="lead">If you ran a Medan food SME tomorrow, your <strong>first</strong> platform?</p>
+                <div class="poll-options" id="platform-poll">
+                    <button type="button" class="poll-btn" data-poll="ig">Instagram</button>
+                    <button type="button" class="poll-btn" data-poll="tt">TikTok</button>
+                    <button type="button" class="poll-btn" data-poll="wa">WhatsApp only</button>
+                    <button type="button" class="poll-btn" data-poll="fb">Facebook</button>
+                </div>
+                <div class="btn-row"><button type="button" class="btn primary" id="poll-show">Show class results</button></div>
+                <div class="poll-results" id="poll-results"></div>
+            </div>
+        </div>
+
         <div class="slide slide-standard cream">
             <div class="vline"></div>
             <div class="slide-body">
-            <div class="section-label">Indonesia context</div>
-            <h2 class="title">Platform Landscape — Where Should You Show Up?</h2>
-            <p class="lead">No single “best” platform. Start where your <strong>customers already spend time</strong> and where your <strong>product can be shown clearly</strong>.</p>
-            <div class="platform-grid"><div class="plat-card"><img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram"><h3>Instagram</h3><div class="audience">Visual brands, food, fashion, services</div><p><strong>Strengths:</strong> Feeds, Reels, Stories, collab posts</p><div class="example">Example: Medan bakery shows daily fresh bread + pre-order DM</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok"><h3>TikTok</h3><div class="audience">Younger audiences, discovery</div><p><strong>Strengths:</strong> Short video, trends, shop tab (where available)</p><div class="example">Example: Snack brand films packing orders for Ramadan hampers</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/facebook/0866FF" alt="Facebook"><h3>Facebook</h3><div class="audience">Local communities, older demographics</div><p><strong>Strengths:</strong> Groups, Marketplace, events</p><div class="example">Example: Furniture shop posts in neighborhood groups</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/whatsapp/25D366" alt="WhatsApp Business"><h3>WhatsApp Business</h3><div class="audience">Orders, support, catalogs</div><p><strong>Strengths:</strong> Catalog, labels, quick replies, broadcast lists</p><div class="example">Example: Tailor sends size chart + payment via QRIS</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube"><h3>YouTube</h3><div class="audience">Education, long trust-building</div><p><strong>Strengths:</strong> Tutorials, reviews, Shorts</p><div class="example">Example: Auto workshop explains maintenance tips</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/linkedin/0A66C2" alt="LinkedIn"><h3>LinkedIn</h3><div class="audience">B2B, professional services</div><p><strong>Strengths:</strong> Articles, company page, hiring</p><div class="example">Example: Logistics firm shares case studies</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/threads/000000" alt="Threads"><h3>Threads</h3><div class="audience">Text updates, conversation</div><p><strong>Strengths:</strong> Quick takes, links to longer content</p><div class="example">Example: Café threads daily menu specials</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/x/000000" alt="X (Twitter)"><h3>X (Twitter)</h3><div class="audience">News, public conversation</div><p><strong>Strengths:</strong> Real-time updates, customer service</p><div class="example">Example: Brand responds to delivery complaints publicly</div></div></div>
-        
+                <div class="section-label">Platforms A</div>
+                <h2 class="title">Where SMEs Show Up (1/2)</h2>
+                <div class="platform-grid">
+                    <div class="plat-card"><span class="icon-badge" style="width:34px;height:34px"><svg viewBox="0 0 24 24" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="5" fill="#E4405F"/></svg></span><h3>Instagram</h3><p class="use">Visual products, Reels, Stories.</p><p class="medan">e.g. bakery + DM pre-order</p></div>
+                    <div class="plat-card"><span class="icon-badge" style="width:34px;height:34px"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="#000" d="M16 3v9.5a3.5 3.5 0 1 1-2.45-3.35V8.2a6.3 6.3 0 1 0 5.45 6.25V3H16z"/></svg></span><h3>TikTok</h3><p class="use">Short video discovery.</p><p class="medan">e.g. snack packing clips</p></div>
+                    <div class="plat-card"><span class="icon-badge" style="width:34px;height:34px"><svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="11" fill="#0866FF"/></svg></span><h3>Facebook</h3><p class="use">Groups, Marketplace, events.</p><p class="medan">e.g. neighborhood furniture</p></div>
+                    <div class="plat-card"><span class="icon-badge" style="width:34px;height:34px"><svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="11" fill="#25D366"/></svg></span><h3>WhatsApp</h3><p class="use">Orders, catalog, support.</p><p class="medan">e.g. tailor + QRIS invoice</p></div>
+                </div>
             </div>
         </div>
+
         <div class="slide slide-standard">
             <div class="vline"></div>
             <div class="slide-body">
-            <div class="section-label">Decision framework</div>
-            <h2 class="title">Choosing Platforms — Practical Questions</h2>
-            <p class="lead">Use this checklist in pairs (5 minutes). Aim for <strong>one primary</strong> and <strong>one support</strong> channel — not eight half-finished profiles.</p>
-            <table class="data-table">
-                <thead><tr><th>Question</th><th>If yes → consider</th><th>Medan / SME example</th></tr></thead>
-                <tbody>
-                    <tr><td>Is your product highly visual?</td><td>Instagram, TikTok</td><td>Kue tradisional, hijab, interior design</td></tr>
-                    <tr><td>Do customers ask many questions before buying?</td><td>WhatsApp Business + one social feed</td><td>Custom printing, wedding services</td></tr>
-                    <tr><td>Do you sell to other businesses?</td><td>LinkedIn, email, website</td><td>Supplier packaging, IT support</td></tr>
-                    <tr><td>Is local foot traffic important?</td><td>Facebook Groups, Google Maps reviews, Instagram location tags</td><td>Coffee shop near USU / Sun Plaza area</td></tr>
-                    <tr><td>Can you film short process videos weekly?</td><td>TikTok, Reels</td><td>Street food, crafts, behind-the-counter</td></tr>
-                </tbody>
-            </table>
-        
+                <div class="section-label">Platforms B</div>
+                <h2 class="title">Where SMEs Show Up (2/2)</h2>
+                <div class="platform-grid">
+                    <div class="plat-card"><span class="icon-badge" style="width:34px;height:34px"><svg viewBox="0 0 24 24" width="20" height="20"><rect width="24" height="24" rx="4" fill="#FF0000"/></svg></span><h3>YouTube</h3><p class="use">Tutorials, long trust.</p><p class="medan">e.g. workshop tips</p></div>
+                    <div class="plat-card"><span class="icon-badge" style="width:34px;height:34px"><svg viewBox="0 0 24 24" width="20" height="20"><rect width="24" height="24" rx="3" fill="#0A66C2"/></svg></span><h3>LinkedIn</h3><p class="use">B2B, services.</p><p class="medan">e.g. IT for shops</p></div>
+                    <div class="plat-card"><span class="icon-badge" style="width:34px;height:34px">@</span><h3>Threads</h3><p class="use">Quick text updates.</p><p class="medan">e.g. daily menu</p></div>
+                    <div class="plat-card"><span class="icon-badge" style="width:34px;height:34px;font-weight:700">X</span><h3>X</h3><p class="use">News, public replies.</p><p class="medan">e.g. delivery updates</p></div>
+                </div>
             </div>
         </div>
-        <div class="slide slide-split">
-            <div class="vline"></div>
-            <div class="split-grid">
-            <div class="text-side">
-                <div class="section-label">How to start</div>
-                <h2 class="title">Building a Credible Business Profile</h2>
-                <p class="lead">Before boosting posts, fix the basics. Customers decide in seconds whether you look trustworthy.</p>
-                <ul class="bullet-list">
-                    <li><strong>Name &amp; category:</strong> Real business name; category matches what you sell.</li>
-                    <li><strong>Bio formula:</strong> What you offer + who it’s for + location + CTA (“Order via WA” / “Link menu”).</li>
-                    <li><strong>Visual system:</strong> Logo or consistent colors; templates for price posts and promos.</li>
-                    <li><strong>Contact &amp; trust:</strong> WA number, hours, address or service area; highlight reviews or press if any.</li>
-                    <li><strong>Highlights / pinned posts:</strong> Menu, how to order, bestsellers, FAQ.</li>
-                </ul>
-            </div>
-            <div class="visual"><div class="image-container">
-                <img src="https://images.unsplash.com/photo-1556740758-90de374c12ef?w=900&q=80" alt="Small business owner with phone">
-            </div></div>
-            </div>
-        </div>
+
         <div class="slide slide-standard cream">
             <div class="vline"></div>
             <div class="slide-body">
-            <div class="section-label">Content strategy</div>
-            <h2 class="title">Content Pillars &amp; the Value-First Mix</h2>
-            <p class="lead">Pillars are recurring themes so you never stare at a blank screen. The <strong>80/20 guideline</strong> (popularized by many social trainers) means mostly value, lightly promotional — adjust to your audience.</p>
-            <div class="pillar-grid">
-                <div class="pillar"><h3>Educate</h3><p>How-to, tips, myths vs facts — positions you as helpful expert.</p></div>
-                <div class="pillar"><h3>Show proof</h3><p>Process, ingredients, testimonials, before/after (honest, not exaggerated).</p></div>
-                <div class="pillar"><h3>Entertain / relate</h3><p>Behind the scenes, team, local culture — humanizes the brand.</p></div>
-                <div class="pillar"><h3>Promote</h3><p>Offers, new SKUs, events — clear CTA and dates.</p></div>
-            </div>
-            <div class="ratio-bar" aria-label="80 percent value 20 percent promotional">
-                <div class="val">~80% value (educate, proof, entertain)</div>
-                <div class="promo">~20% promo</div>
-            </div>
-        
-            </div>
-        </div>
-        <div class="slide slide-standard">
-            <div class="vline"></div>
-            <div class="slide-body">
-            <div class="section-label">Formats</div>
-            <h2 class="title">Content Types Students Can Plan This Week</h2>
-            <div class="type-grid">
-                <div class="type-card"><div class="format">Feed carousel</div><h3>Teach in slides</h3><p>Step-by-step (e.g., “3 ways to store kripik”), save-worthy tips.</p></div>
-                <div class="type-card"><div class="format">Reels / TikTok</div><h3>Show motion</h3><p>15–45 sec: packing order, sizzle reel, customer reaction (with permission).</p></div>
-                <div class="type-card"><div class="format">Stories</div><h3>Daily presence</h3><p>Today’s stock, poll (“which flavor?”), countdown to promo.</p></div>
-                <div class="type-card"><div class="format">Live</div><h3>Real-time trust</h3><p>Q&amp;A, launch, tour of workshop — prepare outline beforehand.</p></div>
-                <div class="type-card"><div class="format">UGC / collab</div><h3>Social proof</h3><p>Repost customer photos (credit them), micro-influencer tasting.</p></div>
-                <div class="type-card"><div class="format">WA broadcast</div><h3>Owned audience</h3><p>Opt-in list only; short update + link to catalog — not spam.</p></div>
-            </div>
-        
-            </div>
-        </div>
-        <div class="slide slide-standard cream">
-            <div class="vline"></div>
-            <div class="slide-body">
-            <div class="section-label">Planning tool</div>
-            <h2 class="title">Sample Weekly Content Calendar (One-Person SME)</h2>
-            <p class="lead">Example plan for a Medan food business — <strong>adapt days and volume</strong> to your capacity. Batch-create visuals on Sunday if possible.</p>
-            <div class="cal-wrap">
-                <table class="cal-table" aria-label="Weekly content calendar">
-                    <thead>
-                        <tr><th class="slot-label">Slot</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>
-                    </thead>
+                <div class="section-label">You try · 5 min</div>
+                <h2 class="title">Pick Your Stack</h2>
+                <table class="data-table">
+                    <thead><tr><th>Ask</th><th>If yes →</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td class="slot-label">Morning</td>
-                            <td class="cal-cell"><div class="platform">IG Story</div><div class="topic">Today’s menu + open hours</div></td>
-                            <td class="cal-cell"><div class="platform">WA</div><div class="topic">Restock alert to opt-in list</div></td>
-                            <td class="cal-cell"><div class="platform">IG Reel</div><div class="topic">15s kitchen prep</div></td>
-                            <td class="cal-cell"><div class="platform">IG Story</div><div class="topic">Poll: flavor of the week</div></td>
-                            <td class="cal-cell"><div class="platform">TikTok</div><div class="topic">Packing rush hour</div></td>
-                            <td class="cal-cell"><div class="platform">IG Feed</div><div class="topic">Customer photo repost</div></td>
-                            <td class="cal-cell"><div class="platform">Plan</div><div class="topic">Batch photos &amp; captions</div></td>
-                        </tr>
-                        <tr>
-                            <td class="slot-label">Afternoon</td>
-                            <td class="cal-cell"><div class="platform">Reply</div><div class="topic">DMs &amp; comments (30 min)</div></td>
-                            <td class="cal-cell"><div class="platform">IG Carousel</div><div class="topic">Tip: how to reheat</div></td>
-                            <td class="cal-cell"><div class="platform">Reply</div><div class="topic">WA catalog questions</div></td>
-                            <td class="cal-cell"><div class="platform">IG Feed</div><div class="topic">Soft promo: weekend bundle</div></td>
-                            <td class="cal-cell"><div class="platform">Story</div><div class="topic">Sold-out update / FOMO</div></td>
-                            <td class="cal-cell"><div class="platform">Live</div><div class="topic">Optional 20-min Q&amp;A</div></td>
-                            <td class="cal-cell"><div class="platform">Rest</div><div class="topic">Analytics snapshot</div></td>
-                        </tr>
+                        <tr><td>Very visual product?</td><td>IG + TikTok</td></tr>
+                        <tr><td>Many questions before buy?</td><td>WA + one feed</td></tr>
+                        <tr><td>B2B?</td><td>LinkedIn + website</td></tr>
+                        <tr><td>Need foot traffic?</td><td>FB Groups + Maps</td></tr>
+                    </tbody>
+                </table>
+                <p class="hint">Write: primary platform + one backup on your phone notes.</p>
+            </div>
+        </div>
+
+        <div class="slide slide-split">
+            <div class="vline"></div>
+            <div class="split-grid">
+                <div class="text-side">
+                    <div class="section-label">Profile</div>
+                    <h2 class="title">Trust in 10 Seconds</h2>
+                    <ul class="compact">
+                        <li>Bio: offer + location + CTA (WA / menu).</li>
+                        <li>Pinned: how to order, bestseller, FAQ.</li>
+                        <li>Same colors/fonts on every promo post.</li>
+                    </ul>
+                </div>
+                <div class="visual">
+                    <div class="visual-placeholder">
+                        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="10" width="160" height="140" rx="8" fill="#fff" stroke="#b8b0a4"/>
+                            <circle cx="50" cy="45" r="18" fill="#0097a7" opacity="0.3"/>
+                            <rect x="80" y="35" width="90" height="8" rx="2" fill="#1a1a1a"/>
+                            <rect x="80" y="50" width="70" height="6" rx="2" fill="#8a8178"/>
+                            <rect x="30" y="85" width="140" height="40" rx="6" fill="#e0f7fa"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-standard">
+            <div class="vline"></div>
+            <div class="slide-body">
+                <div class="section-label">Content</div>
+                <h2 class="title">Four Pillars · 80/20</h2>
+                <div class="pillar-grid">
+                    <div class="pillar"><h3>Educate</h3><p>Tips &amp; how-tos.</p></div>
+                    <div class="pillar"><h3>Proof</h3><p>Process, reviews.</p></div>
+                    <div class="pillar"><h3>Relate</h3><p>BTS, team.</p></div>
+                    <div class="pillar"><h3>Promo</h3><p>Offers + dates.</p></div>
+                </div>
+                <div class="ratio-bar"><div class="val">~80% value</div><div class="promo">~20%</div></div>
+            </div>
+        </div>
+
+        <div class="slide slide-interactive cream">
+            <div class="vline"></div>
+            <div class="slide-body">
+                <div class="section-label">Click to reveal</div>
+                <h2 class="title">Format Menu</h2>
+                <p class="hint">Tap each card — discuss which fits your capstone business.</p>
+                <div class="reveal-grid">
+                    <div class="reveal-card" tabindex="0"><div class="front">Carousel</div><div class="back">Teach in 3–5 slides; saves on IG.</div></div>
+                    <div class="reveal-card" tabindex="0"><div class="front">Reel / TikTok</div><div class="back">15–30s process or packing clip.</div></div>
+                    <div class="reveal-card" tabindex="0"><div class="front">Story poll</div><div class="back">“Which flavor?” → stock decision.</div></div>
+                    <div class="reveal-card" tabindex="0"><div class="front">Live</div><div class="back">Q&amp;A with outline; 20 min max.</div></div>
+                    <div class="reveal-card" tabindex="0"><div class="front">UGC repost</div><div class="back">Customer photo + credit.</div></div>
+                    <div class="reveal-card" tabindex="0"><div class="front">WA broadcast</div><div class="back">Opt-in only; short + catalog link.</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-standard">
+            <div class="vline"></div>
+            <div class="slide-body">
+                <div class="section-label">Calendar</div>
+                <h2 class="title">Sample Week (Solo Owner)</h2>
+                <table class="cal-table" aria-label="Weekly calendar">
+                    <thead><tr><th class="slot-label">Slot</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr></thead>
+                    <tbody>
+                        <tr><td class="slot-label">AM</td><td>Story menu</td><td>WA restock</td><td>Reel prep</td><td>Story poll</td><td>TikTok pack</td><td>Repost UGC</td><td>Batch shoot</td></tr>
+                        <tr><td class="slot-label">PM</td><td>Reply DMs</td><td>Carousel tip</td><td>WA FAQ</td><td>Soft promo</td><td>Sold-out post</td><td>Live opt.</td><td>Review stats</td></tr>
                     </tbody>
                 </table>
             </div>
-            <p class="cal-note">Track what you actually posted vs planned — improvement beats perfection.</p>
-        
-            </div>
         </div>
-        <div class="slide slide-standard">
-            <div class="vline"></div>
-            <div class="slide-body">
-            <div class="section-label">Indonesia workflow</div>
-            <h2 class="title">From Like to Payment: WhatsApp Business &amp; QRIS</h2>
-            <p class="lead">Social creates interest; <strong>frictionless ordering and payment</strong> close the sale. Many Sumatera Utara SMEs run discovery on IG/TikTok and fulfillment on WA.</p>
-            <div class="steps">
-                <div class="step"><div class="n">1</div><h3>Discover</h3><p>Reel or post shows product; bio link / “DM ORDER” CTA.</p></div>
-                <div class="step"><div class="n">2</div><h3>Consult</h3><p>WA quick replies: price list, shipping areas (Medan, Belawan, etc.).</p></div>
-                <div class="step"><div class="n">3</div><h3>Pay</h3><p>QRIS on invoice image or transfer; confirm before packing.</p></div>
-                <div class="step"><div class="n">4</div><h3>Retain</h3><p>Thank-you message + ask for review / next order reminder (opt-in).</p></div>
-            </div>
-            <div class="callout" style="margin-top:2vh"><img src="https://cdn.simpleicons.org/whatsapp/25D366" alt="" style="width:28px;vertical-align:middle;margin-right:10px">Use <strong>WhatsApp Business</strong> labels (new order, paid, shipped) and saved catalog items — looks professional without a full e-commerce site.</div>
-        
-            </div>
-        </div>
+
         <div class="slide slide-standard cream">
             <div class="vline"></div>
             <div class="slide-body">
-            <div class="section-label">Local examples</div>
-            <h2 class="title">Indonesian SME Patterns (Illustrative)</h2>
-            <p class="lead">These are <strong>teaching composites</strong> inspired by common Medan / national patterns — not claims about specific registered companies.</p>
-            <div class="sme-grid">
-                <div class="sme-card">
-                    <div class="head"><h3>“Kopi Nusantara” stall</h3><span>F&amp;B · high foot traffic</span></div>
-                    <div class="body"><p>Instagram Reels of brewing + WA for catering orders.</p><ul><li>Stories: daily bean origin</li><li>QRIS at counter + on invoice</li></ul></div>
+                <div class="section-label">Sales path</div>
+                <h2 class="title">IG/TikTok → WA → QRIS</h2>
+                <div class="steps">
+                    <div class="step"><h3>1 · See</h3><p>Reel + “DM ORDER”.</p></div>
+                    <div class="step"><h3>2 · Ask</h3><p>WA price + area.</p></div>
+                    <div class="step"><h3>3 · Pay</h3><p>QRIS on invoice.</p></div>
+                    <div class="step"><h3>4 · Keep</h3><p>Thanks + review ask.</p></div>
                 </div>
-                <div class="sme-card">
-                    <div class="head"><h3>“Batik Gayo” boutique</h3><span>Fashion · visual product</span></div>
-                    <div class="body"><p>Carousel sizing guide; TikTok try-on; DM for custom length.</p><ul><li>Pinned: measurement chart</li><li>Collab with local creator (micro)</li></ul></div>
-                </div>
-                <div class="sme-card">
-                    <div class="head"><h3>“Solusi Toko” IT help</h3><span>Services · B2B/B2C</span></div>
-                    <div class="body"><p>LinkedIn tips + WA support for shops migrating to digital payments.</p><ul><li>Case posts (problem → fix)</li><li>Clear service area map</li></ul></div>
-                </div>
-            </div>
-        
             </div>
         </div>
+
+        <div class="slide slide-interactive">
+            <div class="vline"></div>
+            <div class="slide-body">
+                <div class="section-label">Mini quiz</div>
+                <h2 class="title">Quick Check (click answers)</h2>
+                <div class="quiz-q" data-answer="b">
+                    <p>1. Best default content mix for a new SME?</p>
+                    <div class="quiz-opts">
+                        <button type="button" class="quiz-opt" data-v="a">100% promos</button>
+                        <button type="button" class="quiz-opt" data-v="b">~80% value, ~20% promo</button>
+                        <button type="button" class="quiz-opt" data-v="c">Post only when sales drop</button>
+                    </div>
+                </div>
+                <div class="quiz-q" data-answer="c">
+                    <p>2. Customer complains publicly — first move?</p>
+                    <div class="quiz-opts">
+                        <button type="button" class="quiz-opt" data-v="a">Delete comment</button>
+                        <button type="button" class="quiz-opt" data-v="b">Argue in thread</button>
+                        <button type="button" class="quiz-opt" data-v="c">Reply + move to DM/WA</button>
+                    </div>
+                </div>
+                <div class="quiz-q" data-answer="a">
+                    <p>3. Paid ad should usually…</p>
+                    <div class="quiz-opts">
+                        <button type="button" class="quiz-opt" data-v="a">Boost a post that already works</button>
+                        <button type="button" class="quiz-opt" data-v="b">Use brand-new untested creative</button>
+                        <button type="button" class="quiz-opt" data-v="c">Target “everyone in Indonesia”</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="slide slide-standard">
             <div class="vline"></div>
             <div class="slide-body">
-            <div class="section-label">Operations</div>
-            <h2 class="title">Community Management &amp; Customer Care</h2>
-            <p class="lead">Response time and tone are part of your brand. Set <strong>realistic SLAs</strong> (e.g., reply within business hours) and document FAQs.</p>
-            <div class="do-dont">
-                <div class="col do"><h3>Do</h3><ul>
-                    <li>Thank people for tags and reviews; ask permission before reposting faces.</li>
-                    <li>Move complex issues to DM/WA with a ticket note.</li>
-                    <li>Admit mistakes publicly when needed, then explain the fix.</li>
-                    <li>Use saved replies for shipping, hours, and allergen info.</li>
-                </ul></div>
-                <div class="col dont"><h3>Avoid</h3><ul>
-                    <li>Deleting honest criticism without responding.</li>
-                    <li>Arguing in comments — take it private.</li>
-                    <li>Posting personal political views on a business page (unless core to brand).</li>
-                    <li>Buying fake followers — hurts insights and credibility.</li>
-                </ul></div>
-            </div>
-        
+                <div class="section-label">Community</div>
+                <h2 class="title">Do / Don’t</h2>
+                <div class="do-dont">
+                    <div class="col do"><h3>Do</h3><ul class="compact"><li>Reply in business hours.</li><li>Thank tags; ask to repost.</li><li>Saved replies for FAQ.</li></ul></div>
+                    <div class="col dont"><h3>Don’t</h3><ul class="compact"><li>Ignore criticism.</li><li>Buy fake followers.</li><li>Spam WA broadcasts.</li></ul></div>
+                </div>
             </div>
         </div>
+
         <div class="slide slide-standard cream">
             <div class="vline"></div>
             <div class="slide-body">
-            <div class="section-label">Paid reach</div>
-            <h2 class="title">Paid Social — When &amp; How (Without Getting Lost)</h2>
-            <p class="lead">Paid ads <strong>amplify</strong> what already works organically. Test small, learn, then scale — always label promos clearly under Indonesian advertising norms.</p>
-            <div class="ads-grid">
-                <div class="ads-card">
-                    <h3>Meta Ads (Facebook + Instagram)</h3>
-                    <p>Good for local targeting (city, interests), retargeting website/IG engagers, and catalog sales.</p>
-                    <ul>
-                        <li>Start with one objective (e.g., messages or traffic).</li>
-                        <li>Use existing best post as creative — native look wins.</li>
-                        <li>Define audience: location radius around Medan, age, interests.</li>
-                    </ul>
-                </div>
-                <div class="ads-card">
-                    <h3>TikTok / other boosts</h3>
-                    <p>Strong for short video discovery; monitor comment sentiment closely.</p>
-                    <ul>
-                        <li>Boost posts that already have organic traction.</li>
-                        <li>Track cost per message or click — not just likes.</li>
-                        <li>Pause ads that don’t beat your baseline within a set test budget.</li>
-                    </ul>
-                </div>
-            </div>
-        
+                <div class="section-label">Paid</div>
+                <h2 class="title">Ads: Small Tests</h2>
+                <ul class="compact">
+                    <li><strong>Meta:</strong> one objective; radius around Medan; use winning post.</li>
+                    <li><strong>TikTok boost:</strong> only if organic comments are positive.</li>
+                    <li><strong>Stop rule:</strong> pause if cost per message beats your margin.</li>
+                </ul>
             </div>
         </div>
-        <div class="slide slide-standard">
+
+        <div class="slide slide-interactive">
             <div class="vline"></div>
             <div class="slide-body">
-            <div class="section-label">Discussion · 20 min</div>
-            <h2 class="title">Mini Case: “Warung Kopi Menteng” Wants More Students</h2>
-            <div class="case-box">
-                <p>A small coffee shop near a university in Medan has an Instagram account with irregular posts (mostly product photos). Owner has limited time, one staff member, QRIS ready, and WhatsApp for orders. Competitors post daily Reels. Monthly sales are flat.</p>
-                <p><strong>Your task in groups of 3–4:</strong> Propose a <em>realistic</em> 2-week plan — platforms, 3 content pillars, posting frequency, and how WA + QRIS fit the journey.</p>
-            </div>
-            <div class="discussion-q">
-                <div class="dq">Which <strong>one</strong> metric would you watch first (reach, saves, DM starts, repeat orders)? Why?</div>
-                <div class="dq">What would you <strong>stop doing</strong> to free time for sustainable content?</div>
-                <div class="dq">How do you keep promo under ~20% without hiding new products?</div>
-                <div class="dq">What could go wrong publicly — and how would you respond?</div>
-            </div>
-        
+                <div class="section-label">Case · groups</div>
+                <h2 class="title">Warung Kopi Near Campus</h2>
+                <div class="activity-box">
+                    <p>Flat sales · irregular IG · competitors post daily Reels · QRIS + WA ready.</p>
+                    <p><strong>Deliverable:</strong> 2-week plan — 2 platforms, 3 pillars, posting rhythm.</p>
+                </div>
+                <div class="btn-row">
+                    <button type="button" class="btn primary" data-timer="1200">Start 20:00 discussion</button>
+                    <button type="button" class="btn" data-timer-reset>Reset</button>
+                </div>
+                <div class="timer-display" id="case-timer">20:00</div>
             </div>
         </div>
+
         <div class="slide slide-recap">
             <div class="vline"></div>
             <div class="slide-body recap-grid">
-            <div class="left-col">
-                <div class="section-label">Recap</div>
-                <h2 class="title">Key Takeaways</h2>
-                <ul class="recap-list">
-                    <li><span class="recap-num">01</span><div class="recap-text"><h4>Strategy before volume</h4><p>Pick platforms and goals; don’t spread thin across every app.</p></div></li>
-                    <li><span class="recap-num">02</span><div class="recap-text"><h4>Consistency beats virality</h4><p>Pillars + calendar reduce burnout; improve from weekly reviews.</p></div></li>
-                    <li><span class="recap-num">03</span><div class="recap-text"><h4>Social → WA → QRIS</h4><p>Discovery and payment should feel like one smooth journey.</p></div></li>
-                    <li><span class="recap-num">04</span><div class="recap-text"><h4>Measure what matters</h4><p>Engagement is useless if it doesn’t support inquiries, orders, or retention.</p></div></li>
-                </ul>
-            </div>
-            <div class="right-col">
-                <div class="next-session">
-                    <div class="section-label">Assignment</div>
-                    <h3>Due next session</h3>
-                    <ul class="assign-list">
-                        <li>Choose a real or hypothetical SME in Sumatera Utara. Write a one-page social media plan: goal, primary + secondary platform, 3 content pillars.</li>
-                        <li>Fill in a <strong>7-day calendar grid</strong> (morning/afternoon slots) with specific post ideas — not just “post photo.”</li>
-                        <li>Sketch the customer path from first touch (social) to payment (QRIS/WA/marketplace) in 4 steps.</li>
-                        <li>Optional: screenshot one competitor profile and note 2 things to emulate + 1 to avoid.</li>
+                <div class="left-col">
+                    <div class="section-label">Recap</div>
+                    <h2 class="title">Takeaways</h2>
+                    <ul class="recap-list">
+                        <li><span class="recap-num">01</span><div class="recap-text"><h4>Strategy first</h4><p>One primary channel.</p></div></li>
+                        <li><span class="recap-num">02</span><div class="recap-text"><h4>Calendar beats viral</h4><p>Weekly rhythm.</p></div></li>
+                        <li><span class="recap-num">03</span><div class="recap-text"><h4>Social → WA → QRIS</h4><p>One smooth path.</p></div></li>
+                        <li><span class="recap-num">04</span><div class="recap-text"><h4>Measure leads</h4><p>DMs &amp; orders, not likes alone.</p></div></li>
                     </ul>
                 </div>
-                <p class="next-link">Next: Session 05 — Data Analytics &amp; Business Intelligence</p>
-            </div>
+                <div class="right-col">
+                    <div class="next-session">
+                        <div class="section-label">Assignment</div>
+                        <h3>Before Session 05</h3>
+                        <ul class="assign-list">
+                            <li>1-page plan: goal, 2 platforms, 3 pillars.</li>
+                            <li>7-day calendar (AM/PM slots).</li>
+                            <li>4-step path: social → payment.</li>
+                        </ul>
+                        <div class="worksheet-qr">
+                            <div class="qr-box" aria-hidden="true">
+                                <svg width="72" height="72" viewBox="0 0 72 72"><rect width="72" height="72" fill="#fff"/><path fill="#1a1a1a" d="M8 8h20v20H8zm4 4v12h12V12zm28 0h20v20H40zm4 4v12h12V16zM8 40h20v20H8zm4 4v12h12V44zm16 0h8v8h-8zm12 0h8v8h-8zm12 12h8v8h-8z"/></svg>
+                            </div>
+                            <span>Worksheet: duplicate this calendar in your notebook (no link required).</span>
+                        </div>
+                    </div>
+                    <p class="hint" style="margin-top:1vh">Next: Session 05 — Data Analytics &amp; BI</p>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="corner-mark">Session 04 — Digital Business</div>
     <div class="nav">
-        <button type="button" onclick="prev()" aria-label="Previous slide">←</button>
-        <button type="button" onclick="next()" aria-label="Next slide">→</button>
+        <button type="button" onclick="prev()" aria-label="Previous">←</button>
+        <button type="button" onclick="next()" aria-label="Next">→</button>
     </div>
-    <div class="counter"><span id="num">1</span> / 16</div>
+    <div class="counter"><span id="num">1</span> / <span id="total">20</span></div>
 
     <script>
         let current = 0;
         const slides = document.querySelectorAll('.slide');
-        const total = slides.length;
         const numEl = document.getElementById('num');
+        const totalEl = document.getElementById('total');
+        if (totalEl) totalEl.textContent = slides.length;
 
         function show(i) {
             slides.forEach(s => s.classList.remove('active'));
             slides[i].classList.add('active');
             if (numEl) numEl.textContent = i + 1;
         }
-
-        function next() {
-            current = (current + 1) % total;
-            show(current);
-        }
-
-        function prev() {
-            current = (current - 1 + total) % total;
-            show(current);
-        }
+        function next() { current = (current + 1) % slides.length; show(current); }
+        function prev() { current = (current - 1 + slides.length) % slides.length; show(current); }
 
         document.addEventListener('keydown', e => {
             if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
             if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
         });
-
         let touchStartX = 0;
         document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
         document.addEventListener('touchend', e => {
-            const diff = touchStartX - e.changedTouches[0].clientX;
-            if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); }
+            const d = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(d) > 50) d > 0 ? next() : prev();
+        });
+
+        // Click-to-reveal cards
+        document.querySelectorAll('.reveal-card').forEach(card => {
+            const toggle = () => card.classList.toggle('open');
+            card.addEventListener('click', toggle);
+            card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+        });
+
+        // Poll (local demo — tallies clicks in this browser)
+        const pollCounts = { ig: 0, tt: 0, wa: 0, fb: 0 };
+        const pollLabels = { ig: 'Instagram', tt: 'TikTok', wa: 'WhatsApp', fb: 'Facebook' };
+        document.querySelectorAll('.poll-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.poll-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                pollCounts[btn.dataset.poll]++;
+            });
+        });
+        document.getElementById('poll-show')?.addEventListener('click', () => {
+            const box = document.getElementById('poll-results');
+            const max = Math.max(1, ...Object.values(pollCounts));
+            box.innerHTML = Object.keys(pollCounts).map(k => {
+                const pct = Math.round((pollCounts[k] / max) * 100);
+                return `<div class="poll-bar"><span>${pollLabels[k]}</span><div class="bar"><div class="fill" style="width:${pct}%"></div></div><span>${pollCounts[k]}</span></div>`;
+            }).join('');
+            box.classList.add('visible');
+        });
+
+        // Quiz
+        document.querySelectorAll('.quiz-q').forEach(q => {
+            const ans = q.dataset.answer;
+            q.querySelectorAll('.quiz-opt').forEach(opt => {
+                opt.addEventListener('click', () => {
+                    q.querySelectorAll('.quiz-opt').forEach(o => o.classList.remove('correct', 'wrong'));
+                    opt.classList.add(opt.dataset.v === ans ? 'correct' : 'wrong');
+                    if (opt.dataset.v !== ans) {
+                        const right = q.querySelector(`[data-v="${ans}"]`);
+                        if (right) right.classList.add('correct');
+                    }
+                });
+            });
+        });
+
+        // Timers
+        let timerId = null;
+        let timerRemaining = 0;
+        let timerDisplay = null;
+        function fmt(sec) {
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            return m + ':' + String(s).padStart(2, '0');
+        }
+        function tick() {
+            if (timerRemaining <= 0) { clearInterval(timerId); timerId = null; return; }
+            timerRemaining--;
+            if (timerDisplay) timerDisplay.textContent = fmt(timerRemaining);
+        }
+        document.querySelectorAll('[data-timer]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                clearInterval(timerId);
+                timerRemaining = parseInt(btn.dataset.timer, 10);
+                timerDisplay = btn.closest('.slide-body')?.querySelector('.timer-display');
+                if (timerDisplay) timerDisplay.textContent = fmt(timerRemaining);
+                timerId = setInterval(tick, 1000);
+            });
+        });
+        document.querySelectorAll('[data-timer-reset]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                clearInterval(timerId);
+                timerId = null;
+                const slide = btn.closest('.slide-body');
+                const display = slide?.querySelector('.timer-display');
+                const startBtn = slide?.querySelector('[data-timer]');
+                if (display && startBtn) display.textContent = fmt(parseInt(startBtn.dataset.timer, 10));
+            });
         });
 
         show(0);
