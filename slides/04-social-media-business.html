@@ -22,11 +22,13 @@
             --radius: 18px;
             --radius-lg: 24px;
             --chrome-h: 7vh;
-            --fs-h1: clamp(2.6rem, 4.8vw, 3.75rem);
-            --fs-h2: clamp(2rem, 3.2vw, 2.75rem);
-            --fs-h3: clamp(1.1rem, 1.4vw, 1.3rem);
-            --fs-body: clamp(1.05rem, 1.25vw, 1.28rem);
-            --fs-small: clamp(0.85rem, 1vw, 0.95rem);
+            --fs-h1: clamp(3.75rem, 7.2vw, 5.75rem);
+            --fs-h2: clamp(2.85rem, 5.2vw, 4.35rem);
+            --fs-h3: clamp(1.5rem, 2.25vw, 1.9rem);
+            --fs-body: clamp(1.375rem, 2vw, 1.75rem);
+            --fs-sub: clamp(1.15rem, 1.55vw, 1.35rem);
+            --fs-small: clamp(1rem, 1.25vw, 1.125rem);
+            --fs-label: clamp(0.95rem, 1.15vw, 1.05rem);
         }
         body {
             font-family: Inter, system-ui, sans-serif;
@@ -48,6 +50,43 @@
             padding: calc(var(--chrome-h) + 2vh) 5vw 4vh;
         }
         .slide.active { opacity: 1; visibility: visible; }
+
+        /* Blue-only energy (no teal/purple blobs) */
+        .slide::before {
+            content: "";
+            position: absolute;
+            width: min(42vw, 520px);
+            height: min(42vw, 520px);
+            top: -18vh;
+            right: -12vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(111, 160, 255, 0.22) 0%, rgba(79, 127, 255, 0) 68%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .slide::after {
+            content: "";
+            position: absolute;
+            width: min(28vw, 360px);
+            height: min(28vw, 360px);
+            bottom: -8vh;
+            left: -6vw;
+            border-radius: 50%;
+            border: 2px solid rgba(79, 127, 255, 0.12);
+            box-shadow: 0 0 0 12px rgba(111, 160, 255, 0.06);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .energy-band {
+            position: absolute;
+            left: 0;
+            top: 22%;
+            width: 100%;
+            height: 38%;
+            background: linear-gradient(105deg, rgba(79, 127, 255, 0.07) 0%, transparent 55%);
+            pointer-events: none;
+            z-index: 0;
+        }
 
         /* —— Chrome (Hermes white header strip) —— */
         .chrome {
@@ -80,13 +119,13 @@
         .label-c-text {
             font-family: Satoshi, sans-serif;
             font-weight: 500;
-            font-size: var(--fs-small);
+            font-size: var(--fs-label);
             letter-spacing: 0.22em;
             text-transform: uppercase;
             color: var(--blue);
         }
         .label-c-line {
-            flex: 1; max-width: 120px; height: 2px;
+            flex: 1; max-width: 160px; height: 3px;
             display: flex; align-items: center;
             background: linear-gradient(90deg, var(--blue-mid) 0%, rgba(111, 160, 255, 0) 100%);
             border-radius: 2px;
@@ -130,8 +169,22 @@
             backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius);
-            box-shadow: 0 12px 40px rgba(27, 42, 74, 0.06);
+            box-shadow: 0 16px 48px rgba(79, 127, 255, 0.1), 0 4px 16px rgba(27, 42, 74, 0.05);
         }
+        .glass-strong {
+            background: linear-gradient(145deg, rgba(255,255,255,0.92), rgba(255,255,255,0.65));
+            border: 1px solid rgba(79, 127, 255, 0.2);
+        }
+        .plat strong, .plat-row strong {
+            font-family: Satoshi, sans-serif;
+            font-weight: 500;
+            font-size: var(--fs-h3);
+            color: var(--navy);
+            display: block;
+            margin-bottom: 0.25vh;
+        }
+        .brand-icon { width: 40px; height: 40px; display: block; }
+        .brand-icon-lg { width: 44px; height: 44px; }
         .chip {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 0.45em 0.9em;
@@ -187,9 +240,20 @@
             height: min(68vh, 100%);
             border-radius: var(--radius-lg);
             display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(79,127,255,0.08));
-            border: 1px solid var(--glass-border);
+            background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(79,127,255,0.14));
+            border: 2px solid rgba(79, 127, 255, 0.22);
+            box-shadow: 0 24px 64px rgba(79, 127, 255, 0.15);
         }
+        .logo-strip {
+            display: flex; flex-wrap: wrap; gap: 14px; margin-top: 2.5vh;
+        }
+        .logo-strip span {
+            display: flex; align-items: center; justify-content: center;
+            width: 52px; height: 52px; border-radius: 14px;
+            background: #fff; border: 1px solid var(--line);
+            box-shadow: 0 6px 20px rgba(79, 127, 255, 0.12);
+        }
+        .logo-strip .brand-icon { width: 30px; height: 30px; }
         .hero-panel svg { width: 88%; max-height: 85%; }
 
         /* 2 Agenda */
@@ -235,20 +299,21 @@
             padding: 2vh 1.5vw;
         }
         .plat-ico {
-            width: 52px; height: 52px; border-radius: 14px;
+            width: 72px; height: 72px; border-radius: 18px;
             display: flex; align-items: center; justify-content: center;
-            background: rgba(255,255,255,0.85);
-            border: 1px solid var(--line);
+            background: #fff;
+            border: 1px solid rgba(79, 127, 255, 0.18);
+            box-shadow: 0 8px 24px rgba(79, 127, 255, 0.12);
             flex-shrink: 0;
         }
 
         /* 6 Platform list */
         .plat-list { flex: 1; display: flex; flex-direction: column; gap: 1vh; }
         .plat-row {
-            display: grid; grid-template-columns: 56px 1fr auto;
-            gap: 1.2vw; align-items: center; padding: 1.6vh 1.4vw;
+            display: grid; grid-template-columns: 80px 1fr auto;
+            gap: 1.5vw; align-items: center; padding: 2vh 1.6vw;
         }
-        .plat-row span.tag { font-size: var(--fs-small); color: var(--blue); font-weight: 500; }
+        .plat-row span.tag { font-size: var(--fs-sub); color: var(--blue); font-weight: 600; }
 
         /* 7 Table */
         .table-glass { flex: 1; overflow: hidden; padding: 0; }
@@ -293,11 +358,11 @@
         }
         .pillar .pct {
             font-family: Satoshi, sans-serif; font-weight: 500;
-            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-size: clamp(2rem, 3.5vw, 2.75rem);
             color: var(--blue); margin-bottom: 0.5vh;
         }
         .ratio-bar {
-            margin-top: 2vh; height: 14px; border-radius: 999px;
+            margin-top: 2vh; height: 20px; border-radius: 999px;
             overflow: hidden; display: flex; border: 1px solid var(--line);
         }
         .ratio-bar .val { flex: 4; background: rgba(79, 127, 255, 0.35); }
@@ -315,7 +380,7 @@
         .mosaic .wide { grid-row: span 2; }
 
         /* 11 Calendar */
-        table.cal { width: 100%; border-collapse: collapse; font-size: clamp(0.9rem, 1.1vw, 1.05rem); }
+        table.cal { width: 100%; border-collapse: collapse; font-size: var(--fs-sub); }
         table.cal th, table.cal td {
             border: 1px solid var(--line); padding: 1.1vh 0.5vw;
             text-align: center; color: var(--navy-soft);
@@ -332,11 +397,12 @@
             padding: 2.5vh 1.2vw; position: relative;
         }
         .step-num {
-            width: 36px; height: 36px; border-radius: 10px;
+            width: 48px; height: 48px; border-radius: 12px;
+            font-size: var(--fs-sub);
             background: var(--blue); color: #fff;
             font-family: Satoshi, sans-serif; font-weight: 500;
             display: flex; align-items: center; justify-content: center;
-            margin-bottom: 1.2vh; font-size: var(--fs-small);
+            margin-bottom: 1.2vh;
         }
 
         /* 13 Do / Don't */
@@ -383,6 +449,51 @@
     </style>
 </head>
 <body>
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+        <defs>
+            <linearGradient id="ig-grad" x1="0" y1="24" x2="24" y2="0">
+                <stop offset="0%" stop-color="#F58529"/><stop offset="35%" stop-color="#DD2A7B"/>
+                <stop offset="65%" stop-color="#8134AF"/><stop offset="100%" stop-color="#515BD4"/>
+            </linearGradient>
+        </defs>
+        <symbol id="logo-instagram" viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#ig-grad)"/>
+            <rect x="6.5" y="6.5" width="11" height="11" rx="3" fill="none" stroke="#fff" stroke-width="1.6"/>
+            <circle cx="17.4" cy="6.6" r="1.25" fill="#fff"/>
+        </symbol>
+        <symbol id="logo-tiktok" viewBox="0 0 24 24">
+            <path fill="#25F4EE" d="M17.5 5.5v8.2a3.3 3.3 0 1 1-2.3-3.15V8.4a6 6 0 1 0 5.2 5.95V5.5h-2.9z"/>
+            <path fill="#FE2C55" d="M17.5 5.5v2.9h2.9a5.2 5.2 0 0 1-2.9-2.9z"/>
+            <path fill="#000" d="M16.2 5.5h1.3v8.2a3.3 3.3 0 1 1-2.3-3.15V8.4a6 6 0 1 0 5.2 5.95V9.4h-2.9V5.5z" opacity=".85"/>
+        </symbol>
+        <symbol id="logo-facebook" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="11" fill="#1877F2"/>
+            <path fill="#fff" d="M13.2 7.5h2.1V5.2h-2.1c-2.5 0-4 1.5-4 4.1v1.8H7.5v2.4h1.7v6.5h2.6v-6.5h2.2l.4-2.4h-2.6V9.4c0-.8.6-1.9 1.4-1.9z"/>
+        </symbol>
+        <symbol id="logo-whatsapp" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="11" fill="#25D366"/>
+            <path fill="#fff" d="M17.2 14.5c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.4-2.3-1.4-.9-.8-1.5-1.7-1.7-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.1-.3.2-.5 0-.1 0-.3-.1-.4-.1-.2-.7-1.6-.9-2.2-.2-.5-.5-.4-.7-.4h-.6c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 2 3.1 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2.1-1.4.2-.7.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/>
+            <path fill="#fff" fill-opacity=".9" d="M12 5.5a6.4 6.4 0 0 0-5.5 9.6L5.5 18l3-1a6.4 6.4 0 0 0 8.5-9 6.3 6.3 0 0 0-5-2.5z"/>
+        </symbol>
+        <symbol id="logo-youtube" viewBox="0 0 24 24">
+            <rect x="2" y="5" width="20" height="14" rx="4" fill="#FF0000"/>
+            <path fill="#fff" d="M10.5 9.2v5.6l4.8-2.8-4.8-2.8z"/>
+        </symbol>
+        <symbol id="logo-linkedin" viewBox="0 0 24 24">
+            <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+            <path fill="#fff" d="M6.5 9.5h2.2v7.5H6.5V9.5zm1.1-2.8a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6zM10.2 9.5h2.1v1c.4-.7 1.3-1.2 2.3-1.2 2.5 0 3 1.6 3 3.7v4h-2.2v-3.5c0-.8 0-2-1.2-2s-1.4 1-1.4 2v3.5h-2.2V9.5z"/>
+        </symbol>
+        <symbol id="logo-threads" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="11" fill="#000"/>
+            <path fill="none" stroke="#fff" stroke-width="1.5" d="M15.2 10.8c-.2-2-1.6-3.1-3.8-3.1-2.4 0-3.9 1.6-3.9 4.2 0 2.6 1.5 4.2 4 4.2 2 0 3.2-.9 3.5-2.4h-1.5c-.2.7-.9 1.2-2 1.2-1.3 0-2.2-1-2.2-2.9s.9-2.9 2.2-2.9c1.1 0 1.8.6 1.9 1.8H9.8v1h3.9"/>
+            <path fill="#fff" d="M16.5 7.2c1.1.9 1.8 2.2 1.9 3.8h-1.2c-.1-1.2-.7-2.1-1.8-2.7-1-.6-2.3-.7-3.6-.2l-.5-1.1c1.6-.7 3.4-.6 5.2.2z"/>
+        </symbol>
+        <symbol id="logo-x" viewBox="0 0 24 24">
+            <rect width="24" height="24" rx="5" fill="#000"/>
+            <path fill="#fff" d="M13.2 10.6 18.5 5h-1.3l-4.6 4.9L9 5H5.5l5.6 7.4L5.5 19h1.3l4.9-5.2 3.6 5.2h3.5l-5.8-8.2zm-1.7 1.8.57-.75L16.9 6.2h-1.1l-3.7 4.1-.57.75-4.7 6.2h1.1l3.8-4.2z"/>
+        </symbol>
+    </svg>
+
     <header class="chrome" aria-hidden="false">
         <div class="wordmark">TRIXYNC</div>
         <div class="site-url">trixync.id</div>
@@ -400,6 +511,14 @@
                         <span class="hl-blue">for Business</span>
                     </h1>
                     <p class="body-text">Turn feeds into customers — Medan &amp; Sumatera Utara SMEs.</p>
+                    <div class="logo-strip" aria-hidden="true">
+                        <span><svg class="brand-icon"><use href="#logo-instagram"/></svg></span>
+                        <span><svg class="brand-icon"><use href="#logo-tiktok"/></svg></span>
+                        <span><svg class="brand-icon"><use href="#logo-facebook"/></svg></span>
+                        <span><svg class="brand-icon"><use href="#logo-whatsapp"/></svg></span>
+                        <span><svg class="brand-icon"><use href="#logo-youtube"/></svg></span>
+                        <span><svg class="brand-icon"><use href="#logo-linkedin"/></svg></span>
+                    </div>
                     <p class="title-meta">Randy Brilliant Chandra, S.S.I., M.Kom. · Digital Business</p>
                 </div>
                 <div class="hero-panel" aria-hidden="true">
@@ -426,10 +545,10 @@
                     <span class="hl-blue">flow</span>
                 </h2>
                 <div class="agenda-row">
-                    <div class="glass agenda-card"><strong>0:00–0:25</strong><p>Why social &amp; pick platforms</p></div>
-                    <div class="glass agenda-card"><strong>0:25–0:55</strong><p>Profile &amp; content pillars</p></div>
-                    <div class="glass agenda-card"><strong>0:55–1:25</strong><p>Calendar &amp; WA sales path</p></div>
-                    <div class="glass agenda-card"><strong>1:25–2:00</strong><p>Case talk &amp; recap</p></div>
+                    <div class="glass glass-strong agenda-card"><strong>0:00–0:25</strong><p>Why social &amp; pick platforms</p></div>
+                    <div class="glass glass-strong agenda-card"><strong>0:25–0:55</strong><p>Profile &amp; content pillars</p></div>
+                    <div class="glass glass-strong agenda-card"><strong>0:55–1:25</strong><p>Calendar &amp; WA sales path</p></div>
+                    <div class="glass glass-strong agenda-card"><strong>1:25–2:00</strong><p>Case talk &amp; recap</p></div>
                 </div>
                 <p class="body-text" style="margin-top:2vh">You leave with one primary channel, one backup, and a 7-day sketch.</p>
             </div>
@@ -444,7 +563,7 @@
                     <span class="hl-blue">sales channel</span>
                 </h2>
                 <p class="body-text">Not a side hobby — it sits with SEO, email, and ads from Session 03.</p>
-                <div class="hero-float glass" style="padding:2.5vh 2vw">
+                <div class="hero-float glass glass-strong" style="padding:2.5vh 2vw">
                     <ul class="bullets" style="text-align:left">
                         <li>Comments &amp; DMs = free market research.</li>
                         <li>Local habit: IG/TikTok → WhatsApp Business → QRIS.</li>
@@ -490,22 +609,23 @@
                     <span class="hl-light">Platforms</span>
                     <span class="hl-blue">(1/2)</span>
                 </h2>
+                <div class="energy-band"></div>
                 <div class="plat-grid">
-                    <div class="glass plat">
-                        <div class="plat-ico"><svg width="26" height="26" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="6" fill="#E4405F"/></svg></div>
-                        <div><strong>Instagram</strong><p class="body-text" style="font-size:var(--fs-small)">Reels · visual brands · Medan F&amp;B</p></div>
+                    <div class="glass glass-strong plat">
+                        <div class="plat-ico"><svg class="brand-icon brand-icon-lg"><use href="#logo-instagram"/></svg></div>
+                        <div><strong>Instagram</strong><p class="body-text" style="font-size:var(--fs-sub)">Reels · visual brands · Medan F&amp;B</p></div>
                     </div>
-                    <div class="glass plat">
-                        <div class="plat-ico"><svg width="26" height="26" viewBox="0 0 24 24"><path fill="#000" d="M16 3v9.5a3.5 3.5 0 1 1-2.45-3.35V8.2a6.3 6.3 0 1 0 5.45 6.25V3H16z"/></svg></div>
-                        <div><strong>TikTok</strong><p class="body-text" style="font-size:var(--fs-small)">Discovery · short video</p></div>
+                    <div class="glass glass-strong plat">
+                        <div class="plat-ico"><svg class="brand-icon brand-icon-lg"><use href="#logo-tiktok"/></svg></div>
+                        <div><strong>TikTok</strong><p class="body-text" style="font-size:var(--fs-sub)">Discovery · short video</p></div>
                     </div>
-                    <div class="glass plat">
-                        <div class="plat-ico"><svg width="26" height="26" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#0866FF"/></svg></div>
-                        <div><strong>Facebook</strong><p class="body-text" style="font-size:var(--fs-small)">Groups · Marketplace</p></div>
+                    <div class="glass glass-strong plat">
+                        <div class="plat-ico"><svg class="brand-icon brand-icon-lg"><use href="#logo-facebook"/></svg></div>
+                        <div><strong>Facebook</strong><p class="body-text" style="font-size:var(--fs-sub)">Groups · Marketplace</p></div>
                     </div>
-                    <div class="glass plat">
-                        <div class="plat-ico"><svg width="26" height="26" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#25D366"/></svg></div>
-                        <div><strong>WhatsApp Business</strong><p class="body-text" style="font-size:var(--fs-small)">Orders · catalog · QRIS</p></div>
+                    <div class="glass glass-strong plat">
+                        <div class="plat-ico"><svg class="brand-icon brand-icon-lg"><use href="#logo-whatsapp"/></svg></div>
+                        <div><strong>WhatsApp Business</strong><p class="body-text" style="font-size:var(--fs-sub)">Orders · catalog · QRIS</p></div>
                     </div>
                 </div>
             </div>
@@ -519,25 +639,26 @@
                     <span class="hl-light">Platforms</span>
                     <span class="hl-blue">(2/2)</span>
                 </h2>
+                <div class="energy-band"></div>
                 <div class="plat-list">
-                    <div class="glass plat-row">
-                        <div class="plat-ico" style="width:48px;height:48px"><svg width="22" height="22" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#FF0000"/></svg></div>
-                        <div><strong>YouTube</strong><p class="body-text" style="font-size:var(--fs-small)">Tutorials · trust</p></div>
+                    <div class="glass glass-strong plat-row">
+                        <div class="plat-ico"><svg class="brand-icon brand-icon-lg"><use href="#logo-youtube"/></svg></div>
+                        <div><strong>YouTube</strong><p class="body-text" style="font-size:var(--fs-sub)">Tutorials · trust</p></div>
                         <span class="tag">Long-form</span>
                     </div>
-                    <div class="glass plat-row">
-                        <div class="plat-ico" style="width:48px;height:48px"><svg width="22" height="22" viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#0A66C2"/></svg></div>
-                        <div><strong>LinkedIn</strong><p class="body-text" style="font-size:var(--fs-small)">B2B services</p></div>
+                    <div class="glass glass-strong plat-row">
+                        <div class="plat-ico"><svg class="brand-icon brand-icon-lg"><use href="#logo-linkedin"/></svg></div>
+                        <div><strong>LinkedIn</strong><p class="body-text" style="font-size:var(--fs-sub)">B2B services</p></div>
                         <span class="tag">Professional</span>
                     </div>
-                    <div class="glass plat-row">
-                        <div class="plat-ico" style="width:48px;height:48px;font-weight:700;color:var(--navy)">@</div>
-                        <div><strong>Threads</strong><p class="body-text" style="font-size:var(--fs-small)">Quick updates</p></div>
+                    <div class="glass glass-strong plat-row">
+                        <div class="plat-ico"><svg class="brand-icon brand-icon-lg"><use href="#logo-threads"/></svg></div>
+                        <div><strong>Threads</strong><p class="body-text" style="font-size:var(--fs-sub)">Quick updates</p></div>
                         <span class="tag">Light</span>
                     </div>
-                    <div class="glass plat-row">
-                        <div class="plat-ico" style="width:48px;height:48px;font-weight:700">X</div>
-                        <div><strong>X</strong><p class="body-text" style="font-size:var(--fs-small)">News · public CS</p></div>
+                    <div class="glass glass-strong plat-row">
+                        <div class="plat-ico"><svg class="brand-icon brand-icon-lg"><use href="#logo-x"/></svg></div>
+                        <div><strong>X</strong><p class="body-text" style="font-size:var(--fs-sub)">News · public CS</p></div>
                         <span class="tag">Alerts</span>
                     </div>
                 </div>
@@ -583,11 +704,10 @@
                         <li>Hours, location, QRIS badge visible.</li>
                     </ul>
                 </div>
-                <div class="mock-ig glass">
-                    <div class="bar"></div>
-                    <div class="avatar"></div>
-                    <p style="font-family:Satoshi;font-weight:500;color:var(--navy);margin-bottom:0.5vh">Kopi Kampus Medan</p>
-                    <p class="body-text" style="font-size:var(--fs-small)">DM ORDER · Jl. Setiabudi · QRIS ✓</p>
+                <div class="mock-ig glass glass-strong">
+                    <div class="plat-ico" style="width:64px;height:64px;margin-bottom:1.2vh"><svg class="brand-icon brand-icon-lg"><use href="#logo-instagram"/></svg></div>
+                    <p style="font-family:Satoshi;font-weight:500;font-size:var(--fs-h3);color:var(--navy);margin-bottom:0.5vh">Kopi Kampus Medan</p>
+                    <p class="body-text" style="font-size:var(--fs-sub)">DM ORDER · Jl. Setiabudi · QRIS ✓</p>
                     <div style="margin-top:1.5vh;display:flex;gap:6px">
                         <span class="chip">Pinned menu</span>
                         <span class="chip">How to pay</span>
@@ -605,13 +725,13 @@
                     <span class="hl-blue">80 / 20 mix</span>
                 </h2>
                 <div class="pillar-ring">
-                    <div class="glass pillar"><div class="pct">E</div><h3 style="font-family:Satoshi;font-weight:500">Educate</h3><p class="body-text" style="font-size:var(--fs-small)">Tips &amp; how-tos</p></div>
-                    <div class="glass pillar"><div class="pct">P</div><h3 style="font-family:Satoshi;font-weight:500">Proof</h3><p class="body-text" style="font-size:var(--fs-small)">Process &amp; reviews</p></div>
-                    <div class="glass pillar"><div class="pct">R</div><h3 style="font-family:Satoshi;font-weight:500">Relate</h3><p class="body-text" style="font-size:var(--fs-small)">Behind the scenes</p></div>
-                    <div class="glass pillar"><div class="pct">O</div><h3 style="font-family:Satoshi;font-weight:500">Offer</h3><p class="body-text" style="font-size:var(--fs-small)">Promo + dates</p></div>
+                    <div class="glass pillar"><div class="pct">E</div><h3 style="font-family:Satoshi;font-weight:500">Educate</h3><p class="body-text" style="font-size:var(--fs-sub)">Tips &amp; how-tos</p></div>
+                    <div class="glass pillar"><div class="pct">P</div><h3 style="font-family:Satoshi;font-weight:500">Proof</h3><p class="body-text" style="font-size:var(--fs-sub)">Process &amp; reviews</p></div>
+                    <div class="glass pillar"><div class="pct">R</div><h3 style="font-family:Satoshi;font-weight:500">Relate</h3><p class="body-text" style="font-size:var(--fs-sub)">Behind the scenes</p></div>
+                    <div class="glass pillar"><div class="pct">O</div><h3 style="font-family:Satoshi;font-weight:500">Offer</h3><p class="body-text" style="font-size:var(--fs-sub)">Promo + dates</p></div>
                 </div>
                 <div class="ratio-bar"><div class="val"></div><div class="promo"></div></div>
-                <p class="body-text" style="margin-top:1vh;font-size:var(--fs-small)">~80% value · ~20% promo</p>
+                <p class="body-text" style="margin-top:1vh;font-size:var(--fs-sub)">~80% value · ~20% promo</p>
             </div>
         </section>
 
@@ -628,10 +748,10 @@
                         <h3 style="font-family:Satoshi;font-weight:500;margin-bottom:1vh">Carousel</h3>
                         <p class="body-text">Teach in 3–5 slides — price list, sizing, or “how we pack.”</p>
                     </div>
-                    <div class="glass"><h3 style="font-family:Satoshi;font-weight:500">Reel / TikTok</h3><p class="body-text" style="font-size:var(--fs-small)">15–30s packing clip</p></div>
-                    <div class="glass"><h3 style="font-family:Satoshi;font-weight:500">Story sticker</h3><p class="body-text" style="font-size:var(--fs-small)">“Which flavor?”</p></div>
-                    <div class="glass"><h3 style="font-family:Satoshi;font-weight:500">UGC repost</h3><p class="body-text" style="font-size:var(--fs-small)">Customer photo + credit</p></div>
-                    <div class="glass"><h3 style="font-family:Satoshi;font-weight:500">WA broadcast</h3><p class="body-text" style="font-size:var(--fs-small)">Opt-in restock only</p></div>
+                    <div class="glass"><h3 style="font-family:Satoshi;font-weight:500">Reel / TikTok</h3><p class="body-text" style="font-size:var(--fs-sub)">15–30s packing clip</p></div>
+                    <div class="glass"><h3 style="font-family:Satoshi;font-weight:500">Story sticker</h3><p class="body-text" style="font-size:var(--fs-sub)">“Which flavor?”</p></div>
+                    <div class="glass"><h3 style="font-family:Satoshi;font-weight:500">UGC repost</h3><p class="body-text" style="font-size:var(--fs-sub)">Customer photo + credit</p></div>
+                    <div class="glass"><h3 style="font-family:Satoshi;font-weight:500">WA broadcast</h3><p class="body-text" style="font-size:var(--fs-sub)">Opt-in restock only</p></div>
                 </div>
             </div>
         </section>
@@ -665,10 +785,10 @@
                     <span class="hl-blue">QRIS</span>
                 </h2>
                 <div class="steps">
-                    <div class="glass step"><div class="step-num">1</div><h3 style="font-family:Satoshi;font-weight:500">See</h3><p class="body-text" style="font-size:var(--fs-small)">Post + “DM ORDER”.</p></div>
-                    <div class="glass step"><div class="step-num">2</div><h3 style="font-family:Satoshi;font-weight:500">Ask</h3><p class="body-text" style="font-size:var(--fs-small)">Price list on WA.</p></div>
-                    <div class="glass step"><div class="step-num">3</div><h3 style="font-family:Satoshi;font-weight:500">Pay</h3><p class="body-text" style="font-size:var(--fs-small)">QRIS on invoice.</p></div>
-                    <div class="glass step"><div class="step-num">4</div><h3 style="font-family:Satoshi;font-weight:500">Keep</h3><p class="body-text" style="font-size:var(--fs-small)">Thanks + review ask.</p></div>
+                    <div class="glass step"><div class="step-num">1</div><h3 style="font-family:Satoshi;font-weight:500">See</h3><p class="body-text" style="font-size:var(--fs-sub)">Post + “DM ORDER”.</p></div>
+                    <div class="glass step"><div class="step-num">2</div><h3 style="font-family:Satoshi;font-weight:500">Ask</h3><p class="body-text" style="font-size:var(--fs-sub)">Price list on WA.</p></div>
+                    <div class="glass step"><div class="step-num">3</div><h3 style="font-family:Satoshi;font-weight:500">Pay</h3><p class="body-text" style="font-size:var(--fs-sub)">QRIS on invoice.</p></div>
+                    <div class="glass step"><div class="step-num">4</div><h3 style="font-family:Satoshi;font-weight:500">Keep</h3><p class="body-text" style="font-size:var(--fs-sub)">Thanks + review ask.</p></div>
                 </div>
             </div>
         </section>
@@ -741,7 +861,7 @@
                         <li>7-day calendar (AM/PM).</li>
                         <li>4-step payment path sketch.</li>
                     </ul>
-                    <p class="body-text" style="margin-top:1vh;font-size:var(--fs-small)">Next: Data Analytics &amp; BI</p>
+                    <p class="body-text" style="margin-top:1vh;font-size:var(--fs-sub)">Next: Data Analytics &amp; BI</p>
                     <p class="wa-cta">Questions? WA +62 878 9338 8812</p>
                 </div>
             </div>
