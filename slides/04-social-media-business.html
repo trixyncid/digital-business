@@ -9,8 +9,21 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --fs-body: clamp(1.25rem, 1.4vw, 1.5rem);           /* 20–24px */
-            --fs-body-dense: clamp(1.125rem, 1.25vw, 1.3125rem); /* 18–21px tight grids */
+            --bg: #ede8e0;
+            --bg2: #e2dbd1;
+            --text: var(--text);
+            --sec: var(--sec);
+            --acc: var(--acc);
+            --line: var(--acc);
+            --accent: var(--accent);
+            --accent-l: #e0f7fa;
+            --cream: var(--cream);
+            --card: var(--card);
+            --card-border: var(--card-border);
+            --navy: var(--navy);
+            --radius: 12px;
+            --fs-body: clamp(1.25rem, 1.4vw, 1.5rem);
+            --fs-body-dense: clamp(1.125rem, 1.25vw, 1.3125rem);
             --fs-small: clamp(1.05rem, 1.1vw, 1.125rem);
             --fs-label: 0.9rem;
             --fs-h2: clamp(2.35rem, 4vw, 3.25rem);
@@ -20,8 +33,8 @@
         body {
             font-family: "Inter", sans-serif;
             font-size: var(--fs-body);
-            background: #f5f1eb;
-            color: #2d2d2d;
+            background: var(--cream);
+            color: var(--text);
             overflow: hidden;
         }
         .presentation { width: 100vw; height: 100vh; position: relative; }
@@ -31,39 +44,59 @@
             opacity: 0; visibility: hidden;
             transition: opacity 0.5s ease, visibility 0.5s ease;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
         .slide.active { opacity: 1; visibility: visible; }
 
-        .section-label {
-            font-size: var(--fs-label); text-transform: uppercase;
-            letter-spacing: 4px; color: #0097a7; margin-bottom: 1.5vh;
+        .vline {
+            position: absolute; left: 8vw; top: 0;
+            width: 1px; height: 100%;
+            background: var(--line); opacity: 0.3; z-index: 0;
+            pointer-events: none;
         }
-        h2.title {
+        .geo-decoration {
+            position: absolute; border: 1px solid var(--line);
+            border-radius: 50%; pointer-events: none; z-index: 0;
+        }
+        .slide-body {
+            position: relative; z-index: 1;
+            flex: 1; min-height: 0;
+            display: flex; flex-direction: column;
+        }
+
+        .section-label, .label {
+            font-size: var(--fs-label); text-transform: uppercase;
+            letter-spacing: 4px; color: var(--accent); margin-bottom: 1.5vh;
+            font-weight: 500;
+        }
+        h2.title, .slide h2 {
             font-family: "DM Serif Display", serif;
             font-size: var(--fs-h2);
-            color: #1a1a1a; line-height: 1.12; margin-bottom: 1.8vh;
+            color: var(--text); line-height: 1.12; margin-bottom: 1.8vh;
         }
         p.lead {
             font-size: var(--fs-body);
-            color: #5a5a5a; line-height: 1.55; max-width: 58vw;
+            color: var(--sec); line-height: 1.55; max-width: 58vw;
         }
 
         /* Title */
         .slide-title {
-            background: #1a1a2e;
+            background: var(--navy);
             display: flex; align-items: center; padding: 0 8vw;
+            position: relative;
         }
-        .slide-title .content { max-width: 62vw; }
+        .slide-title .content { max-width: 62vw; position: relative; z-index: 1; }
         .slide-title .label {
             font-size: var(--fs-label); text-transform: uppercase;
-            letter-spacing: 4px; color: #0097a7; margin-bottom: 2.5vh;
+            letter-spacing: 4px; color: var(--accent); margin-bottom: 2.5vh;
         }
         .slide-title h1 {
             font-family: "DM Serif Display", serif;
             font-size: var(--fs-title);
             color: #fff; line-height: 1.08; margin-bottom: 2.5vh;
         }
-        .slide-title h1 em { color: #0097a7; font-style: italic; }
+        .slide-title h1 em { color: var(--accent); font-style: italic; }
         .slide-title .subtitle {
             font-size: clamp(1.25rem, 1.6vw, 1.45rem);
             color: rgba(255,255,255,0.65); line-height: 1.55; max-width: 48vw;
@@ -84,26 +117,31 @@
             inset: 28px; border: 1px solid rgba(0,151,167,0.25);
             border-radius: 50%;
         }
-        .slide-title .platform-orbit {
-            position: absolute; right: 9vw; top: 50%;
-            transform: translateY(-50%);
-            display: grid; grid-template-columns: repeat(4, 44px); gap: 12px;
+        .slide-title .geo-decoration {
+            right: 5vw; bottom: 10vh; width: 28vw; height: 28vw; opacity: 0.35;
         }
-        .slide-title .platform-orbit img {
+        .slide-title .geo-decoration::before {
+            content: ""; position: absolute; top: 10%; left: 10%;
+            width: 80%; height: 80%; border: 1px dashed var(--line);
+            border-radius: 50%;
+        }
+        .title-logos {
+            display: flex; flex-wrap: wrap; gap: 12px; margin-top: 2.5vh;
+        }
+        .title-logos img {
             width: 40px; height: 40px; background: #fff;
-            border-radius: 10px; padding: 6px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            border-radius: var(--radius); padding: 6px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
 
         /* Standard content slide */
         .slide-standard {
-            display: flex; flex-direction: column;
-            padding: 4vh 5.5vw; background: #fff;
+            padding: 4vh 5vw 4vh 10vw;
+            background: #fff;
             max-height: 100vh; overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
-        .slide-standard.cream { background: #f5f1eb; }
-        .slide-standard .body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .slide-standard.cream { background: var(--cream); }
 
         /* Objectives */
         .obj-grid {
@@ -111,72 +149,80 @@
             gap: 2vh 3vw; margin-top: 2vh;
         }
         .obj-card {
-            background: #f8f6f2; border: 1px solid #e8e2d8;
-            border-radius: 12px; padding: 2.2vh 2vw;
+            background: var(--card); border: 1px solid var(--card-border);
+            border-radius: var(--radius); padding: 2.2vh 2vw;
             display: flex; gap: 14px; align-items: flex-start;
         }
         .obj-num {
             width: 40px; height: 40px; border-radius: 8px;
-            background: #0097a7; color: #fff;
+            background: var(--accent); color: #fff;
             font-size: 1.05rem; font-weight: 700;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
         }
         .obj-card h3 {
             font-family: "Playfair Display", serif;
-            font-size: var(--fs-h3); margin-bottom: 0.5vh; color: #1a1a1a;
+            font-size: var(--fs-h3); margin-bottom: 0.5vh; color: var(--text);
         }
-        .obj-card p { font-size: var(--fs-body); color: #5a5a5a; line-height: 1.45; }
+        .obj-card p { font-size: var(--fs-body); color: var(--sec); line-height: 1.45; }
 
         .timeline {
             margin-top: 2.5vh; display: grid;
             grid-template-columns: repeat(4, 1fr); gap: 1vw;
         }
         .time-block {
-            background: #fff; border: 1px solid #e0dbd3;
+            background: #fff; border: 1px solid var(--line);
             border-radius: 10px; padding: 1.8vh 1.2vw;
-            border-top: 3px solid #0097a7;
+            border-top: 3px solid var(--accent);
         }
         .time-block .when {
             font-size: var(--fs-small); font-weight: 600;
             text-transform: uppercase; letter-spacing: 1px;
-            color: #0097a7; margin-bottom: 0.8vh;
+            color: var(--accent); margin-bottom: 0.8vh;
         }
-        .time-block p { font-size: var(--fs-body-dense); color: #4a4a4a; line-height: 1.4; }
+        .time-block p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.4; }
 
-        /* Two column */
+        /* Two column (slide-twocol pattern) */
         .slide-split {
+            padding: 0; background: var(--cream);
+            max-height: 100vh; overflow: hidden;
+        }
+        .slide-split .split-grid {
             display: grid; grid-template-columns: 1fr 1fr;
-            min-height: 100vh;
+            height: 100%; position: relative; z-index: 1;
         }
         .slide-split .visual {
-            background: #f0f4f5; display: flex;
+            background: var(--bg2); display: flex;
             align-items: center; justify-content: center; padding: 4vh 3vw;
         }
-        .slide-split .visual img {
-            width: 100%; max-width: 480px; border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+        .slide-split .image-container {
+            width: 100%; max-width: 520px; height: 58vh;
+            position: relative; overflow: hidden;
+            border: 1px solid var(--line);
+        }
+        .slide-split .image-container img {
+            width: 100%; height: 100%; object-fit: cover;
         }
         .slide-split .text-side {
             display: flex; flex-direction: column; justify-content: center;
-            padding: 4vh 4.5vw; background: #fff;
-            border-left: 1px solid #eee;
+            padding: 5vh 5vw 5vh 3vw; background: #fff;
+            border-left: 1px solid var(--card-border);
             max-height: 100vh; overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
         .callout {
-            background: #f0f9fa; border-left: 3px solid #0097a7;
+            background: var(--accent-l); border-left: 3px solid var(--accent);
             padding: 2vh 2vw; margin: 2vh 0;
-            font-size: var(--fs-body); color: #3a3a3a; line-height: 1.5;
+            font-size: var(--fs-body); color: var(--text); line-height: 1.5;
         }
         .bullet-list { display: flex; flex-direction: column; gap: 1.2vh; margin-top: 1vh; }
         .bullet-list li {
-            list-style: none; font-size: var(--fs-body); color: #4a4a4a;
+            list-style: none; font-size: var(--fs-body); color: var(--sec);
             line-height: 1.45; padding-left: 1.5rem; position: relative;
         }
         .bullet-list li::before {
             content: ''; position: absolute; left: 0; top: 0.55em;
-            width: 7px; height: 7px; border-radius: 50%; background: #0097a7;
+            width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
         }
 
         /* Flow diagram */
@@ -185,18 +231,18 @@
             gap: 1.5vw; margin-top: 2.5vh;
         }
         .flow-card {
-            background: #fff; border: 1px solid #e8e2d8;
+            background: #fff; border: 1px solid var(--card-border);
             border-radius: 14px; padding: 2.5vh 2vw;
         }
         .flow-card h3 {
             font-family: "Playfair Display", serif;
             font-size: var(--fs-h3); margin-bottom: 0.8vh;
         }
-        .flow-card p { font-size: var(--fs-body); color: #5a5a5a; line-height: 1.45; }
+        .flow-card p { font-size: var(--fs-body); color: var(--sec); line-height: 1.45; }
         .flow-card .tag {
             display: inline-block; margin-top: 1vh;
             font-size: var(--fs-small); text-transform: uppercase;
-            letter-spacing: 1px; color: #0097a7; font-weight: 600;
+            letter-spacing: 1px; color: var(--accent); font-weight: 600;
         }
 
         /* Platform grid */
@@ -205,17 +251,17 @@
             gap: 0.9vw; flex: 1; margin-top: 1.5vh;
         }
         .plat-card {
-            background: #fff; border: 1px solid #e8e2d8;
+            background: #fff; border: 1px solid var(--card-border);
             border-radius: 12px; padding: 1.6vh 1.2vw;
             display: flex; flex-direction: column; gap: 0.6vh;
         }
         .plat-card img { width: 36px; height: 36px; }
         .plat-card h3 { font-size: 1.25rem; font-family: "Playfair Display", serif; }
-        .plat-card .audience { font-size: var(--fs-small); color: #0097a7; font-weight: 600; }
-        .plat-card p { font-size: var(--fs-body-dense); color: #5a5a5a; line-height: 1.38; flex: 1; }
+        .plat-card .audience { font-size: var(--fs-small); color: var(--accent); font-weight: 600; }
+        .plat-card p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.38; flex: 1; }
         .plat-card .example {
             font-size: var(--fs-small); color: #7a7a7a; font-style: italic;
-            border-top: 1px solid #eee; padding-top: 0.8vh;
+            border-top: 1px solid var(--card-border); padding-top: 0.8vh;
         }
 
         /* Table */
@@ -225,12 +271,12 @@
         }
         .data-table th {
             text-align: left; padding: 1.1vh 1vw;
-            background: #1a1a2e; color: #fff;
+            background: var(--navy); color: #fff;
             font-weight: 600; font-size: var(--fs-small);
             text-transform: uppercase; letter-spacing: 1px;
         }
         .data-table td {
-            padding: 1.2vh 1vw; border-bottom: 1px solid #e8e2d8;
+            padding: 1.2vh 1vw; border-bottom: 1px solid var(--card-border);
             vertical-align: top; line-height: 1.4;
         }
         .data-table tr:nth-child(even) td { background: #faf8f5; }
@@ -242,16 +288,16 @@
         }
         .pillar {
             border-radius: 12px; padding: 2vh 1.5vw;
-            border: 1px solid #e0dbd3; background: #fff;
+            border: 1px solid var(--line); background: #fff;
         }
         .pillar h3 { font-size: var(--fs-h3); margin-bottom: 0.6vh; font-family: "Playfair Display", serif; }
-        .pillar p { font-size: var(--fs-body-dense); color: #5a5a5a; line-height: 1.42; }
+        .pillar p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.42; }
         .ratio-bar {
             margin-top: 2vh; display: flex; min-height: 56px;
             border-radius: 10px; overflow: hidden;
-            border: 1px solid #e0dbd3;
+            border: 1px solid var(--line);
         }
-        .ratio-bar .val { flex: 8; background: #0097a7; color: #fff;
+        .ratio-bar .val { flex: 8; background: var(--accent); color: #fff;
             display: flex; align-items: center; justify-content: center;
             font-size: var(--fs-body-dense); font-weight: 600; padding: 0.5rem; text-align: center; }
         .ratio-bar .promo { flex: 2; background: #c4883a; color: #fff;
@@ -265,11 +311,11 @@
         }
         .type-card {
             background: #fff; border-radius: 12px;
-            border: 1px solid #e8e2d8; padding: 2vh 1.5vw;
+            border: 1px solid var(--card-border); padding: 2vh 1.5vw;
         }
         .type-card h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 0.6vh; }
-        .type-card .format { font-size: var(--fs-small); color: #0097a7; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8vh; }
-        .type-card p { font-size: var(--fs-body-dense); color: #5a5a5a; line-height: 1.42; }
+        .type-card .format { font-size: var(--fs-small); color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8vh; }
+        .type-card p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.42; }
 
         /* Calendar */
         .cal-wrap { margin-top: 2vh; flex: 1; }
@@ -278,7 +324,7 @@
             font-size: var(--fs-body-dense); table-layout: fixed;
         }
         .cal-table th {
-            background: #0097a7; color: #fff;
+            background: var(--accent); color: #fff;
             padding: 1vh 0.4vw; text-align: center;
             font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 1px;
         }
@@ -287,11 +333,11 @@
             vertical-align: top; min-height: 10vh; background: #fff;
         }
         .cal-table .slot-label {
-            font-weight: 600; color: #1a1a1a; background: #f8f6f2;
+            font-weight: 600; color: var(--text); background: var(--card);
             width: 100px; text-align: center; font-size: var(--fs-small);
         }
-        .cal-cell .platform { font-size: var(--fs-small); font-weight: 700; color: #0097a7; }
-        .cal-cell .topic { font-size: var(--fs-body-dense); color: #3a3a3a; line-height: 1.32; margin-top: 0.25vh; }
+        .cal-cell .platform { font-size: var(--fs-small); font-weight: 700; color: var(--accent); }
+        .cal-cell .topic { font-size: var(--fs-body-dense); color: var(--text); line-height: 1.32; margin-top: 0.25vh; }
         .cal-note { font-size: var(--fs-body-dense); color: #7a7a7a; margin-top: 1.2vh; font-style: italic; }
 
         /* WA + QRIS */
@@ -300,13 +346,13 @@
             gap: 1vw; margin-top: 2vh;
         }
         .step {
-            background: #fff; border: 1px solid #e8e2d8;
+            background: #fff; border: 1px solid var(--card-border);
             border-radius: 12px; padding: 2vh 1.2vw;
             position: relative;
         }
         .step::after {
             content: '→'; position: absolute; right: -0.6vw; top: 50%;
-            transform: translateY(-50%); color: #b8b0a4; font-size: 1.2rem;
+            transform: translateY(-50%); color: var(--acc); font-size: 1.2rem;
         }
         .step:last-child::after { display: none; }
         .step .n {
@@ -315,7 +361,7 @@
             display: flex; align-items: center; justify-content: center; margin-bottom: 0.8vh;
         }
         .step h3 { font-size: var(--fs-h3); margin-bottom: 0.5vh; }
-        .step p { font-size: var(--fs-body-dense); color: #5a5a5a; line-height: 1.4; }
+        .step p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.4; }
 
         /* SME examples */
         .sme-grid {
@@ -324,16 +370,16 @@
         }
         .sme-card {
             border-radius: 14px; overflow: hidden;
-            border: 1px solid #e8e2d8; background: #fff;
+            border: 1px solid var(--card-border); background: #fff;
         }
         .sme-card .head {
-            padding: 1.8vh 1.5vw; background: #1a1a2e; color: #fff;
+            padding: 1.8vh 1.5vw; background: var(--navy); color: #fff;
         }
         .sme-card .head h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); }
         .sme-card .head span { font-size: var(--fs-small); color: rgba(255,255,255,0.55); }
         .sme-card .body { padding: 1.6vh 1.4vw; }
-        .sme-card .body p { font-size: var(--fs-body-dense); color: #5a5a5a; line-height: 1.42; margin-bottom: 0.8vh; }
-        .sme-card .body ul { padding-left: 1.2rem; font-size: var(--fs-body-dense); color: #4a4a4a; line-height: 1.42; }
+        .sme-card .body p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.42; margin-bottom: 0.8vh; }
+        .sme-card .body ul { padding-left: 1.2rem; font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.42; }
 
         /* Community */
         .do-dont {
@@ -357,68 +403,75 @@
             gap: 2vw; margin-top: 2vh;
         }
         .ads-card {
-            background: #fff; border: 1px solid #e8e2d8;
+            background: #fff; border: 1px solid var(--card-border);
             border-radius: 14px; padding: 2.5vh 2vw;
         }
         .ads-card h3 { font-family: "Playfair Display", serif; font-size: var(--fs-h3); margin-bottom: 0.8vh; }
-        .ads-card p { font-size: var(--fs-body); color: #5a5a5a; line-height: 1.45; margin-bottom: 0.8vh; }
-        .ads-card ul { margin-left: 1.2rem; font-size: var(--fs-body-dense); color: #4a4a4a; line-height: 1.45; }
+        .ads-card p { font-size: var(--fs-body); color: var(--sec); line-height: 1.45; margin-bottom: 0.8vh; }
+        .ads-card ul { margin-left: 1.2rem; font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.45; }
 
         /* Case study */
         .case-box {
-            background: #f8f6f2; border: 1px solid #e8e2d8;
+            background: var(--card); border: 1px solid var(--card-border);
             border-radius: 14px; padding: 2.5vh 2.5vw; margin-top: 2vh;
         }
-        .case-box p { font-size: var(--fs-body); line-height: 1.5; color: #3a3a3a; margin-bottom: 1.2vh; }
+        .case-box p { font-size: var(--fs-body); line-height: 1.5; color: var(--text); margin-bottom: 1.2vh; }
         .discussion-q {
             display: grid; grid-template-columns: 1fr 1fr;
             gap: 1.2vw; margin-top: 1.5vh;
         }
         .dq {
             background: #fff; border-radius: 10px;
-            padding: 1.6vh 1.4vw; border-left: 4px solid #0097a7;
+            padding: 1.6vh 1.4vw; border-left: 4px solid var(--accent);
             font-size: var(--fs-body); line-height: 1.42;
         }
 
-        /* Recap */
+        /* Recap (course slide-recap) */
         .slide-recap {
-            display: grid; grid-template-columns: 1.1fr 0.9fr;
-            min-height: 100vh; background: #f5f1eb;
-        }
-        .slide-recap .left {
-            padding: 4vh 4.5vw; display: flex; flex-direction: column; justify-content: center;
+            padding: 4vh 5vw 4vh 10vw;
+            background: var(--cream);
             max-height: 100vh; overflow-y: auto;
         }
-        .recap-list { display: flex; flex-direction: column; gap: 1.8vh; margin-top: 2vh; }
-        .recap-item {
-            display: grid; grid-template-columns: 40px 1fr; gap: 14px;
-            background: #fff; border-radius: 10px; padding: 1.8vh 1.5vw;
-            border: 1px solid #e8e2d8;
+        .slide-recap .recap-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 5vw; align-items: start;
         }
-        .recap-item .num { font-family: "Playfair Display", serif; font-size: 1.75rem; color: #0097a7; }
-        .recap-item h4 { font-size: var(--fs-h3); margin-bottom: 0.35vh; }
-        .recap-item p { font-size: var(--fs-body-dense); color: #5a5a5a; line-height: 1.4; }
-        .slide-recap .right {
-            background: #1a1a2e; color: #fff;
-            padding: 4vh 3.5vw; display: flex; flex-direction: column; justify-content: center;
-            max-height: 100vh; overflow-y: auto;
+        .recap-list { list-style: none; margin-top: 2vh; }
+        .recap-list li {
+            padding: 1.8vh 0; border-bottom: 1px solid var(--line);
+            display: flex; align-items: baseline; gap: 1.5vw;
         }
-        .slide-recap .right h3 {
-            font-family: "DM Serif Display", serif;
-            font-size: clamp(1.85rem, 2.5vw, 2.25rem); margin-bottom: 1.8vh;
+        .recap-num {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(1.6rem, 2vw, 1.9rem);
+            color: var(--acc); min-width: 2.5rem; flex-shrink: 0;
         }
-        .assign-list { list-style: none; display: flex; flex-direction: column; gap: 1.2vh; }
+        .recap-text h4 {
+            font-family: "Playfair Display", serif;
+            font-size: var(--fs-h3); margin-bottom: 0.35vh; color: var(--text);
+        }
+        .recap-text p { font-size: var(--fs-body-dense); color: var(--sec); line-height: 1.4; }
+        .next-session {
+            border: 1px solid var(--line);
+            padding: 3vh 2.5vw; background: var(--accent-l);
+            border-radius: var(--radius);
+        }
+        .next-session h3 {
+            font-family: "Playfair Display", serif;
+            font-size: var(--fs-h3); margin-bottom: 1.5vh; color: var(--text);
+        }
+        .assign-list { list-style: none; display: flex; flex-direction: column; gap: 0.8vh; }
         .assign-list li {
-            font-size: var(--fs-body);
-            line-height: 1.45;
-            padding-left: 1.3rem; position: relative;
-            color: rgba(255,255,255,0.85);
+            font-size: var(--fs-body-dense);
+            line-height: 1.45; color: var(--sec);
+            padding: 0.5vh 0;
+            border-bottom: 1px solid rgba(0,151,167,0.12);
         }
-        .assign-list li::before {
-            content: ''; position: absolute; left: 0; top: 0.55em;
-            width: 6px; height: 6px; background: #0097a7; border-radius: 50%;
+        .assign-list li::before { content: "→ "; color: var(--accent); font-weight: 600; }
+        .next-link {
+            margin-top: 2vh; font-size: var(--fs-body-dense);
+            color: var(--acc); letter-spacing: 1px;
         }
-        .next-link { margin-top: 2.5vh; font-size: var(--fs-body-dense); color: rgba(255,255,255,0.45); }
 
         /* Nav */
         .nav {
@@ -427,28 +480,29 @@
         }
         .nav button {
             width: 44px; height: 44px;
-            border: 1px solid #d4cfc7;
-            background: rgba(245,241,235,0.92);
-            color: #5a5a5a; border-radius: 8px;
+            border: 1px solid var(--line);
+            background: rgba(245,241,235,0.9);
+            color: var(--sec); border-radius: 8px;
             cursor: pointer; font-size: 1.1rem;
+            transition: all 0.2s; backdrop-filter: blur(8px);
         }
-        .nav button:hover { background: #0097a7; border-color: #0097a7; color: #fff; }
+        .nav button:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
         .counter {
             position: fixed; bottom: 4vh; left: 5vw;
-            font-size: 0.95rem; color: #8a8178;
-            letter-spacing: 2px; z-index: 100;
+            font-size: clamp(0.85rem, 1vw, 0.95rem);
+            color: var(--acc); letter-spacing: 2px; z-index: 100;
+            font-family: "Inter", sans-serif;
         }
         .corner-mark {
-            position: fixed; bottom: 3.2vh; left: 5vw;
-            font-size: 0.7rem; color: #c4bfb6;
-            letter-spacing: 2px; text-transform: uppercase; z-index: 99;
-            transform: translateY(-1.6rem);
+            position: fixed; bottom: 3vh; left: 5vw;
+            font-size: 0.6rem; color: #c4bfb6;
+            letter-spacing: 2px; text-transform: uppercase; z-index: 100;
         }
 
         @media (max-width: 1100px) {
             .platform-grid, .pillar-grid, .steps { grid-template-columns: repeat(2, 1fr); }
             .step::after { display: none; }
-            .obj-grid, .slide-split, .slide-recap { grid-template-columns: 1fr; }
+            .obj-grid, .slide-split .split-grid, .slide-recap .recap-grid { grid-template-columns: 1fr; }
             .flow-row, .type-grid, .sme-grid { grid-template-columns: 1fr; }
         }
 
@@ -457,21 +511,24 @@
 <body>
     <div class="presentation">
         <div class="slide slide-title active">
+            <div class="geo-decoration"></div>
             <div class="deco"></div>
-            <div class="platform-orbit">
-                <img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram"><img src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok">
-                <img src="https://cdn.simpleicons.org/facebook/0866FF" alt="Facebook"><img src="https://cdn.simpleicons.org/whatsapp/25D366" alt="WhatsApp">
-                <img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube"><img src="https://cdn.simpleicons.org/linkedin/0A66C2" alt="LinkedIn">
-                <img src="https://cdn.simpleicons.org/threads/000000" alt="Threads"><img src="https://cdn.simpleicons.org/x/000000" alt="X">
-            </div>
             <div class="content">
-                <div class="label">Session 04 · Digital Business</div>
+                <div class="label">Session 04</div>
                 <h1>Social Media<br><em>for Business</em></h1>
                 <p class="subtitle">Strategy, content, community, and paid reach — how Indonesian SMEs turn social platforms into real business channels.</p>
+                <div class="title-logos" aria-hidden="true">
+                    <img src="https://cdn.simpleicons.org/instagram/E4405F" alt=""><img src="https://cdn.simpleicons.org/tiktok/000000" alt="">
+                    <img src="https://cdn.simpleicons.org/facebook/0866FF" alt=""><img src="https://cdn.simpleicons.org/whatsapp/25D366" alt="">
+                    <img src="https://cdn.simpleicons.org/youtube/FF0000" alt=""><img src="https://cdn.simpleicons.org/linkedin/0A66C2" alt="">
+                    <img src="https://cdn.simpleicons.org/threads/000000" alt=""><img src="https://cdn.simpleicons.org/x/000000" alt="">
+                </div>
                 <p class="lecturer">Lecturer: Randy Brilliant Chandra, S.S.I., M.Kom.</p>
             </div>
         </div>
         <div class="slide slide-standard cream">
+            <div class="vline"></div>
+            <div class="slide-body">
             <div class="section-label">Start here</div>
             <h2 class="title">Learning Objectives &amp; Class Flow (2 hours)</h2>
             <p class="lead">By the end of this session, you should be able to explain <strong>why</strong> social media fits a business goal, <strong>where</strong> to show up, and <strong>how</strong> to plan content without burning out.</p>
@@ -487,11 +544,15 @@
                 <div class="time-block"><div class="when">0:50 – 1:25</div><p>Content system: pillars, formats, sample weekly grid</p></div>
                 <div class="time-block"><div class="when">1:25 – 2:00</div><p>Case discussion, paid basics, recap &amp; assignment</p></div>
             </div>
+        
+            </div>
         </div>
         <div class="slide slide-split">
-            <div class="visual">
+            <div class="vline"></div>
+            <div class="split-grid">
+            <div class="visual"><div class="image-container">
                 <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=900&q=80" alt="Social media on phone">
-            </div>
+            </div></div>
             <div class="text-side">
                 <div class="section-label">Concepts</div>
                 <h2 class="title">Social Media Is a Business Channel — Not Just Posting</h2>
@@ -503,8 +564,11 @@
                     <li><strong>Owned + rented attention:</strong> Your profile is yours; reach depends on algorithms and optional ad spend.</li>
                 </ul>
             </div>
+            </div>
         </div>
         <div class="slide slide-standard">
+            <div class="vline"></div>
+            <div class="slide-body">
             <div class="section-label">How it works</div>
             <h2 class="title">The Social Media Engine for SMEs</h2>
             <p class="lead">Think of three layers working together. Weak content with strong ads wastes money; great content with no response loses customers.</p>
@@ -526,14 +590,22 @@
                 </div>
             </div>
             <div class="callout" style="margin-top:2.5vh">Teaching note: Organic reach is <em>unpredictable</em>; consistency and relevance matter more than chasing one viral post.</div>
+        
+            </div>
         </div>
         <div class="slide slide-standard cream">
+            <div class="vline"></div>
+            <div class="slide-body">
             <div class="section-label">Indonesia context</div>
             <h2 class="title">Platform Landscape — Where Should You Show Up?</h2>
             <p class="lead">No single “best” platform. Start where your <strong>customers already spend time</strong> and where your <strong>product can be shown clearly</strong>.</p>
             <div class="platform-grid"><div class="plat-card"><img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram"><h3>Instagram</h3><div class="audience">Visual brands, food, fashion, services</div><p><strong>Strengths:</strong> Feeds, Reels, Stories, collab posts</p><div class="example">Example: Medan bakery shows daily fresh bread + pre-order DM</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok"><h3>TikTok</h3><div class="audience">Younger audiences, discovery</div><p><strong>Strengths:</strong> Short video, trends, shop tab (where available)</p><div class="example">Example: Snack brand films packing orders for Ramadan hampers</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/facebook/0866FF" alt="Facebook"><h3>Facebook</h3><div class="audience">Local communities, older demographics</div><p><strong>Strengths:</strong> Groups, Marketplace, events</p><div class="example">Example: Furniture shop posts in neighborhood groups</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/whatsapp/25D366" alt="WhatsApp Business"><h3>WhatsApp Business</h3><div class="audience">Orders, support, catalogs</div><p><strong>Strengths:</strong> Catalog, labels, quick replies, broadcast lists</p><div class="example">Example: Tailor sends size chart + payment via QRIS</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube"><h3>YouTube</h3><div class="audience">Education, long trust-building</div><p><strong>Strengths:</strong> Tutorials, reviews, Shorts</p><div class="example">Example: Auto workshop explains maintenance tips</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/linkedin/0A66C2" alt="LinkedIn"><h3>LinkedIn</h3><div class="audience">B2B, professional services</div><p><strong>Strengths:</strong> Articles, company page, hiring</p><div class="example">Example: Logistics firm shares case studies</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/threads/000000" alt="Threads"><h3>Threads</h3><div class="audience">Text updates, conversation</div><p><strong>Strengths:</strong> Quick takes, links to longer content</p><div class="example">Example: Café threads daily menu specials</div></div><div class="plat-card"><img src="https://cdn.simpleicons.org/x/000000" alt="X (Twitter)"><h3>X (Twitter)</h3><div class="audience">News, public conversation</div><p><strong>Strengths:</strong> Real-time updates, customer service</p><div class="example">Example: Brand responds to delivery complaints publicly</div></div></div>
+        
+            </div>
         </div>
         <div class="slide slide-standard">
+            <div class="vline"></div>
+            <div class="slide-body">
             <div class="section-label">Decision framework</div>
             <h2 class="title">Choosing Platforms — Practical Questions</h2>
             <p class="lead">Use this checklist in pairs (5 minutes). Aim for <strong>one primary</strong> and <strong>one support</strong> channel — not eight half-finished profiles.</p>
@@ -547,8 +619,12 @@
                     <tr><td>Can you film short process videos weekly?</td><td>TikTok, Reels</td><td>Street food, crafts, behind-the-counter</td></tr>
                 </tbody>
             </table>
+        
+            </div>
         </div>
         <div class="slide slide-split">
+            <div class="vline"></div>
+            <div class="split-grid">
             <div class="text-side">
                 <div class="section-label">How to start</div>
                 <h2 class="title">Building a Credible Business Profile</h2>
@@ -561,11 +637,14 @@
                     <li><strong>Highlights / pinned posts:</strong> Menu, how to order, bestsellers, FAQ.</li>
                 </ul>
             </div>
-            <div class="visual" style="background:#eef6f7">
+            <div class="visual"><div class="image-container">
                 <img src="https://images.unsplash.com/photo-1556740758-90de374c12ef?w=900&q=80" alt="Small business owner with phone">
+            </div></div>
             </div>
         </div>
         <div class="slide slide-standard cream">
+            <div class="vline"></div>
+            <div class="slide-body">
             <div class="section-label">Content strategy</div>
             <h2 class="title">Content Pillars &amp; the Value-First Mix</h2>
             <p class="lead">Pillars are recurring themes so you never stare at a blank screen. The <strong>80/20 guideline</strong> (popularized by many social trainers) means mostly value, lightly promotional — adjust to your audience.</p>
@@ -579,8 +658,12 @@
                 <div class="val">~80% value (educate, proof, entertain)</div>
                 <div class="promo">~20% promo</div>
             </div>
+        
+            </div>
         </div>
         <div class="slide slide-standard">
+            <div class="vline"></div>
+            <div class="slide-body">
             <div class="section-label">Formats</div>
             <h2 class="title">Content Types Students Can Plan This Week</h2>
             <div class="type-grid">
@@ -591,8 +674,12 @@
                 <div class="type-card"><div class="format">UGC / collab</div><h3>Social proof</h3><p>Repost customer photos (credit them), micro-influencer tasting.</p></div>
                 <div class="type-card"><div class="format">WA broadcast</div><h3>Owned audience</h3><p>Opt-in list only; short update + link to catalog — not spam.</p></div>
             </div>
+        
+            </div>
         </div>
         <div class="slide slide-standard cream">
+            <div class="vline"></div>
+            <div class="slide-body">
             <div class="section-label">Planning tool</div>
             <h2 class="title">Sample Weekly Content Calendar (One-Person SME)</h2>
             <p class="lead">Example plan for a Medan food business — <strong>adapt days and volume</strong> to your capacity. Batch-create visuals on Sunday if possible.</p>
@@ -626,8 +713,12 @@
                 </table>
             </div>
             <p class="cal-note">Track what you actually posted vs planned — improvement beats perfection.</p>
+        
+            </div>
         </div>
         <div class="slide slide-standard">
+            <div class="vline"></div>
+            <div class="slide-body">
             <div class="section-label">Indonesia workflow</div>
             <h2 class="title">From Like to Payment: WhatsApp Business &amp; QRIS</h2>
             <p class="lead">Social creates interest; <strong>frictionless ordering and payment</strong> close the sale. Many Sumatera Utara SMEs run discovery on IG/TikTok and fulfillment on WA.</p>
@@ -638,8 +729,12 @@
                 <div class="step"><div class="n">4</div><h3>Retain</h3><p>Thank-you message + ask for review / next order reminder (opt-in).</p></div>
             </div>
             <div class="callout" style="margin-top:2vh"><img src="https://cdn.simpleicons.org/whatsapp/25D366" alt="" style="width:28px;vertical-align:middle;margin-right:10px">Use <strong>WhatsApp Business</strong> labels (new order, paid, shipped) and saved catalog items — looks professional without a full e-commerce site.</div>
+        
+            </div>
         </div>
         <div class="slide slide-standard cream">
+            <div class="vline"></div>
+            <div class="slide-body">
             <div class="section-label">Local examples</div>
             <h2 class="title">Indonesian SME Patterns (Illustrative)</h2>
             <p class="lead">These are <strong>teaching composites</strong> inspired by common Medan / national patterns — not claims about specific registered companies.</p>
@@ -657,8 +752,12 @@
                     <div class="body"><p>LinkedIn tips + WA support for shops migrating to digital payments.</p><ul><li>Case posts (problem → fix)</li><li>Clear service area map</li></ul></div>
                 </div>
             </div>
+        
+            </div>
         </div>
         <div class="slide slide-standard">
+            <div class="vline"></div>
+            <div class="slide-body">
             <div class="section-label">Operations</div>
             <h2 class="title">Community Management &amp; Customer Care</h2>
             <p class="lead">Response time and tone are part of your brand. Set <strong>realistic SLAs</strong> (e.g., reply within business hours) and document FAQs.</p>
@@ -676,8 +775,12 @@
                     <li>Buying fake followers — hurts insights and credibility.</li>
                 </ul></div>
             </div>
+        
+            </div>
         </div>
         <div class="slide slide-standard cream">
+            <div class="vline"></div>
+            <div class="slide-body">
             <div class="section-label">Paid reach</div>
             <h2 class="title">Paid Social — When &amp; How (Without Getting Lost)</h2>
             <p class="lead">Paid ads <strong>amplify</strong> what already works organically. Test small, learn, then scale — always label promos clearly under Indonesian advertising norms.</p>
@@ -701,8 +804,12 @@
                     </ul>
                 </div>
             </div>
+        
+            </div>
         </div>
         <div class="slide slide-standard">
+            <div class="vline"></div>
+            <div class="slide-body">
             <div class="section-label">Discussion · 20 min</div>
             <h2 class="title">Mini Case: “Warung Kopi Menteng” Wants More Students</h2>
             <div class="case-box">
@@ -715,27 +822,35 @@
                 <div class="dq">How do you keep promo under ~20% without hiding new products?</div>
                 <div class="dq">What could go wrong publicly — and how would you respond?</div>
             </div>
+        
+            </div>
         </div>
         <div class="slide slide-recap">
-            <div class="left">
+            <div class="vline"></div>
+            <div class="slide-body recap-grid">
+            <div class="left-col">
                 <div class="section-label">Recap</div>
                 <h2 class="title">Key Takeaways</h2>
-                <div class="recap-list">
-                    <div class="recap-item"><div class="num">01</div><div><h4>Strategy before volume</h4><p>Pick platforms and goals; don’t spread thin across every app.</p></div></div>
-                    <div class="recap-item"><div class="num">02</div><div><h4>Consistency beats virality</h4><p>Pillars + calendar reduce burnout; improve from weekly reviews.</p></div></div>
-                    <div class="recap-item"><div class="num">03</div><div><h4>Social → WA → QRIS</h4><p>Discovery and payment should feel like one smooth journey.</p></div></div>
-                    <div class="recap-item"><div class="num">04</div><div><h4>Measure what matters</h4><p>Engagement is useless if it doesn’t support inquiries, orders, or retention.</p></div></div>
-                </div>
-            </div>
-            <div class="right">
-                <h3>Assignment (due next session)</h3>
-                <ul class="assign-list">
-                    <li>Choose a real or hypothetical SME in Sumatera Utara. Write a one-page social media plan: goal, primary + secondary platform, 3 content pillars.</li>
-                    <li>Fill in a <strong>7-day calendar grid</strong> (morning/afternoon slots) with specific post ideas — not just “post photo.”</li>
-                    <li>Sketch the customer path from first touch (social) to payment (QRIS/WA/marketplace) in 4 steps.</li>
-                    <li>Optional: screenshot one competitor profile and note 2 things to emulate + 1 to avoid.</li>
+                <ul class="recap-list">
+                    <li><span class="recap-num">01</span><div class="recap-text"><h4>Strategy before volume</h4><p>Pick platforms and goals; don’t spread thin across every app.</p></div></li>
+                    <li><span class="recap-num">02</span><div class="recap-text"><h4>Consistency beats virality</h4><p>Pillars + calendar reduce burnout; improve from weekly reviews.</p></div></li>
+                    <li><span class="recap-num">03</span><div class="recap-text"><h4>Social → WA → QRIS</h4><p>Discovery and payment should feel like one smooth journey.</p></div></li>
+                    <li><span class="recap-num">04</span><div class="recap-text"><h4>Measure what matters</h4><p>Engagement is useless if it doesn’t support inquiries, orders, or retention.</p></div></li>
                 </ul>
+            </div>
+            <div class="right-col">
+                <div class="next-session">
+                    <div class="section-label">Assignment</div>
+                    <h3>Due next session</h3>
+                    <ul class="assign-list">
+                        <li>Choose a real or hypothetical SME in Sumatera Utara. Write a one-page social media plan: goal, primary + secondary platform, 3 content pillars.</li>
+                        <li>Fill in a <strong>7-day calendar grid</strong> (morning/afternoon slots) with specific post ideas — not just “post photo.”</li>
+                        <li>Sketch the customer path from first touch (social) to payment (QRIS/WA/marketplace) in 4 steps.</li>
+                        <li>Optional: screenshot one competitor profile and note 2 things to emulate + 1 to avoid.</li>
+                    </ul>
+                </div>
                 <p class="next-link">Next: Session 05 — Data Analytics &amp; Business Intelligence</p>
+            </div>
             </div>
         </div>
     </div>
